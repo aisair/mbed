@@ -1,0 +1,38 @@
+/* mbed Microcontroller Library
+ * Copyright (c) 2007-2008, sford
+ */
+
+#ifndef MBED_H
+#define MBED_H
+ 
+// Useful C libraries
+#include "stdio.h"
+#include "stdlib.h"
+#include "string.h"
+#include "math.h"
+
+#include "helper.h"
+
+// mbed Debug libraries
+#include "Debug.h"
+#include "stackheap.h"
+
+// mbed Peripheral components
+#include "DigitalIn.h"
+#include "DigitalOut.h"
+#include "BusIn.h"
+#include "BusOut.h"
+#include "AnalogIn.h"
+#include "AnalogOut.h"
+#include "PwmOut.h"
+#include "Serial.h"
+#include "SPI.h"
+#include "I2C.h"
+
+// mbed Internal components
+#include "Timer.h"
+#include "wait.h"
+
+using namespace mbed; 
+
+#endif 
