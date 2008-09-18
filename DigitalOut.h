@@ -17,8 +17,6 @@ class DigitalOut : public Base {
 
 public:
 
-	/* Group: Configuration Methods */
-	
 	/* Constructor: DigitalOut
 	 *  Create a DigitalOut connected to the specified pin
 	 *
@@ -27,8 +25,6 @@ public:
 	 */
 	DigitalOut(int pin);
 
-	/* Group: Access Methods */
-		
 	/* Function: write
 	 *  Set the output, specified as 0 or 1 (int)
 	 *
@@ -47,8 +43,6 @@ public:
 	 */
     int read();
    
-   	/* Group: Access Method Shorthand */
-   	 
 	/* Function: operator=
 	 *  A shorthand for <write>
 	 */
