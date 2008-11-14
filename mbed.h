@@ -32,6 +32,8 @@
 // mbed Internal components
 #include "Timer.h"
 #include "wait.h"
+#include "Ticker.h"
+#include "Timeout.h"
 
 using namespace mbed; 
 
