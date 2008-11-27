@@ -28,6 +28,11 @@ enum {
 	USBRX = 70
 };
 
+#define LED1_PORT  	(4*32 + 28)
+#define LED2_PORT	(3*32 + 25)
+#define LED3_PORT	(4*32 + 29)
+#define LED4_PORT	(3*32 + 26)
+
 #elif TARGET_PHAT40
 
 enum {
@@ -38,6 +43,11 @@ enum {
 	USBTX = 36,
 	USBRX = 37
 };
+
+#define LED1_PORT  	(1*32 + 18)
+#define LED2_PORT	(1*32 + 20)
+#define LED3_PORT	(1*32 + 21)
+#define LED4_PORT	(1*32 + 23)
 
 #else
 #error "UNRECOGNISED TARGET"

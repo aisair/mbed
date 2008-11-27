@@ -6,7 +6,7 @@
 #define MBED_DEBUGTRACER_H
 
 #include "Base.h"
-#include "stdio.h"
+#include <cstdio>
 
 #define MAX_TRACER_DEPTH 32
 
@@ -17,7 +17,7 @@ namespace mbed {
 #define METHOD(name) 	DebugTracer _tracer_instance(name, this)
 #define FUNCTION(name)	DebugTracer _tracer_instance(name)
 
-/* Class: DebugTracer
+/* Class DebugTracer
  *  A code instrumentation utility
  * 
  * This object adds a function name or methodname/object instance 
@@ -31,7 +31,7 @@ namespace mbed {
  *  - trace the runtime call graph (for the whole program run, or programatically on/off) 
  *
  *
- * Example:
+ * Example
  *
  * Function example
  * > void foo(int x) { FUNCTION("foo");
@@ -45,7 +45,7 @@ class DebugTracer {
 
 public:
 
-	/* Constructor: DebugTracer
+	/* Constructor DebugTracer
 	 *  Record the method and object instance it is called on
 	 *  to the call stack
 	 */
@@ -55,7 +55,7 @@ public:
 		_depth++;
 	}
 	
-	/* Destructor: ~DebugTracer
+	/* Destructor ~DebugTracer
 	 *  Pop from the call stack
 	 */
 	~DebugTracer() {
@@ -63,16 +63,16 @@ public:
 	}
 
 	static void stack() {
-		fprintf(stderr, "Trace (depth = %d):\n", _depth);
+		std::fprintf(stderr, "Trace (depth = %d):\n", _depth);
 		for(int i=0; i<_depth; i++) { 
 			// indent
 			for(int j=0; j<i; j++) {
-				fprintf(stderr, "  ");
+				std::fprintf(stderr, "  ");
 			}
 			if(_objects[i]) {
-				fprintf(stderr, "%s::", _objects[i]->type());
+//				std::fprintf(stderr, "%s::", _objects[i]->type());
 			}
-			fprintf(stderr, "%s\n", _functions[i]);
+			std::fprintf(stderr, "%s\n", _functions[i]);
 		}
 	}
 

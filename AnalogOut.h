@@ -24,7 +24,7 @@ public:
 	 * Variables:
 	 *  pin - AnalogOut pin to connect to (18)
 	 */
-	AnalogOut(int pin);
+	AnalogOut(int pin, const char *name = NULL);
 	
 	/* Group: Access Methods */
 		
@@ -86,6 +86,8 @@ public:
 	 *  A shorthand for <read>
 	 */	
 	operator float();
+
+    virtual const struct rpc_method *rpc_methods();
 		
 };
 

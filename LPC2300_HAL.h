@@ -11,11 +11,9 @@
 #ifndef MBED_LPC2300_HAL_H
 #define MBED_LPC2300_HAL_H
 
-#include "LPC23xx.h"
-
 namespace LPC2300 {
 
-/* Section: LPC2300 */
+/* Section LPC2300 */
 
 //===================================================================
 // General
@@ -29,22 +27,22 @@ typedef volatile unsigned int reg32;
 // Pin Connect Block
 //===================================================================
 
-/* Function: pin_function
+/* Function pin_function
  *  Set the port function (0-3)
  */
 void pin_function(int port, int function);
 
-/* Function: pin_pullup
+/* Function pin_pullup
  *  Set the port resistor to pullup
  */
 void pin_pullup(int port);
 
-/* Function: pin_pulldown
+/* Function pin_pulldown
  *  Set the port resistor to pulldown
  */
 void pin_pulldown(int port);
 
-/* Function: pin_pullnone
+/* Function pin_pullnone
  *  Set the port resistor to none
  */
 void pin_pullnone(int port);
@@ -64,22 +62,22 @@ struct GPIORF {
 	volatile unsigned int clr;	// 0x1C
 };	
 
-/* Function: gpio_input
+/* Function gpio_input
  *  Set the port GPIO as an input
  */
 void gpio_input(int port);
 
-/* Function: gpio_output
+/* Function gpio_output
  *  Set the port GPIO as an output
  */
 void gpio_output(int port);
 
-/* Function: gpio_write
+/* Function gpio_write
  *  Write a value to the GPIO port (v & 1)
  */
 void gpio_write(int port, int v);
 
-/* Function: gpio_read
+/* Function gpio_read
  *  Read a value from the GPIO port (0 or 1)
  */
 int gpio_read(int port);
@@ -96,27 +94,27 @@ struct GPIOInterruptsRF {
 	reg32 EnF;		// 0x10
 };	
 
-/* Function: gpio_irq_enable_rising
+/* Function gpio_irq_enable_rising
  *  Enable the rising edge interrupt
  */
 void gpio_irq_enable_rising(int port);		
 
-/* Function: gpio_irq_enable_falling
+/* Function gpio_irq_enable_falling
  *  Enable the falling edge interrupt
  */
 void gpio_irq_enable_falling(int port);
 
-/* Function: gpio_irq_disable_rising
+/* Function gpio_irq_disable_rising
  *  Disable the rising edge interrupt
  */
 void gpio_irq_disable_rising(int port);
 
-/* Function: gpio_irq_disable_falling
+/* Function gpio_irq_disable_falling
  *  Disable the falling edge interrupt
  */
 void gpio_irq_disable_falling(int port);
 
-/* Function: gpio_irq_clear
+/* Function gpio_irq_clear
  *  Clear rising and falling interrupt for the port
  */
 void gpio_irq_clear(int port);
@@ -129,22 +127,22 @@ int gpio_irq_pending_falling(int port);
 // Analog-to-Digital Converter
 //===================================================================
 
-/* Function: adc_poweron
+/* Function adc_poweron
  *  Turn on the ADC
  */
 void adc_poweron();
 
-/* Function: adc_poweroff
+/* Function adc_poweroff
  *  Turn off the ADC
  */
 void adc_poweroff();
 
-/* Function: adc_init
+/* Function adc_init
  *  Setup the ADC ready for reading
  */
 void adc_init();
 
-/* Function: adc_read
+/* Function adc_read
  *  Read the value of the ADC (10-bit, id 0-5)
  */
 int adc_read(int id);
@@ -153,27 +151,27 @@ int adc_read(int id);
 // Digital-to-Analog Converter
 //===================================================================
 
-/* Function: dac_poweron
+/* Function dac_poweron
  *  Turn on the DAC
  */
 void dac_poweron();
 
-/* Function: dac_poweroff
+/* Function dac_poweroff
  *  Turn off the DAC
  */
 void dac_poweroff();
 
-/* Function: dac_init
+/* Function dac_init
  *  Setup the DAC ready for writinbg
  */
 void dac_init();
 
-/* Function: dac_write
+/* Function dac_write
  *  Write a value to the DAC (10-bit)
  */
 void dac_write(int value);
 
-/* Function: dac_read
+/* Function dac_read
  *  Read the value currently set as the DAC output (10-bit)
  */
 int dac_read();
@@ -208,7 +206,7 @@ struct LPC2368_PWM_RF {
 	reg32 CTCR; // 0x70 - Count Control Register
 };
 
-#define LPC2368_PWM  ((LPC2368_PWM_RF*)0xE0018000)
+#define LPC2368_PWM  ((LPC2368_PWM_RF*)PWM1_BASE_ADDR)
 
 #define TCR_CNT_EN	(1 << 0)
 #define TCR_RESET	(1 << 1)
@@ -289,12 +287,12 @@ enum Parity {
 	Forced0
 };
 	
-/* Function: uart_poweron
+/* Function uart_poweron
  *  Turn on the Uart power
  */	
 void uart_poweron(int id);
 
-/* Function: uart_poweroff
+/* Function uart_poweroff
  *  Turn off the Uart power
  */	
 void uart_poweroff(int id);
@@ -362,12 +360,12 @@ struct TimerRF {
 	reg32 ctcr;	// 0x70
 };	
 
-/* Function: timer_poweron
+/* Function timer_poweron
  *  Turn on the Timer power
  */	
 void timer_poweron(int id);
 
-/* Function: timer_poweroff
+/* Function timer_poweroff
  *  Turn off the Timer power
  */	
 void timer_poweroff(int id);

@@ -28,7 +28,7 @@ public:
 	 * Pin Options:
 	 *  (9, 10) or (28, 27)	 
 	 */
-	I2C(int sda, int scl);
+	I2C(int sda, int scl, const char *name = NULL);
 	
 	/* Function: frequency
 	 *  Set the frequency of the I2C interface

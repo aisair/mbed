@@ -24,7 +24,7 @@ public:
 	 * Variables:
 	 *  pin - AnalogIn pin to connect to (15-20)
 	 */
-	AnalogIn(int pin);
+	AnalogIn(int pin, const char *name = NULL);
 	
 	/* Group: Access Methods */
 		
@@ -64,6 +64,8 @@ public:
      *  A shorthand for <read>
      */
 	operator float();
+
+    virtual const struct rpc_method *rpc_methods();
 	
 protected:
 	

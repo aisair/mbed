@@ -16,7 +16,7 @@ class Timer : public Base {
 
 public:
 
-	Timer();
+	Timer(const char *name = NULL);
 	
 	/* Group: Access Methods */
 		

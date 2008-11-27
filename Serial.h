@@ -28,7 +28,7 @@ public:
 	 * Pin Options:
 	 *  (9, 10) or (13, 14) or (28, 27)
      */
-	Serial(int tx, int rx);
+	Serial(int tx, int rx, const char *name = NULL);
 
 
 	/* Function: baud

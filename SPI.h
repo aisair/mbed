@@ -30,7 +30,7 @@ public:
 	 * Pin Options:
 	 *  (5, 6, 7) or (11, 12, 13)
 	 */
-	SPI(int mosi, int miso, int sclk);
+	SPI(int mosi, int miso, int sclk, const char *name = NULL);
 	
 	/* Function: format
 	 *  Set the transmission format

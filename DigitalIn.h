@@ -28,7 +28,7 @@ public:
 	 * Variables:
 	 *  pin - DigitalIn pin to connect to (5-30)
 	 */
-	DigitalIn(int pin);
+	DigitalIn(int pin, const char *name = NULL);
 
 	/* Function: rise
 	 *  Attach a function to call when a rising edge occurs on the input
@@ -66,6 +66,8 @@ public:
 	operator int();
  	
  	static void _irq(); // Called on a GPIO interrupt
+
+    virtual const struct rpc_method *rpc_methods();
  	
 protected:
 

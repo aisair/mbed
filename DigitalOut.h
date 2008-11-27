@@ -25,7 +25,7 @@ public:
 	 * Variables:
 	 *  pin - DigitalOut pin to connect to (5-30)
 	 */
-	DigitalOut(int pin);
+	DigitalOut(int pin, const char* name = NULL);
 
 	/* Group: Access Methods */
 		
@@ -46,7 +46,9 @@ public:
 	 *      0 for logical 0 (0v) and 1 for logical 1 (3.3v)
 	 */
     int read();
-   
+
+    virtual const struct rpc_method *rpc_methods();
+
    	/* Group: Access Method Shorthand */
    	 
 	/* Function: operator=

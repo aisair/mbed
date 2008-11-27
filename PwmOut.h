@@ -24,7 +24,7 @@ public:
 	 * Variables:
 	 *  pin - PwmOut pin to connect to (21-26)
 	 */	
-	PwmOut(int pin);
+	PwmOut(int pin, const char *name = NULL);
 
 	/* Group: Access Methods (Analog-like) */
 		
@@ -127,6 +127,8 @@ public:
 	 *  A shorthand for <read>
 	 */
 	operator float();
+
+    virtual const struct rpc_method *rpc_methods();
 	
 protected:
 

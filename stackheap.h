@@ -73,7 +73,11 @@ int heap_size();
 
 
 inline int stack_limit() {
+#ifdef __GNUC__
+	return (unsigned)__builtin_frame_address(0);
+#else
 	return __current_sp();
+#endif
 }
 
 inline int stack_size() {

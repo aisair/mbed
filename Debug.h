@@ -5,8 +5,6 @@
 #ifndef MBED_DEBUG_H
 #define MBED_DEBUG_H
 
-#include "DebugTracer.h"
-
 namespace mbed {
 
 /* Section: debug
@@ -25,11 +23,11 @@ namespace mbed {
 void ERROR(const char* format, ...);
 #endif 
 
-#define ERROR(...) mbed_error(__FILE__, __LINE__, __VA_ARGS__) 
-void mbed_error(const char* file, int line, const char* fmt, ...);
+#define ERROR(FMT, ...) mbed_error(__FILE__, __LINE__, FMT, ##__VA_ARGS__) 
+void mbed_error(const char* file, int line, const char* fmt=0, ...) __attribute__((noreturn));
 
 // Internal use for "official" errors
-void mbed_error(const char* file, int line, int code, const char* fmt, ...);
+void mbed_error(const char* file, int line, int code, const char* fmt=0, ...) __attribute__((noreturn));
 
 // As seen by user, for documentation purposes only
 #if 0
@@ -46,11 +44,7 @@ void mbed_error(const char* file, int line, int code, const char* fmt, ...);
 void ASSERT(int condition, const char* fmt = 0, ...);
 #endif
 
-#define ASSERT(...) mbed_assert(__FILE__, __LINE__, __VA_ARGS__)
-void mbed_assert(const char* file, int line, int condition, const char* fmt = 0, ...);
-
-// Internal use for "official" errors
-void mbed_assert(const char* file, int line, int condition, int code, const char* fmt = 0, ...);
+#define ASSERT(COND, ...) (COND ? (void)0 : mbed_error(__FILE__, __LINE__, ##__VA_ARGS__))
 
 // As seen by user, for documentation purposes only
 #if 0 

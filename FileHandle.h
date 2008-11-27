@@ -5,9 +5,19 @@
 #ifndef MBED_FILEHANDLE_H
 #define MBED_FILEHANDLE_H
 
+typedef int FILEHANDLE;
+
+#include <stdio.h>
+#ifdef __ARMCC_VERSION
+typedef int ssize_t;
+typedef long off_t;
+#else
+#include <sys/types.h>
+#endif
+
 namespace mbed { 
 
-/* Class: FileHandle
+/* Class FileHandle
  *  An OO equivalent of the internal FILEHANDLE variable
  *  and associated _sys_* functions
  *
@@ -21,73 +31,81 @@ class FileHandle {
 
 public:
 
-	//virtual ~FileHandle() { }
-	
-	/* Function: sys_write
-	 *  Write the contents of a buffer to the file
+    /* Function write
+     *  Write the contents of a buffer to the file
      *
-     * Parameters:
+     * Parameters
      *  buffer - the buffer to write from
      *  length - the number of characters to write
-     *  mode   - the mode of the file, 0 (normal) or 1 (binary); this may be unused?
      *
-	 * Returns:
-	 *  0 on success, -1 on error, or the number of characters not written on partial success
+     * Returns
+     *  The number of characters written (possibly 0) on success, -1 on error.
      */
-	virtual	int sys_write(const unsigned char* buffer, unsigned int length, int mode) = 0;
+    virtual ssize_t write(const void* buffer, size_t length) = 0;
 
-	virtual	int sys_close() = 0;
-	
-	/* Function: sys_read
-	 *  Reads the contents of the file into a buffer
-	 *
-     * Parameters:
+    /* Function close
+     *  Close the file
+     *
+     * Returns
+     *  Zero on success, -1 on error.
+     */
+    virtual int close() = 0;
+
+    /* Function read
+     *  Reads the contents of the file into a buffer
+     *
+     * Parameters
      *  buffer - the buffer to read in to
      *  length - the number of characters to read
-     *  mode   - the mode of the file, 0 (normal) or 1 (binary); this may be unused?
      *
-     * Returns:
-     *  0 on success, -1 on error, or the number of characters not read on partial success. EOF is 
-     *  signaled by setting the top bit (0x80000000) of the return value. 
-	 */
-	virtual	int sys_read(unsigned char* buffer, unsigned int length, int mode) = 0;
-	
-	/* Function: sys_istty
-	 *  Check if the handle is for a interactive terminal device 
-	 *
-	 * If so, unbuffered behaviour is used by default
-	 *
-	 * Returns:
-	 *  0 - no
-	 *  1 - yes
-	 */
-	virtual	int sys_istty() = 0 ;
+     * Returns
+     *  The number of characters read (zero at end of file) on success, -1 on error.
+     */
+    virtual ssize_t read(void* buffer, size_t length) = 0;
 
-	/* Function: sys_seek
- 	 *  Move the file position to a given offset from the file start
- 	 *
- 	 * Returns:
- 	 *  0 on success, -1 on failure or unsupported
- 	 */
-	virtual	int sys_seek(int position) = 0;
-	
-	/* Function: sys_ensure
-	 *  Flush any OS buffers associated with the FileHandle, ensuring it
-	 *  is up to date on disk
-	 *
-	 * Returns:
-	 *  0 on success or un-needed, -1 on error
- 	 */
-	virtual	int sys_ensure() = 0;
-	
-	/* Function: sys_flen
-	 *  Find the current length of the file
-	 *
-	 * Returns:
-	 *  The current length of the file, or -1 on error
-	 */
-	virtual	int sys_flen() = 0;
-		
+    /* Function isatty
+     *  Check if the handle is for a interactive terminal device 
+     *
+     * If so, line buffered behaviour is used by default
+     *
+     * Returns
+     *  1 if it is a terminal, 0 otherwise
+     */
+    virtual int isatty() = 0 ;
+
+    /* Function lseek
+     *  Move the file position to a given offset from a given location.
+     *
+     * Parameters
+     *  offset - The offset from whence to move to
+     *  whence - SEEK_SET for the start of the file, SEEK_CUR for the
+     *   current file position, or SEEK_END for the end of the file.
+     *
+     * Returns
+     *  New file position on success, -1 on failure or unsupported
+     */
+    virtual off_t lseek(off_t offset, int whence) = 0;
+
+    /* Function fsync
+     *  Flush any buffers associated with the FileHandle, ensuring it
+     *  is up to date on disk
+     *
+     * Returns
+     *  0 on success or un-needed, -1 on error
+     */
+    virtual int fsync() = 0;
+
+    virtual off_t flen() {
+        /* remember our current position */
+        off_t pos = lseek(0, SEEK_CUR);
+        if(pos == -1) return -1;
+        /* seek to the end to get the file length */
+        off_t res = lseek(0, SEEK_END);
+        /* return to our old position */
+        lseek(pos, SEEK_SET);
+        return res;
+    }
+
 };
 
 } // namespace mbed

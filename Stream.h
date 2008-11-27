@@ -5,31 +5,53 @@
 #ifndef MBED_STREAM_H
 #define MBED_STREAM_H
 
-#include "Base.h"
+#include "FileLike.h"
+#include <cstdio>
 
 namespace mbed {
 
-class Stream : public Base {
+class Stream : protected FileLike {
 
 public:
+    
+    Stream(const char *name = NULL);
+    virtual ~Stream();
 
-	Stream();
-
-	int putc(int c);
-	int getc();
+    int putc(int c) {
+        fflush(_file);
+        return std::fputc(c, _file); 
+    }
+    int puts(const char *s) {
+        fflush(_file);
+        return std::fputs(s, _file); 
+    }
+    int getc() {
+        fflush(_file);
+        return std::fgetc(_file);
+    }
+    char *gets(char *s, int size) {
+        fflush(_file);
+        return std::fgets(s,size,_file);;
+    }
     int printf(const char* format, ...);
     int scanf(const char* format, ...);
-
-	int _backspace();
-	
+    
+    operator std::FILE*() { return _file; }
+    
 protected:
 
-	virtual int _putc(int c) = 0;
-	virtual int _getc() = 0;
+    virtual int close();
+    virtual ssize_t write(const void* buffer, size_t length);
+    virtual ssize_t read(void* buffer, size_t length);
+    virtual off_t lseek(off_t offset, int whence);
+    virtual int isatty();
+    virtual int fsync();
 
-	int _back;
-	int _last;
-	
+    virtual int _putc(int c) = 0;
+    virtual int _getc() = 0;
+    
+    std::FILE *_file;
+    
 };
 
 } // namespace mbed
