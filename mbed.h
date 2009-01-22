@@ -4,6 +4,8 @@
 
 #ifndef MBED_H
 #define MBED_H
+
+#define MBED_LIBRARY_VERSION 6
  
 // Useful C libraries
 #include <stdio.h>
@@ -27,6 +29,7 @@
 #include "PwmOut.h"
 #include "Serial.h"
 #include "SPI.h"
+#include "SPI3.h"
 #include "I2C.h"
 
 // mbed Internal components
@@ -35,6 +38,8 @@
 #include "Ticker.h"
 #include "Timeout.h"
 #include "LocalFileSystem.h"
+#include "rpc.h"
+#include "rtc.h"
 
 using namespace mbed; 
 

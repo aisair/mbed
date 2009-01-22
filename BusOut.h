@@ -35,6 +35,8 @@ public:
            int p12 = NOT_CONNECTED, int p13 = NOT_CONNECTED, int p14 = NOT_CONNECTED, int p15 = NOT_CONNECTED, 
            const char *name = NULL);
 
+    BusOut(int pins[16], const char *name = NULL);
+
 	virtual ~BusOut();
 
 	/* Group: Access Methods */
@@ -69,11 +71,14 @@ public:
 	 */
 	operator int();
 
-    virtual const struct rpc_method *rpc_methods();
+    virtual const struct rpc_method *get_rpc_methods();
+    static struct rpc_class *get_rpc_class();
 
 protected:
 
 	DigitalOut* _pin[16];
+
+        static void construct(const char *arguments, char *res);
 			
 };
 

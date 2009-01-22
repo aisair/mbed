@@ -56,9 +56,12 @@ public:
 
 	int slicetime();
 	
-int _running;          // whether the timer is running
+        int _running;          // whether the timer is running
 	unsigned int _start;   // the start time of the latest slice
 	int _time;             // any accumulated time from previous slices
+
+    virtual const struct rpc_method *get_rpc_methods();
+    static struct rpc_class *get_rpc_class();
 
 };
 

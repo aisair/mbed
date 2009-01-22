@@ -34,6 +34,8 @@ public:
           int p8 = NOT_CONNECTED, int p9 = NOT_CONNECTED, int p10 = NOT_CONNECTED, int p11 = NOT_CONNECTED,
           int p12 = NOT_CONNECTED, int p13 = NOT_CONNECTED, int p14 = NOT_CONNECTED, int p15 = NOT_CONNECTED, 
           const char *name = NULL);
+
+    BusIn(int pins[16], const char *name = NULL);
 		
 	virtual ~BusIn();
 	
@@ -54,11 +56,14 @@ public:
 	 */
 	operator int();
 
-    virtual const struct rpc_method *rpc_methods();
-		
+    virtual const struct rpc_method *get_rpc_methods();
+    static struct rpc_class *get_rpc_class();
+
 protected:
 	
 	DigitalIn* _pin[16];
+
+        static void construct(const char *arguments, char *res);
 	
 };
 

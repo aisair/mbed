@@ -16,8 +16,6 @@ class Serial : public Stream {
 
 public:
 
-	/* Group: Configuration Methods */
-	 
 	/* Constructor: Serial
 	 *  Create a Serial port, connected to the specified transmit and receive pins
 	 *
@@ -26,7 +24,9 @@ public:
 	 *  rx - Receive pin
 	 *
 	 * Pin Options:
-	 *  (9, 10) or (13, 14) or (28, 27)
+	 *  (USBTX, USBRX) or (9, 10) or (13, 14) or (28, 27)
+	 *
+	 *  Either tx or rx may be specified as NC (not connected) e.g. (9, NC)
      */
 	Serial(int tx, int rx, const char *name = NULL);
 
@@ -59,8 +59,6 @@ public:
 	void format(int bits, int parity, int stop); 
 
 	
-	/* Group: Access Methods */
-
 #if 0 // Inhereted from Stream, for documentation only
 
 	/* Function: putc

@@ -47,7 +47,8 @@ public:
 	 */
     int read();
 
-    virtual const struct rpc_method *rpc_methods();
+    virtual const struct rpc_method *get_rpc_methods();
+    static struct rpc_class *get_rpc_class();
 
    	/* Group: Access Method Shorthand */
    	 

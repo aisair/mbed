@@ -10,6 +10,17 @@
 
 namespace mbed {
 
+struct rpc_function {
+    const char *name;
+    void (*caller)(const char*, char*);
+};
+
+struct rpc_class {
+    const char *name;
+    const rpc_function *static_functions;
+    struct rpc_class *next;
+};
+
 /* Class Base
  *  The base class for most things
  */
@@ -52,24 +63,27 @@ public:
      */
     virtual bool rpc(const char *method, const char *arguments, char *result);	
 
-    /* Function rpc_method
+    /* Function get_rpc_methods
      *  Returns a pointer to an array describing the rpc methods
-     *  supported by this object, terminated by RPC_METHOD_END.
+     *  supported by this object, terminated by either
+     *  RPC_METHOD_END or RPC_METHOD_SUPER(Superclass).
      *
      * Example
      *
      * > class Example : public Base {
      * >   int foo(int a, int b) { return a + b; }
-     * >   virtual const struct rpc_method *rpc_methods() {
+     * >   virtual const struct rpc_method *get_rpc_methods() {
      * >     static const rpc_method rpc_methods[] = {
      * >       { "foo", generic_caller<int, Example, int, int, &Example::foo> },
-     * >       RPC_METHOD_END
+     * >       RPC_METHOD_SUPER(Base)
      * >     };
      * >     return rpc_methods;
      * >   }
      * > };
      */
-    virtual const struct rpc_method *rpc_methods();
+    virtual const struct rpc_method *get_rpc_methods();
+
+    static struct rpc_class *get_rpc_class();
 
     /* Function rpc
      *  Use the lookup function to lookup an object and, if
@@ -96,6 +110,81 @@ protected:
     static Base *_head;
     Base *_next;
     const char *_name;
+    bool _from_construct;
+
+private:
+
+    static rpc_class *_classes;
+
+    void delete_self();
+    static void list_objs(const char *arguments, char *result);
+    static void clear(const char*,char*);
+
+    static char *new_name(Base *p);
+
+public:
+
+    /* Function add_rpc_class
+     *  Add the class to the list of classes which can have static
+     *  methods called via rpc (the static methods which can be called
+     *  are defined by that class' get_rpc_class() static method).
+     */
+    template<class C>
+    static void add_rpc_class() {
+        rpc_class *c = C::get_rpc_class();
+        c->next = _classes;
+        _classes = c;
+    }
+
+    template<class C> 
+    static const char *construct() {
+        Base *p = new C();
+        p->_from_construct = true;
+        if(p->_name==NULL) {
+            p->register_object(new_name(p));
+        }
+        return p->_name;
+    }
+
+    template<class C, typename A1> 
+    static const char *construct(A1 arg1) {
+        Base *p = new C(arg1);
+        p->_from_construct = true;
+        if(p->_name==NULL) {
+            p->register_object(new_name(p));
+        }
+        return p->_name;
+    }
+
+    template<class C, typename A1, typename A2> 
+    static const char *construct(A1 arg1, A2 arg2) {
+        Base *p = new C(arg1,arg2);
+        p->_from_construct = true;
+        if(p->_name==NULL) {
+            p->register_object(new_name(p));
+        }
+        return p->_name;
+    }
+
+    template<class C, typename A1, typename A2, typename A3> 
+    static const char *construct(A1 arg1, A2 arg2, A3 arg3) {
+        Base *p = new C(arg1,arg2,arg3);
+        p->_from_construct = true;
+        if(p->_name==NULL) {
+            p->register_object(new_name(p));
+        }
+        return p->_name;
+    }
+
+    template<class C, typename A1, typename A2, typename A3, typename A4> 
+    static const char *construct(A1 arg1, A2 arg2, A3 arg3, A4 arg4) {
+        Base *p = new C(arg1,arg2,arg3,arg4);
+        p->_from_construct = true;
+        if(p->_name==NULL) {
+            p->register_object(new_name(p));
+        }
+        return p->_name;
+    }
 
 };
 

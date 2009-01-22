@@ -1,6 +1,7 @@
 /* mbed Microcontroller Library - AnalogOut
- * Copyright (c) 2007-2008, sford
- */
+ * Copyright (c) 2006-2009 ARM Limited. All rights reserved.
+ * sford
+ */ 
  
 #ifndef MBED_ANALOGOUT_H
 #define MBED_ANALOGOUT_H
@@ -16,8 +17,6 @@ class AnalogOut : public Base {
 
 public:
 
-	/* Group: Configuration Methods */
-	
 	/* Constructor: AnalogOut
 	 *  Create an AnalogOut connected to the specified pin
 	 * 
@@ -26,8 +25,6 @@ public:
 	 */
 	AnalogOut(int pin, const char *name = NULL);
 	
-	/* Group: Access Methods */
-		
 	/* Function: write
 	 *  Set the output voltage, specified as a percentage (float)
 	 *
@@ -39,26 +36,16 @@ public:
 	 */
     void write(float percent);
     
-	/* Function: write_v
-	 *  Set the output voltage, specified in volts (float)
-	 *
-	 * Variables:
-	 *  v - A floating-point value representing the output voltage, 
-	 *    specified in volts. The value should lie between
-	 *    0.0f (representing 0v / 0%) and 3.3f (representing 3.3v / 100%).
-	 *    Values outside this range will be saturated to 0.0f or 3.3f.	 
-	 */	
-    void write_v(float v);
+    /* Function: write_u16
+     *  Set the output voltage, represented as an unsigned short in the range [0x0, 0xFFFF]
+     *
+     * Variables:
+     *  value - 16-bit unsigned short representing the output voltage,
+     *            normalised to a 16-bit value (0x0000 = 0v, 0xFFFF = 3.3v)
+     */
+    void write_u16(unsigned short value);
 
-	/* Function: write_mv
-	 *  Set the output voltage, specified in mili-volts (int)
-	 *
-	 * Variables:
-	 *  mv - An integer value representing the output voltage, 
-	 *    specified in milli-volts. The value should lie between
-	 *    0 (representing 0v / 0%) and 3300 (representing 3.3v / 100%).
-	 *    Values outside this range will be saturated to 0 or 3300.	 
-	 */	
+    void write_v(float v);
     void write_mv(int mv);
     
     /* Function: read
@@ -74,21 +61,20 @@ public:
 	 */	
     float read();
 
-   	/* Group: Access Method Shorthand */ 
-
     /* Function: operator=
-     *  A shorthand for <write>
+     *  An operator shorthand for <write()>
      */
 	AnalogOut& operator= (float percent);
 	AnalogOut& operator= (AnalogOut& rhs);
 
     /* Function: operator float()
-	 *  A shorthand for <read>
+	 *  An operator shorthand for <read()>
 	 */	
 	operator float();
 
-    virtual const struct rpc_method *rpc_methods();
-		
+    virtual const struct rpc_method *get_rpc_methods();
+    static struct rpc_class *get_rpc_class();
+
 };
 
 }

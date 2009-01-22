@@ -35,7 +35,8 @@ enum {
 
 #elif TARGET_PHAT40
 
-enum {
+enum {  
+  NC = 0,   // Not Connected 
 	LED1 = 32,
 	LED2 = 33,
 	LED3 = 34,
@@ -65,8 +66,10 @@ struct PortMap {
 	unsigned char function;	// Pin function
 };
 
+/* returns NOT_AVAILABLE if no port matches the pin */
 int pin_to_port(int pin);
 
+/* returns NULL if no map matches the pin */
 const PortMap* get_port_map(const PortMap* map, int pin);
 
 extern const PortMap ADC_PORTMAP[];

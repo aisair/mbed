@@ -10,6 +10,7 @@
 # define O_WRONLY 1
 # define O_RDWR   2
 # define O_CREAT  0x0200
+# define O_TRUNC  0x0400
 # define O_APPEND 0x0008
 #else
 # include <sys/fcntl.h>
@@ -39,8 +40,8 @@ class FileSystemLike : public Base {
      *
      * Variables
      *  filename - The name of the file to open.
-     *  flags - One of O_RDONLY, O_WRONLY, or O_RDWR, possibly OR'd
-     *    with O_CREAT or O_APPEND.
+     *  flags - One of O_RDONLY, O_WRONLY, or O_RDWR, OR'd with
+     *    zero or more of O_CREAT, O_TRUNC, or O_APPEND.
      *  returns - A pointer to a FileHandle object representing the
      *   file on success, or NULL on failure.
      */

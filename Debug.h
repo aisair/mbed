@@ -5,63 +5,36 @@
 #ifndef MBED_DEBUG_H
 #define MBED_DEBUG_H
 
+#include <cstdio>
+#include <cstdlib>
+#define __ASSERT_MSG
+#include <assert.h>
+
 namespace mbed {
 
 /* Section: debug
  *  Error reporting and debugging functions 
  */
 
+void mbedinfo(std::FILE *fp = stdout);
+
+#define error(...) (std::fprintf(stderr, __VA_ARGS__), std::abort())
+
 // As seen by user, for documentation purposes only
 #if 0 
-/* Function: ERROR
+/* Function: error
  *  Report a fatal runtime error. Attempts to report the specified error message through the
  * USB serial port, then dies with a fatal runtime error (siren lights)
  *
  * Variables:
  *  format - printf-style format string, followed by associated variables
  */
-void ERROR(const char* format, ...);
+void error(const char* format, ...);
 #endif 
 
-#define ERROR(FMT, ...) mbed_error(__FILE__, __LINE__, FMT, ##__VA_ARGS__) 
-void mbed_error(const char* file, int line, const char* fmt=0, ...) __attribute__((noreturn));
-
-// Internal use for "official" errors
-void mbed_error(const char* file, int line, int code, const char* fmt=0, ...) __attribute__((noreturn));
-
-// As seen by user, for documentation purposes only
-#if 0
-/* Function: ASSERT
- *  Assert a condition is true, and report a fatal runtime error on failure. If
- * the condition is true (non-zero), the function simply returns. If the
- * condition is false (0), it attempts to report the specified error message through the
- * USB serial port, then dies with a fatal runtime error (siren lights)
- *
- * Variables:
- *  condition - The condition variable to be tested. 0 causes an error to be reported
- *  format - printf-style format string, followed by associated variables
- */
-void ASSERT(int condition, const char* fmt = 0, ...);
-#endif
-
-#define ASSERT(COND, ...) (COND ? (void)0 : mbed_error(__FILE__, __LINE__, ##__VA_ARGS__))
-
-// As seen by user, for documentation purposes only
-#if 0 
-/* Function: DEBUG
- *  Report a debug message. Attempts to report the specified 
- * debug message through the USB serial port.
- *
- * Variables:
- *  format - printf-style format string, followed by associated variables
- */
-void DEBUG(const char* format, ...);
-#endif
-
-// Actual macro and prototype
-#define DEBUG(...) mbed_debug(__FILE__, __LINE__, __VA_ARGS__)
-void mbed_debug(const char* file, int line, const char* format, ...);
-
+void ERROR(const char* format, ...);// __attribute__((deprecated));
+void ASSERT(int condition, const char* format = 0, ...);// __attribute__((deprecated));
+void DEBUG(const char* format, ...);// __attribute__((deprecated));
 
 /* Function: DEBUG_LED1
  *  Set the state of LED1

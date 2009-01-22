@@ -75,9 +75,13 @@ template<> inline unsigned long long parse_arg<unsigned long long>(const char *a
 /* floating types */
 
 template<> inline float parse_arg<float>(const char *arg, const char **next) {
-#if !defined(__ARMCC_VERSION) || __ARMCC_VERSION >= 310000
+#if !defined(__ARMCC_VERSION) || __ARMCC_VERSION >= 410000
     return strtof(arg,const_cast<char**>(next));
+#elif __ARMCC_VERSION >= 310000
+    /* bug in header means no using declaration for strtof */
+    return std::strtof(arg,const_cast<char**>(next));    
 #else
+    /* strtof not supported */
     return strtod(arg,const_cast<char**>(next));
 #endif
 }
@@ -88,6 +92,32 @@ template<> inline double parse_arg<double>(const char *arg, const char **next) {
 
 template<> inline long double parse_arg<long double>(const char *arg, const char **next) {
     return strtod(arg,const_cast<char**>(next));
+}
+
+/* string */
+
+template<> inline char *parse_arg<char*>(const char *arg, const char **next) {
+    const char *ptr = arg;
+    while(*ptr != 0 && *ptr != ' ' && *ptr != ',') {
+        ptr++;
+    }
+    int len = ptr-arg;
+    char *p;
+    if(len==0) {
+        p = NULL;
+    } else {
+        p = new char[len+1];
+        memcpy(p, arg, len);
+        p[len] = 0;
+    }
+    if(next != NULL) {
+        *next = ptr;
+    }
+    return p;
+}
+
+template<> inline const char *parse_arg<const char*>(const char *arg, const char **next) {
+    return parse_arg<char*>(arg,next);
 }
 
 
@@ -161,10 +191,35 @@ template<> inline void write_result<long double>(long double val, char *result) 
 }
 
 
-/* Function generic_caller
+/* string */
+
+template<> inline void write_result<char*>(char *val, char *result) {
+    strcpy(result, val);
+}
+
+template<> inline void write_result<const char*>(const char *val, char *result) {
+    strcpy(result, val);
+}
+
+
+inline const char *next_arg(const char* next) {
+    if(*next == ',' || *next == ' ') next++;
+    return next;
+}
+
+
+/* Function rpc_method_caller
+ */
+template<class T, void (T::*member)(const char *,char *)> 
+void rpc_method_caller(Base *this_ptr, const char *arguments, char *result) {
+    (static_cast<T*>(this_ptr)->*member)(arguments,result); 
+}
+
+
+/* Function rpc_method_caller
  */
 template<class T, void (T::*member)()> 
-void generic_caller(Base *this_ptr, const char *arguments, char *result) { 
+void rpc_method_caller(Base *this_ptr, const char *arguments, char *result) { 
     (static_cast<T*>(this_ptr)->*member)(); 
     if(result != NULL) {
     	result[0] = '\0';
@@ -172,14 +227,13 @@ void generic_caller(Base *this_ptr, const char *arguments, char *result) {
 }
 
 
-/* Function generic_caller
+/* Function rpc_method_caller
  */
 template<class T, typename A1, void (T::*member)(A1)> 
-void generic_caller(Base *this_ptr, const char *arguments, char *result) {
-    const char *next = arguments;
+void rpc_method_caller(Base *this_ptr, const char *arguments, char *result) {
 
-    if(*next == ',' || *next == ' ') next++;
-    A1 arg1 = parse_arg<A1>(next,NULL);
+    const char *next = arguments;
+    A1 arg1 = parse_arg<A1>(next_arg(next),NULL);
 
     (static_cast<T*>(this_ptr)->*member)(arg1); 
     if(result != NULL) {
@@ -188,17 +242,14 @@ void generic_caller(Base *this_ptr, const char *arguments, char *result) {
 }
 
 
-/* Function generic_caller
+/* Function rpc_method_caller
  */
 template<class T, typename A1, typename A2, void (T::*member)(A1,A2)> 
-void generic_caller(Base *this_ptr, const char *arguments, char *result) {
+void rpc_method_caller(Base *this_ptr, const char *arguments, char *result) {
+
     const char *next = arguments;
-
-    if(*next == ',' || *next == ' ') next++;
-    A1 arg1 = parse_arg<A1>(next,&next);
-
-    if(*next == ',' || *next == ' ') next++;
-    A2 arg2 = parse_arg<A2>(next,NULL);
+    A1 arg1 = parse_arg<A1>(next_arg(next),&next);
+    A2 arg2 = parse_arg<A2>(next_arg(next),NULL);
 
     (static_cast<T*>(this_ptr)->*member)(arg1,arg2);
     if(result != NULL) {
@@ -207,10 +258,10 @@ void generic_caller(Base *this_ptr, const char *arguments, char *result) {
 }
 
 
-/* Function generic_caller
+/* Function rpc_method_caller
  */
 template<typename R, class T, R (T::*member)()> 
-void generic_caller(Base *this_ptr, const char *arguments, char *result) { 
+void rpc_method_caller(Base *this_ptr, const char *arguments, char *result) { 
     R res = (static_cast<T*>(this_ptr)->*member)();
     if(result != NULL) {
         write_result<R>(res, result);
@@ -218,14 +269,13 @@ void generic_caller(Base *this_ptr, const char *arguments, char *result) {
 }
 
 
-/* Function generic_caller
+/* Function rpc_method_caller
  */
 template<typename R, class T, typename A1, R (T::*member)(A1)> 
-void generic_caller(Base *this_ptr, const char *arguments, char *result) {
-    const char *next = arguments;
+void rpc_method_caller(Base *this_ptr, const char *arguments, char *result) {
 
-    if(*next == ',' || *next == ' ') next++;
-    A1 arg1 = parse_arg<A1>(next,NULL);
+    const char *next = arguments;
+    A1 arg1 = parse_arg<A1>(next_arg(next),NULL);
 
     R res = (static_cast<T*>(this_ptr)->*member)(arg1);
     if(result != NULL) {
@@ -234,17 +284,14 @@ void generic_caller(Base *this_ptr, const char *arguments, char *result) {
 }
 
 
-/* Function generic_caller
+/* Function rpc_method_caller
  */
 template<typename R, class T, typename A1, typename A2, R (T::*member)(A1,A2)> 
-void generic_caller(Base *this_ptr, const char *arguments, char *result) {
+void rpc_method_caller(Base *this_ptr, const char *arguments, char *result) {
+
     const char *next = arguments;
-
-    if(*next == ',' || *next == ' ') next++;
-    A1 arg1 = parse_arg<A1>(next,&next);
-
-    if(*next == ',' || *next == ' ') next++;
-    A2 arg2 = parse_arg<A2>(next,NULL);
+    A1 arg1 = parse_arg<A1>(next_arg(next),&next);
+    A2 arg2 = parse_arg<A2>(next_arg(next),NULL);
 
     R res = (static_cast<T*>(this_ptr)->*member)(arg1,arg2);
     if(result != NULL) {
@@ -252,13 +299,115 @@ void generic_caller(Base *this_ptr, const char *arguments, char *result) {
     }
 }
 
+
+/* Function rpc_method_caller
+ */
+template<typename R, class T, typename A1, typename A2, typename A3, R (T::*member)(A1,A2,A3)> 
+void rpc_method_caller(Base *this_ptr, const char *arguments, char *result) {
+
+    const char *next = arguments;
+    A1 arg1 = parse_arg<A1>(next_arg(next),&next);
+    A2 arg2 = parse_arg<A2>(next_arg(next),&next);
+    A3 arg3 = parse_arg<A3>(next_arg(next),NULL);
+
+    R res = (static_cast<T*>(this_ptr)->*member)(arg1,arg2,arg3);
+    if(result != NULL) {
+        write_result<R>(res, result);
+    }
+}
+
+
+/* Function rpc_function caller
+ */
+template<typename R, R (*func)()>
+void rpc_function_caller(const char *arguments, char *result) {
+    R res = (*func)();
+    if(result != NULL) {
+        write_result<R>(res, result);
+    }
+}
+
+
+/* Function rpc_function caller
+ */
+template<typename R, typename A1, R (*func)(A1)>
+void rpc_function_caller(const char *arguments, char *result) {
+    A1 arg1 = parse_arg<A1>(next_arg(arguments),NULL);
+    R res = (*func)(arg1);
+    if(result != NULL) {
+        write_result<R>(res, result);
+    }
+}
+
+
+/* Function rpc_function caller
+ */
+template<typename R, typename A1, typename A2, R (*func)(A1,A2)>
+void rpc_function_caller(const char *arguments, char *result) {
+
+    const char *next = arguments;
+    A1 arg1 = parse_arg<A1>(next_arg(next),&next);
+    A2 arg2 = parse_arg<A2>(next_arg(next),NULL);
+
+    R res = (*func)(arg1,arg2);
+    if(result != NULL) {
+        write_result<R>(res, result);
+    }
+}
+
+
+/* Function rpc_function caller
+ */
+template<typename R, typename A1, typename A2, typename A3, R (*func)(A1,A2,A3)>
+void rpc_function_caller(const char *arguments, char *result) {
+
+    const char *next = arguments;
+    A1 arg1 = parse_arg<A1>(next_arg(next),&next);
+    A2 arg2 = parse_arg<A2>(next_arg(next),&next);
+    A3 arg3 = parse_arg<A3>(next_arg(next),NULL);
+
+    R res = (*func)(arg1,arg2,arg3);
+    if(result != NULL) {
+        write_result<R>(res, result);
+    }
+}
+
+
+/* Function rpc_function caller
+ */
+template<typename R, typename A1, typename A2, typename A3, typename A4, R (*func)(A1,A2,A3,A4)>
+void rpc_function_caller(const char *arguments, char *result) {
+
+    const char *next = arguments;
+    A1 arg1 = parse_arg<A1>(next_arg(next),&next);
+    A2 arg2 = parse_arg<A2>(next_arg(next),&next);
+    A3 arg3 = parse_arg<A3>(next_arg(next),&next);
+    A4 arg4 = parse_arg<A4>(next_arg(next),NULL);
+
+    R res = (*func)(arg1,arg2,arg3,arg4);
+    if(result != NULL) {
+        write_result<R>(res, result);
+    }
+}
+
+
 struct rpc_method { 
     const char *name;
-    void (*caller)(Base*, const char*, char*);
+    typedef void (*caller_t)(Base*, const char*, char*);
+    typedef const struct rpc_method *(*super_t)(Base*);
+    union {
+        caller_t caller;
+        super_t super;
+    };
 };
-    
-#define RPC_METHOD_END { NULL, NULL }
 
+template<class C>
+const struct rpc_method *rpc_super(Base *this_ptr) {
+    return static_cast<C*>(this_ptr)->C::get_rpc_methods();
+}
+
+#define RPC_METHOD_END { NULL, NULL }
+#define RPC_METHOD_SUPER(C) { NULL, (rpc_method::caller_t)(rpc_method::super_t)rpc_super<C> }
 
 /* Function rpc
  *  Parse a string describing a call and then do it
@@ -271,6 +420,7 @@ struct rpc_method {
  *  result - A pointer to an array to write the result into.
  */
 bool rpc(const char *buf, char *result = 0);
+
 
 } /* namespace mbed */
 

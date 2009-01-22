@@ -1,7 +1,8 @@
 /* mbed Microcontroller Library - SPI
- * Copyright (c) 2007-2008, sford
+ * Copyright (c) 2006-2009 ARM Limited. All rights reserved. 
+ * sford
  */
- 
+
 #ifndef MBED_SPI_H
 #define MBED_SPI_H
 
@@ -12,13 +13,27 @@ namespace mbed {
 
 /* Class: SPI
  *  A SPI Master, used for communicating with SPI slave devices
+ *
+ * The default format is set to 8-bits, mode 0, and a clock frequency of 1MHz
+ *
+ * Most SPI devices will also require Chip Select and Reset signals. These
+ * can be controlled using <DigitalOut> pins
+ *
+ * Example:
+ * > // Send a byte to a SPI slave, and record the response
+ * >
+ * > #include "mbed.h"
+ * >
+ * > SPI device(5, 6, 7); // mosi, miso, sclk
+ * >
+ * > int main() {
+ * >     int response = device.write(0xFF);
+ * > }
  */ 
 class SPI : public Base {
 
 public:
 
-	/* Group: Configuration Methods */
-	
 	/* Constructor: SPI
 	 *  Create a SPI master connected to the specified pins
 	 *
@@ -26,21 +41,33 @@ public:
 	 *  mosi - SPI Master Out, Slave In pin
 	 *  miso - SPI Master In, Slave Out pin
 	 *  sclk - SPI Clock pin
+     *  name - (optional) A string to identify the object     
      *
 	 * Pin Options:
 	 *  (5, 6, 7) or (11, 12, 13)
+	 *
+	 *  mosi and miso can each be specfied as NC (not connected) e.g. (5, NC, 7)
 	 */
 	SPI(int mosi, int miso, int sclk, const char *name = NULL);
 	
 	/* Function: format
-	 *  Set the transmission format
+	 *  Configure the data transmission format
 	 *
 	 * Variables:
-	 *  bits - Number of bits per frame (4 - 16, default = 8)
-	 *  polarity - Clock polarity, 0 = Steady state low (default), 1 = Steady state high  
-	 *  phase - Clock phase, 0 = Capture on first edge (default), 1 = Capture on second edge
+	 *  bits - Number of bits per SPI frame (4 - 16)
+	 *  mode - Clock polarity and phase mode (0 - 3)
+     *
+ 	 * > mode | POL PHA 
+     * > -----+--------	 
+     * >   0  |  0   0 
+	 * >   1  |  0   1
+     * >   2  |  1   0 
+	 * >   3  |  1   1
 	 */
-	void format(int bits = 8, int polarity = 0, int phase = 0);
+	void format(int bits, int mode = 0);
+
+    // old one, to be removed over time...
+	void format(int bits, int polarity, int phase) __attribute__((deprecated));
 	
 	/* Function: frequency
 	 *  Set the bus clock frequency
@@ -50,8 +77,6 @@ public:
 	 */
 	void frequency(int hz = 1000000);
 	
-	/* Group: Access Methods */
-		
 	/* Function: write
 	 *  Write to the SPI Slave and return the response
 	 *
@@ -60,6 +85,9 @@ public:
      *  returns - Response from the SPI slave
 	 */
   	int write(int value);
+
+    virtual const struct rpc_method *get_rpc_methods();
+    static struct rpc_class *get_rpc_class();
 
 protected:
 
