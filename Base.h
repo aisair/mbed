@@ -83,8 +83,6 @@ public:
      */
     virtual const struct rpc_method *get_rpc_methods();
 
-    static struct rpc_class *get_rpc_class();
-
     /* Function rpc
      *  Use the lookup function to lookup an object and, if
      *  successful, call its rpc method
@@ -115,6 +113,9 @@ protected:
 private:
 
     static rpc_class *_classes;
+
+    static const rpc_function _base_funcs[];
+    static rpc_class _base_class;
 
     void delete_self();
     static void list_objs(const char *arguments, char *result);
