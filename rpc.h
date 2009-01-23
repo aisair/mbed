@@ -98,7 +98,7 @@ template<> inline long double parse_arg<long double>(const char *arg, const char
 
 template<> inline char *parse_arg<char*>(const char *arg, const char **next) {
     const char *ptr = arg;
-    while(*ptr != 0 && *ptr != ' ' && *ptr != ',') {
+    while(*ptr >= '!' && *ptr != ',') {
         ptr++;
     }
     int len = ptr-arg;
@@ -194,11 +194,19 @@ template<> inline void write_result<long double>(long double val, char *result) 
 /* string */
 
 template<> inline void write_result<char*>(char *val, char *result) {
-    strcpy(result, val);
+    if(val==NULL) {
+        result[0] = 0;
+    } else {
+        strcpy(result, val);
+    }
 }
 
 template<> inline void write_result<const char*>(const char *val, char *result) {
-    strcpy(result, val);
+    if(val==NULL) {
+        result[0] = 0;
+    } else {
+        strcpy(result, val);
+    }
 }
 
 
