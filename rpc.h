@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include "Base.h"
 
 namespace mbed {
@@ -26,50 +27,99 @@ namespace mbed {
  */
 template<typename T> T parse_arg(const char *arg, const char **next);
 
+inline char parse_char(const char *arg, const char **next) {
+    char c = *arg++;
+    if(c == '\\') {
+        c = *arg++;
+        switch(c) {
+        case 'a': c = '\a'; break;
+        case 'b': c = '\b'; break;
+        case 't': c = '\t'; break;
+        case 'n': c = '\n'; break;
+        case 'v': c = '\v'; break;
+        case 'f': c = '\f'; break;
+        case 'r': c = '\r'; break;
+        case 'x': 
+            {
+                /* two-character hexadecimal */
+                char buf[3];
+                buf[0] = *arg++;
+                buf[1] = *arg++;
+                buf[2] = 0;
+                c = strtol(buf, NULL, 16); 
+            }
+            break;
+        default: 
+            if(isdigit(c)) {
+                /* three-character octal */
+                char buf[4];
+                buf[0] = c;
+                buf[1] = *arg++;
+                buf[2] = *arg++;
+                buf[3] = 0;
+                c = strtol(buf, NULL, 8); 
+            }
+            break;
+        }
+    }
+    *next = arg;
+    return c;
+}
+
 /* signed integer types */
 
+template<> inline int parse_arg<int>(const char *arg, const char **next) {
+    if(arg[0] == '\'') {
+        char c = parse_char(arg+1, &arg);
+        if(next != NULL) *next = arg+1;
+        return c;
+    } else {
+        return strtol(arg, const_cast<char**>(next), 0);        
+    }
+}
+
 template<> inline char parse_arg<char>(const char *arg, const char **next) {
-    if(next != NULL) *next = arg+1;
-    return *arg;
+    return parse_arg<int>(arg,next);
 }
 
 template<> inline short int parse_arg<short int>(const char *arg, const char **next) {
-    return strtol(arg, const_cast<char**>(next), 10);
+    return parse_arg<int>(arg,next);
 }
 
 template<> inline long int parse_arg<long int>(const char *arg, const char **next) {
-    return strtol(arg, const_cast<char**>(next), 10);
-}
-
-template<> inline int parse_arg<int>(const char *arg, const char **next) {
-    return strtol(arg, const_cast<char**>(next), 10);
+    return parse_arg<int>(arg,next);
 }
 
 template<> inline long long parse_arg<long long>(const char *arg, const char **next) {
-    return strtoll(arg, const_cast<char**>(next), 10);
+    return strtoll(arg, const_cast<char**>(next), 0);
 }
 
 /* unsigned integer types */
 
+template<> inline unsigned int parse_arg<unsigned int>(const char *arg, const char **next) {
+    if(arg[0] == '\'') {
+        char c = parse_char(arg+1, &arg);
+        if(next != NULL) *next = arg+1;
+        return c;
+    } else {
+        return strtoul(arg, const_cast<char**>(next), 0);        
+    }
+}
+
 template<> inline unsigned char parse_arg<unsigned char>(const char *arg, const char **next) {
-    if(next != NULL) *next = arg+1;
-    return *arg;
+    return parse_arg<unsigned int>(arg,next);
 }
 
 template<> inline unsigned short int parse_arg<unsigned short int>(const char *arg, const char **next) {
-    return strtoul(arg, const_cast<char**>(next), 10);
+    return parse_arg<unsigned int>(arg,next);
 }
 
 template<> inline unsigned long int parse_arg<unsigned long int>(const char *arg, const char **next) {
-    return strtoul(arg, const_cast<char**>(next), 10);
-}
-
-template<> inline unsigned int parse_arg<unsigned int>(const char *arg, const char **next) {
-    return strtoul(arg, const_cast<char**>(next), 10);
+    return parse_arg<unsigned int>(arg,next);
 }
 
 template<> inline unsigned long long parse_arg<unsigned long long>(const char *arg, const char **next) {
-    return strtoull(arg, const_cast<char**>(next), 10);
+    return strtoull(arg, const_cast<char**>(next), 0);
 }
 
 /* floating types */
@@ -98,22 +148,44 @@ template<> inline long double parse_arg<long double>(const char *arg, const char
 
 template<> inline char *parse_arg<char*>(const char *arg, const char **next) {
     const char *ptr = arg;
-    while(*ptr >= '!' && *ptr != ',') {
-        ptr++;
-    }
-    int len = ptr-arg;
-    char *p;
-    if(len==0) {
-        p = NULL;
+    char *res = NULL;
+    if(*arg == '"') {
+        /* quoted string */
+        ptr = ++arg;
+        int len = 0;
+        /* find the end (and length) of the quoted string */
+        for(char c = *ptr; c != 0 && c != '"'; c = *++ptr) {
+            len++;
+            if(c == '\\') {
+                ptr++;
+            }
+        }
+        /* copy the quoted string, and unescape characters */
+        if(len != 0) {
+            res = new char[len+1];
+            char *resptr = res;
+            while(arg != ptr) {
+                *resptr++ = parse_char(arg, &arg);
+            }
+            *resptr = 0;
+        }
     } else {
-        p = new char[len+1];
-        memcpy(p, arg, len);
-        p[len] = 0;
+        /* unquoted string */
+        while(isalnum(*ptr) || *ptr=='_') {
+            ptr++;
+        }
+        int len = ptr-arg;
+        if(len!=0) {
+            res = new char[len+1];
+            memcpy(res, arg, len);
+            res[len] = 0;
+        }
     }
+
     if(next != NULL) {
         *next = ptr;
     }
-    return p;
+    return res;
 }
 
 template<> inline const char *parse_arg<const char*>(const char *arg, const char **next) {
@@ -179,15 +251,15 @@ template<> inline void write_result<unsigned long long int>(unsigned long long i
 /* floating types */
 
 template<> inline void write_result<float>(float val, char *result) {
-    sprintf(result, "%g", val); 
+    sprintf(result, "%.17g", val); 
 }
 
 template<> inline void write_result<double>(double val, char *result) {
-    sprintf(result, "%g", val); 
+    sprintf(result, "%.17g", val); 
 }
 
 template<> inline void write_result<long double>(long double val, char *result) {
-    sprintf(result, "%Lg", val); 
+    sprintf(result, "%.17Lg", val); 
 }
 
 
@@ -211,7 +283,9 @@ template<> inline void write_result<const char*>(const char *val, char *result) 
 
 
 inline const char *next_arg(const char* next) {
-    if(*next == ',' || *next == ' ') next++;
+    while(*next == ' ') next++;
+    if(*next == ',' || *next == '?') next++;
+    while(*next == ' ') next++;
     return next;
 }
 
@@ -260,6 +334,23 @@ void rpc_method_caller(Base *this_ptr, const char *arguments, char *result) {
     A2 arg2 = parse_arg<A2>(next_arg(next),NULL);
 
     (static_cast<T*>(this_ptr)->*member)(arg1,arg2);
+    if(result != NULL) {
+        result[0] = '\0';
+    }
+}
+
+
+/* Function rpc_method_caller
+ */
+template<class T, typename A1, typename A2, typename A3, void (T::*member)(A1,A2,A3)> 
+void rpc_method_caller(Base *this_ptr, const char *arguments, char *result) {
+
+    const char *next = arguments;
+    A1 arg1 = parse_arg<A1>(next_arg(next),&next);
+    A2 arg2 = parse_arg<A2>(next_arg(next),&next);
+    A3 arg3 = parse_arg<A3>(next_arg(next),NULL);
+
+    (static_cast<T*>(this_ptr)->*member)(arg1,arg2,arg3);
     if(result != NULL) {
         result[0] = '\0';
     }

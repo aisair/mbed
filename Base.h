@@ -7,6 +7,7 @@
 #define MBED_BASE_H
 
 #include <cstdlib>
+#include "DirHandle.h"
 
 namespace mbed {
 
@@ -102,6 +103,9 @@ public:
      *  len - the length of name.
      */
     static Base *lookup(const char *name, unsigned int len);
+
+    static DirHandle *opendir();
+    friend class BaseDirHandle;
 
 protected: 
 

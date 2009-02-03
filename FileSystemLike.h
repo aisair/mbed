@@ -3,8 +3,6 @@
 #ifndef MBED_FILESYSTEMLIKE_H
 #define MBED_FILESYSTEMLIKE_H
 
-#include "Base.h"
-#include "FileHandle.h"
 #ifdef __ARMCC_VERSION
 # define O_RDONLY 0
 # define O_WRONLY 1
@@ -12,9 +10,13 @@
 # define O_CREAT  0x0200
 # define O_TRUNC  0x0400
 # define O_APPEND 0x0008
+typedef int mode_t;
 #else
 # include <sys/fcntl.h>
 #endif
+#include "Base.h"
+#include "FileHandle.h"
+#include "DirHandle.h"
 
 namespace mbed {
 
@@ -65,6 +67,26 @@ class FileSystemLike : public Base {
      *  returns - 0 on success, -1 on failure.
      */
     virtual int rename(const char *oldname, const char *newname) { return -1; };
+
+    /* Function opendir
+     *  Opens a directory in the filesystem and returns a DirHandle
+     *   representing the directory stream.
+     *
+     * Variables
+     *  name - The name of the directory to open.
+     *  returns - A DirHandle representing the directory stream, or
+     *   NULL on failure.
+     */
+    virtual DirHandle *opendir(const char *name) { return NULL; };
+
+    /* Function mkdir
+     *  Creates a directory in the filesystem.
+     *
+     * Variables
+     *  name - The name of the directory to create.
+     *  returns - 0 on success, -1 on failure.
+     */
+    virtual int mkdir(const char *name, mode_t mode) { return -1; }
 
     // TODO other filesystem functions (mkdir, rm, rn, ls etc)
     

@@ -10,7 +10,7 @@
 
 namespace mbed {
 
-class Stream : protected FileLike {
+class Stream : public FileLike {
 
 public:
     
@@ -38,6 +38,8 @@ public:
     
     operator std::FILE*() { return _file; }
     
+    virtual const struct rpc_method *get_rpc_methods();
+
 protected:
 
     virtual int close();
@@ -46,6 +48,7 @@ protected:
     virtual off_t lseek(off_t offset, int whence);
     virtual int isatty();
     virtual int fsync();
+    virtual off_t flen();
 
     virtual int _putc(int c) = 0;
     virtual int _getc() = 0;

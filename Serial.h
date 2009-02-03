@@ -112,6 +112,9 @@ public:
 	 *  returns - 1 if there is space to write a character, else 0
 	 */
 	int writeable();	
+
+    virtual const struct rpc_method *get_rpc_methods();
+    static struct rpc_class *get_rpc_class();
 	
 protected:
 
