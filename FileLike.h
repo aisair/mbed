@@ -22,6 +22,7 @@ class FileLike : public Base, public FileHandle {
      *  name - The name to use to open the file.
      */
     FileLike(const char *name) : Base(name) { }
+    virtual ~FileLike();
 
 };
 

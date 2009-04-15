@@ -84,6 +84,7 @@ class FileSystemLike : public Base {
      *
      * Variables
      *  name - The name of the directory to create.
+     *  mode - The permissions to create the directory with.
      *  returns - 0 on success, -1 on failure.
      */
     virtual int mkdir(const char *name, mode_t mode) { return -1; }
