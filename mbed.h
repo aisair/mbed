@@ -5,7 +5,7 @@
 #ifndef MBED_H
 #define MBED_H
 
-#define MBED_LIBRARY_VERSION 10
+#define MBED_LIBRARY_VERSION 11
  
 // Useful C libraries
 #include <stdio.h>
@@ -42,6 +42,7 @@
 #include "rtc.h"
 
 using namespace mbed; 
+using namespace std; 
 
 #endif 
 
