@@ -1,5 +1,8 @@
-/* Copyright 2008 ARM Limited. All rights reserved. */
-
+/* mbed Microcontroller Library - DirHandler
+ * Copyright (c) 2008-2009 ARM Limited. All rights reserved.
+ * sford
+ */ 
+ 
 #ifndef MBED_DIRHANDLE_H
 #define MBED_DIRHANDLE_H
 
@@ -46,10 +49,10 @@ class DirHandle {
      *  Return the directory entry at the current position, and
      *  advances the position to the next entry.
      *
-     * Variables
-     *  returns - A pointer to a dirent structure representing the
-     *   directory entry at the current position, or NULL on reaching
-     *   end of directory or error.
+     * Returns
+     *  A pointer to a dirent structure representing the
+     *  directory entry at the current position, or NULL on reaching
+     *  end of directory or error.
      */
     virtual struct dirent *readdir()=0;
 
@@ -61,8 +64,8 @@ class DirHandle {
     /* Function telldir
      *  Returns the current position of the DirHandle.
      *
-     * Variables
-     *  returns - The current position, or -1 on error.
+     * Returns
+     *  The current position, or -1 on error.
      */
     virtual off_t telldir() { return -1; }
 
@@ -77,7 +80,7 @@ class DirHandle {
 
 };
 
-} /* namespace mbed */
+} // namespace mbed
 
 typedef mbed::DirHandle DIR;
 

@@ -6,11 +6,15 @@
 #ifndef MBED_BASE_H
 #define MBED_BASE_H
 
+#include "platform.h"
+#include "PinNames.h"
+#include "PeripheralNames.h"
 #include <cstdlib>
 #include "DirHandle.h"
 
 namespace mbed {
 
+#ifdef MBED_RPC
 struct rpc_function {
     const char *name;
     void (*caller)(const char*, char*);
@@ -21,6 +25,7 @@ struct rpc_class {
     const rpc_function *static_functions;
     struct rpc_class *next;
 };
+#endif
 
 /* Class Base
  *  The base class for most things
@@ -48,6 +53,8 @@ public:
      */
     const char *name();
 
+#ifdef MBED_RPC
+
     /* Function rpc
      *  Call the given method with the given arguments, and write the
      *  result into the string pointed to by result. The default
@@ -59,7 +66,9 @@ public:
      *  arguments - A list of arguments separated by spaces.
      *  result - A pointer to a string to write the result into. May
      *    be NULL, in which case nothing is written.
-     *  returns - true if method corresponds to a valid rpc method, or
+     *
+     *  Returns
+     *    true if method corresponds to a valid rpc method, or
      *    false otherwise.
      */
     virtual bool rpc(const char *method, const char *arguments, char *result);	
@@ -70,7 +79,6 @@ public:
      *  RPC_METHOD_END or RPC_METHOD_SUPER(Superclass).
      *
      * Example
-     *
      * > class Example : public Base {
      * >   int foo(int a, int b) { return a + b; }
      * >   virtual const struct rpc_method *get_rpc_methods() {
@@ -95,6 +103,8 @@ public:
      */
     static bool rpc(const char *name, const char *method, const char *arguments, char *result);
 
+#endif
+
     /* Function lookup
      *  Lookup and return the object that has the given name.
      *
@@ -116,10 +126,12 @@ protected:
 
 private:
 
+#ifdef MBED_RPC
     static rpc_class *_classes;
 
     static const rpc_function _base_funcs[];
     static rpc_class _base_class;
+#endif
 
     void delete_self();
     static void list_objs(const char *arguments, char *result);
@@ -129,6 +141,7 @@ private:
 
 public:
 
+#ifdef MBED_RPC
     /* Function add_rpc_class
      *  Add the class to the list of classes which can have static
      *  methods called via rpc (the static methods which can be called
@@ -190,6 +203,7 @@ public:
         }
         return p->_name;
     }
+#endif
 
 };
 

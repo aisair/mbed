@@ -1,7 +1,8 @@
-/* mbed Microcontroller Library - SemihostFileSystem
- * Copyright (c) 2007-2008, sford
- */
-
+/* mbed Microcontroller Library - LocalFileSystem
+ * Copyright (c) 2008-2009 ARM Limited. All rights reserved.
+ * sford
+ */ 
+ 
 #ifndef MBED_LOCALFILESYSTEM_H
 #define MBED_LOCALFILESYSTEM_H
 
@@ -10,7 +11,7 @@
 namespace mbed {
 
 /* Class: LocalFileSystem
- *  A filesystem for accessing the local mbed Microcontroller USB disk drive. 
+ *  A filesystem for accessing the local mbed Microcontroller USB disk drive 
  *
  *  This allows programs to read and write files on the same disk drive that is used to program the 
  *  mbed Microcontroller. Once created, the standard C file access functions are used to open, 

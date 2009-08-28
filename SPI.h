@@ -6,8 +6,10 @@
 #ifndef MBED_SPI_H
 #define MBED_SPI_H
 
+#include "platform.h"
+#include "PinNames.h"
+#include "PeripheralNames.h"
 #include "Base.h"
-#include "LPC2300.h"
 
 namespace mbed {
 
@@ -24,7 +26,7 @@ namespace mbed {
  * >
  * > #include "mbed.h"
  * >
- * > SPI device(5, 6, 7); // mosi, miso, sclk
+ * > SPI device(p5, p6, p7); // mosi, miso, sclk
  * >
  * > int main() {
  * >     int response = device.write(0xFF);
@@ -34,75 +36,72 @@ class SPI : public Base {
 
 public:
 
-	/* Constructor: SPI
-	 *  Create a SPI master connected to the specified pins
-	 *
-	 * Variables:
-	 *  mosi - SPI Master Out, Slave In pin
-	 *  miso - SPI Master In, Slave Out pin
-	 *  sclk - SPI Clock pin
+    /* Constructor: SPI
+     *  Create a SPI master connected to the specified pins
+     *
+     * Variables:
+     *  mosi - SPI Master Out, Slave In pin
+     *  miso - SPI Master In, Slave Out pin
+     *  sclk - SPI Clock pin
      *  name - (optional) A string to identify the object     
      *
-	 * Pin Options:
-	 *  (5, 6, 7) or (11, 12, 13)
-	 *
-	 *  mosi and miso can each be specfied as NC (not connected) e.g. (5, NC, 7)
-	 */
-	SPI(int mosi, int miso, int sclk, const char *name = NULL);
-	
-	/* Function: format
-	 *  Configure the data transmission format
-	 *
-	 * Variables:
-	 *  bits - Number of bits per SPI frame (4 - 16)
-	 *  mode - Clock polarity and phase mode (0 - 3)
+     * Pin Options:
+     *  (5, 6, 7) or (11, 12, 13)
      *
- 	 * > mode | POL PHA 
+     *  mosi or miso can be specfied as NOT_CONNECTED if not used
+     */
+    SPI(PinName mosi, PinName miso, PinName sclk, const char *name = NULL);
+
+    /* Function: format
+     *  Configure the data transmission format
+     *
+     * Variables:
+     *  bits - Number of bits per SPI frame (4 - 16)
+     *  mode - Clock polarity and phase mode (0 - 3)
+     *
+     * > mode | POL PHA 
      * > -----+--------	 
      * >   0  |  0   0 
-	 * >   1  |  0   1
+     * >   1  |  0   1
      * >   2  |  1   0 
-	 * >   3  |  1   1
-	 */
-	void format(int bits, int mode = 0);
+     * >   3  |  1   1
+     */
+    void format(int bits, int mode = 0);
 
-    // old one, to be removed over time...
-	void format(int bits, int polarity, int phase) __attribute__((deprecated));
-	
-	/* Function: frequency
-	 *  Set the bus clock frequency
-	 *
-	 * Variables:
-	 *  hz - SCLK frequency in hz (default = 1MHz)
-	 */
-	void frequency(int hz = 1000000);
-	
-	/* Function: write
-	 *  Write to the SPI Slave and return the response
-	 *
+    /* Function: frequency
+     *  Set the spi bus clock frequency
+     *
+     * Variables:
+     *  hz - SCLK frequency in hz (default = 1MHz)
+     */
+    void frequency(int hz = 1000000);
+
+    /* Function: write
+     *  Write to the SPI Slave and return the response
+     *
      * Variables:
      *  value - Data to be sent to the SPI slave
      *  returns - Response from the SPI slave
-	 */
-  	int write(int value);
+    */
+    int write(int value);
 
+#ifdef MBED_RPC
     virtual const struct rpc_method *get_rpc_methods();
     static struct rpc_class *get_rpc_class();
+#endif
 
 protected:
 
-	void configure();
+	SPIName _spi;
 	
-	int _id;
+	void aquire();
+    static SPI *_owner; 
+    int _bits;
+    int _mode;
+    int _hz;
 
-	int _uid;
-	static int _uidcounter;
-		
-	int _bits, _polarity, _phase, _hz;
-	static int _config[2];	
 };
 
-}
+} // namespace mbed
 
 #endif
-

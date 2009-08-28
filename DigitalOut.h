@@ -1,77 +1,88 @@
 /* mbed Microcontroller Library - DigitalOut
- * Copyright (c) 2007-2008, sford
- */
+ * Copyright (c) 2006-2009 ARM Limited. All rights reserved.
+ * sford
+ */ 
  
 #ifndef MBED_DIGITALOUT_H
 #define MBED_DIGITALOUT_H
 
+#include "platform.h"
+#include "PinNames.h"
+#include "PeripheralNames.h"
 #include "Base.h"
-#include "LPC2300.h"
 
 namespace mbed {
 
 /* Class: DigitalOut
  *  A digital output, used for setting the state of a pin
+ *
+ * Example:
+ * > // Toggle a LED
+ * > #include "mbed.h"
+ * >
+ * > DigitalOut led(LED1);
+ * >
+ * > int main() {
+ * >     while(1) {
+ * >         led = !led;
+ * >         wait(0.2);
+ * >     }
+ * > }
  */
 class DigitalOut : public Base {
 
 public:
 
-	/* Group: Configuration Methods */
-	
-	/* Constructor: DigitalOut
-	 *  Create a DigitalOut connected to the specified pin
-	 *
-	 * Variables:
-	 *  pin - DigitalOut pin to connect to (5-30)
-	 */
-	DigitalOut(int pin, const char* name = NULL);
+    /* Constructor: DigitalOut
+     *  Create a DigitalOut connected to the specified pin
+     *
+     * Variables:
+     *  pin - DigitalOut pin to connect to
+     */
+    DigitalOut(PinName pin, const char* name = NULL);
 
-	/* Group: Access Methods */
-		
-	/* Function: write
-	 *  Set the output, specified as 0 or 1 (int)
-	 *
-	 * Variables:
-	 *  value - An integer specifying the pin output value, 
-	 *      0 for logical 0 (0v) and 1 (or any other non-zero value) for logical 1 (3.3v).
-	 */
+    /* Function: write
+     *  Set the output, specified as 0 or 1 (int)
+     *
+     * Variables:
+     *  value - An integer specifying the pin output value, 
+     *      0 for logical 0 and 1 (or any other non-zero value) for logical 1 
+     */
     void write(int value);
 
-	/* Function: read
-	 *  Return the output setting, represented as 0 or 1 (int)
-	 *
-	 * Variables:
-	 *  returns - An integer representing the output setting of the pin, 
-	 *      0 for logical 0 (0v) and 1 for logical 1 (3.3v)
-	 */
+    /* Function: read
+     *  Return the output setting, represented as 0 or 1 (int)
+     *
+     * Variables:
+     *  returns - An integer representing the output setting of the pin, 
+     *      0 for logical 0 and 1 for logical 1
+     */
     int read();
 
-    virtual const struct rpc_method *get_rpc_methods();
-    static struct rpc_class *get_rpc_class();
-
-   	/* Group: Access Method Shorthand */
-   	 
-	/* Function: operator=
-	 *  A shorthand for <write>
-	 */
-	DigitalOut& operator= (int v);
-	DigitalOut& operator= (DigitalOut& rhs);
-	
+#ifdef MBED_OPERATORS
+    /* Function: operator=
+     *  A shorthand for <write>
+     */
+    DigitalOut& operator= (int value);
+    DigitalOut& operator= (DigitalOut& rhs);
+    
     /* Function: operator int()
      *  A shorthand for <read>
      */
-	operator int();
-
-protected:
-	
-	LPC2300::GPIORF* _rf;
-	unsigned int _mask;
-	int _id;
-				
-};
-
-}
-
+    operator int();
 #endif
 
+#ifdef MBED_RPC
+    virtual const struct rpc_method *get_rpc_methods();
+    static struct rpc_class *get_rpc_class();
+#endif
+
+protected:
+
+    PinName _pin;
+
+};
+
+} // namespace mbed
+
+#endif 

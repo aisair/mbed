@@ -1,11 +1,13 @@
 /* mbed Microcontroller Library - Stream
- * Copyright (c) 2007-2008, sford
- */
-
+ * Copyright (c) 2007-2009 ARM Limited. All rights reserved.
+ * sford
+ */ 
+ 
 #ifndef MBED_STREAM_H
 #define MBED_STREAM_H
 
 #include "FileLike.h"
+#include "platform.h"
 #include <cstdio>
 
 namespace mbed {
@@ -37,8 +39,10 @@ public:
     int scanf(const char* format, ...);
     
     operator std::FILE*() { return _file; }
-    
+
+#ifdef MBED_RPC
     virtual const struct rpc_method *get_rpc_methods();
+#endif
 
 protected:
 

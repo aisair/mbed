@@ -1,7 +1,8 @@
 /* mbed Microcontroller Library - Timeout
- * Copyright (c) 2007-2008, sford
- */
-
+ * Copyright (c) 2007-2009 ARM Limited. All rights reserved.
+ * sford
+ */ 
+ 
 #ifndef MBED_TIMEOUT_H
 #define MBED_TIMEOUT_H
 
@@ -13,6 +14,28 @@ namespace mbed {
  *  A Timeout is used to call a function at a point in the future
  *
  * You can use as many seperate Timeout objects as you require. 
+ *
+ * Example:
+ * > // Blink until timeout.
+ * >
+ * > #include "mbed.h"
+ * > 
+ * > Timeout timeout;
+ * > DigitalOut led(LED1);
+ * > 
+ * > int on = 1;
+ * > 
+ * > void attimeout() {
+ * >     on = 0;
+ * > }
+ * > 
+ * > int main() {
+ * >     timeout.attach(&attimeout, 5);
+ * >     while(on) {
+ * >         led = !led;
+ * >         wait(0.2);
+ * >     }
+ * > }
  */
 class Timeout : public Ticker {
 
@@ -77,10 +100,10 @@ class Timeout : public Ticker {
     
 protected:
 
-	virtual void handler();
-	
-};	
+    virtual void handler();
 
-}
+};
+
+} // namespace mbed
 
 #endif

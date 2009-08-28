@@ -1,7 +1,8 @@
-/* mbed Microcontroller Library - FileHandle
- * Copyright (c) 2007-2008, sford
- */
-
+/* mbed Microcontroller Library - FileHandler
+ * Copyright (c) 2007-2009 ARM Limited. All rights reserved.
+ * sford
+ */ 
+ 
 #ifndef MBED_FILEHANDLE_H
 #define MBED_FILEHANDLE_H
 

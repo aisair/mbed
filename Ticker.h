@@ -1,12 +1,13 @@
 /* mbed Microcontroller Library - Ticker
- * Copyright (c) 2007-2008, sford
- */
-
+ * Copyright (c) 2007-2009 ARM Limited. All rights reserved.
+ * sford
+ */ 
+ 
 #ifndef MBED_TICKER_H
 #define MBED_TICKER_H
 
 #include "TimerEvent.h"
-#include "FunctionPointer.h"	
+#include "FunctionPointer.h"
 
 namespace mbed {
 
@@ -14,6 +15,34 @@ namespace mbed {
  *  A Ticker is used to call a function at a recurring interval
  *
  * You can use as many seperate Ticker objects as you require. 
+ *
+ * Example:
+ * > // Toggle the blinking led after 5 seconds
+ * >
+ * > #include "mbed.h"
+ * > 
+ * > Ticker timer;
+ * > DigitalOut led1(LED1);
+ * > DigitalOut led2(LED2);
+ * > 
+ * > int flip = 0;
+ * > 
+ * > void attime() {
+ * >     flip = !flip;
+ * > }
+ * >
+ * > int main() {
+ * >     timer.attach(&attime, 5);
+ * >     while(1) {
+ * >         if(flip == 0) {
+ * >             led1 = !led1;
+ * >         } else {
+ * >             led2 = !led2;
+ * >         }
+ * >         wait(0.2);
+ * >     }
+ * > }
+ *
  */
 class Ticker : public TimerEvent {
 
@@ -73,17 +102,17 @@ public:
      *  Detach the function
      */        
     void detach();
-	
+
 protected:
 
     void setup(unsigned int t);
     virtual void handler();
-	
-    unsigned int _delay;	
-    FunctionPointer _function;	
 
-};	
+    unsigned int _delay;
+    FunctionPointer _function;
 
-}
+};
+
+} // namespace mbed
 
 #endif
