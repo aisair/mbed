@@ -111,7 +111,6 @@ public:
      *
      * Example:
      * > #include "mbed.h"
-     * > #include "CAN.h"
      * > 
      * > Ticker ticker;
      * > DigitalOut led1(LED1);

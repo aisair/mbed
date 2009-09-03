@@ -24,10 +24,9 @@ namespace mbed {
  * > I2C i2c(p28, p27);
  * >
  * > int main() {
- * >     int address = 0x1234;
+ * >     int address = 0x62;
  * >     char data[2];
- * >     i2c.read(address,data,2);
- * >     // ...
+ * >     i2c.read(address, data, 2);
  * > }
  */
 class I2C : public Base {
@@ -54,22 +53,28 @@ public:
     /* Function: read
      *  Read from an I2C slave
      *
+     * Performs a complete read transaction. The bottom bit of
+     * the address is forced to 1 to indicate a read.
+     *
      * Variables:
-     *  address - 7-bit I2C slave address (0-127)
+     *  address - 8-bit I2C slave address [ addr | 1 ]
      *  data - Pointer to the byte-array to read data in to 
      *  length - Number of bytes to read
-     *  returns - 0 on success (ack), or 1 on failure (nack)
+     *  returns - 0 on success (ack), or non-0 on failure (nack)
      */ 
     int read(int address, char *data, int length); 
 
     /* Function: write
      *  Write to an I2C slave
      *
+     * Performs a complete write transaction. The bottom bit of
+     * the address is forced to 0 to indicate a write.
+     *
      * Variables:
-     *  address - 7-bit I2C slave address (0-127)
+     *  address - 8-bit I2C slave address [ addr | 0 ]
      *  data - Pointer to the byte-array data to send 
      *  length - Number of bytes to send
-     *  returns - 0 on success (ack), or 1 on failure (nack)
+     *  returns - 0 on success (ack), or non-0 on failure (nack)
      */ 
     int write(int address, const char *data, int length);
     

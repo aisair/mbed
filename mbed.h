@@ -6,7 +6,7 @@
 #ifndef MBED_H
 #define MBED_H
 
-#define MBED_LIBRARY_VERSION 12
+#define MBED_LIBRARY_VERSION 13
  
 // Useful C libraries
 #include <stdio.h>
@@ -19,6 +19,7 @@
 // mbed Debug libraries
 //#include "Debug.h"
 //#include "stackheap.h"
+#include "error.h"
 
 // mbed Peripheral components
 #include "DigitalIn.h"
@@ -35,7 +36,6 @@
 //#include "SPI3.h"
 #include "I2C.h"
 #include "Ethernet.h"
-#include "CAN.h"
 
 // mbed Internal components
 #include "Timer.h"
