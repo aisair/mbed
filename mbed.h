@@ -13,12 +13,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-
-//#include "helper.h"
+#include <time.h>
 
 // mbed Debug libraries
-//#include "Debug.h"
-//#include "stackheap.h"
 #include "error.h"
 
 // mbed Peripheral components
@@ -33,9 +30,10 @@
 #include "PwmOut.h"
 #include "Serial.h"
 #include "SPI.h"
-//#include "SPI3.h"
 #include "I2C.h"
 #include "Ethernet.h"
+#include "CAN.h"
+//#include "SPI3.h"
 
 // mbed Internal components
 #include "Timer.h"
@@ -46,6 +44,7 @@
 //#include "rpc.h"
 //#include "rtc.h"
 #include "wait_api.h"
+#include "rtc_time.h"
 
 using namespace mbed; 
 using namespace std; 
