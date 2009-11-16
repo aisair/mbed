@@ -16,4 +16,6 @@
 #error "CMSIS Target not recognised"
 #endif
 
+#include "cmsis_nvic.h"
+
 #endif

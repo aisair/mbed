@@ -138,7 +138,7 @@ typedef struct
   __IO uint32_t PCLKSEL1;
        uint32_t RESERVED8[4];
   __IO uint32_t USBIntSt;               /* USB Device/OTG Interrupt Register  */
-       uint32_t DMAREQSEL;
+       uint32_t RESERVED9;
   __IO uint32_t CLKOUTCFG;              /* Clock Output Configuration         */
  } LPC_SC_TypeDef;
 

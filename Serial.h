@@ -10,6 +10,7 @@
 #include "PinNames.h"
 #include "PeripheralNames.h"
 #include "Stream.h"
+#include "FunctionPointer.h"
 
 namespace mbed {
 
@@ -122,6 +123,27 @@ public:
      */
     int writeable();
 
+    /* Function: attach
+     *  Attach a function to call whenever a serial interrupt is generated
+     *
+     * Variables:
+     *  fptr - A pointer to a void function, or 0 to set as none
+     */
+    void attach(void (*fptr)(void));
+
+    /* Function: attach
+     *  Attach a member function to call whenever a serial interrupt is generated
+     *     
+     * Variables:
+     *  tptr - pointer to the object to call the member function on
+     *  mptr - pointer to the member function to be called
+     */
+    template<typename T>
+    void attach(T* tptr, void (T::*mptr)(void)) {
+        _irq.attach(tptr, mptr);
+        setup_interrupt();
+    }
+
 #ifdef MBED_RPC
     virtual const struct rpc_method *get_rpc_methods();
     static struct rpc_class *get_rpc_class();
@@ -129,10 +151,14 @@ public:
 
 protected:
 
+    void setup_interrupt();
+    void remove_interrupt();
+
     virtual int _getc();
     virtual int _putc(int c);
 
     UARTName _uart;
+    FunctionPointer _irq;
 
 };
 
