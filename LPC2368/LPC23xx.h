@@ -799,7 +799,7 @@ typedef struct
 #define LPC_GPDMA_BASE            (0xFFE04000)
 #define LPC_GPDMACH0_BASE         (0xFFE04100)
 #define LPC_GPDMACH1_BASE         (0xFFE04120)
-#define LPC_USB_BASE              (0xE01FC1C0)
+#define LPC_USB_BASE              (0xFFE0C000)
 #define LPC_VIC_BASE              (0xFFFFF000)
 
 /* GPIOs                                                                      */
