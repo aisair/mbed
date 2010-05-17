@@ -53,7 +53,10 @@ public:
      *  returns - An integer representing the state of the input pin, 
      *      0 for logical 0 and 1 for logical 1
      */
-    int read();
+    int read() {
+        return ((_gpio->FIOPIN & _mask) ? 1 : 0);
+    }
+
 
     /* Function: mode
      *  Set the input pin mode
@@ -67,7 +70,10 @@ public:
     /* Function: operator int()
      *  An operator shorthand for <read()>
      */
-    operator int();
+    operator int() {
+        return read();
+    }
+
 #endif
 
 #ifdef MBED_RPC
@@ -77,7 +83,9 @@ public:
 
 protected:
 
-    PinName _pin;
+    PinName             _pin;
+    LPC_GPIO_TypeDef    *_gpio;
+    uint32_t            _mask;
 
 };
 

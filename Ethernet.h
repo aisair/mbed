@@ -115,11 +115,27 @@ public:
     void address(char *mac);
 
     /* Function: link
-     *  Returns if an ethernet link is pressent or not.
+     *  Returns if an ethernet link is pressent or not. It takes a wile after Ethernet initializion to show up.
      * 
      * Returns:
      *  0 - If no ethernet link is pressent.
      *  1 - If an ethernet link is pressent.
+     *
+     * Example:
+     * > // Using the Ethernet link function
+     * > #include "mbed.h"
+     * >
+     * > Ethernet eth;
+     * >
+     * > int main() {
+     * >     wait(1); // Needed after startup.
+     * >     if(eth.link()) {
+     * >         printf("online\n");
+     * >     } else {
+     * >          printf("offline\n");
+     * >     }
+     * > }
+     *
      */
     int link();
 

@@ -1,11 +1,12 @@
 /* mbed Microcontroller Library
  * Copyright (c) 2006-2009 ARM Limited. All rights reserved.
+ * sford
  */ 
  
 #ifndef MBED_H
 #define MBED_H
 
-#define MBED_LIBRARY_VERSION 19
+#define MBED_LIBRARY_VERSION 21
  
 // Useful C libraries
 #include <stdio.h>
@@ -24,6 +25,9 @@
 #include "BusIn.h"
 #include "BusOut.h"
 #include "BusInOut.h"
+#include "PortIn.h"
+#include "PortInOut.h"
+#include "PortOut.h"
 #include "AnalogIn.h"
 #include "AnalogOut.h"
 #include "PwmOut.h"
@@ -32,6 +36,7 @@
 #include "I2C.h"
 #include "Ethernet.h"
 #include "CAN.h"
+//#include "SPI3.h"
 
 // mbed Internal components
 #include "Timer.h"
@@ -39,6 +44,8 @@
 #include "Timeout.h"
 #include "LocalFileSystem.h"
 #include "InterruptIn.h"
+//#include "rpc.h"
+//#include "rtc.h"
 #include "wait_api.h"
 #include "rtc_time.h"
 
