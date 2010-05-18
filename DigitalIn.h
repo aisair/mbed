@@ -62,7 +62,7 @@ public:
      *  Set the input pin mode
      *
      * Variables:
-     *  mode - PullUp, PullDown, PullNone
+     *  mode - PullUp, PullDown, PullNone, OpenDrain
      */
     void mode(PinMode pull);
     
