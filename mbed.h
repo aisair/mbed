@@ -6,7 +6,7 @@
 #ifndef MBED_H
 #define MBED_H
 
-#define MBED_LIBRARY_VERSION 21
+#define MBED_LIBRARY_VERSION 22
  
 // Useful C libraries
 #include <stdio.h>
@@ -32,7 +32,10 @@
 #include "AnalogOut.h"
 #include "PwmOut.h"
 #include "Serial.h"
+#include "SerialHalfDuplex.h"
 #include "SPI.h"
+#include "SPISlave.h"
+#include "SPIHalfDuplex.h"
 #include "I2C.h"
 #include "Ethernet.h"
 #include "CAN.h"

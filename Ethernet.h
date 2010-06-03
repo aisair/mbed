@@ -52,6 +52,14 @@ public:
      */
     virtual ~Ethernet();
 
+    enum Mode {
+        AutoNegotiate
+        , HalfDuplex10
+        , FullDuplex10
+        , HalfDuplex100
+        , FullDuplex100
+    };
+
     /* Function: write
      *  Writes into an outgoing ethernet packet.
      *
@@ -138,6 +146,20 @@ public:
      *
      */
     int link();
+
+    /* Function: set_link
+     *  Sets the speed and duplex parameters of an ethernet link
+     *
+     *  Variables:
+     *   mode - the speed and duplex mode to set the link to:
+     *
+     * > AutoNegotiate      Auto negotiate speed and duplex
+     * > HalfDuplex10       10 Mbit, half duplex
+     * > FullDuplex10       10 Mbit, full duplex
+     * > HalfDuplex100      100 Mbit, half duplex
+     * > FullDuplex100      100 Mbit, full duplex
+     */
+    void set_link(Mode mode);
 
 };
 

@@ -39,7 +39,7 @@ public:
      *  tx - Transmit pin 
      *  rx - Receive pin
      *
-     *  Note: Either tx or rx may be specified as NOT_CONNECTED if unused
+     *  Note: Either tx or rx may be specified as NC if unused
      */
     Serial(PinName tx, PinName rx, const char *name = NULL);
 

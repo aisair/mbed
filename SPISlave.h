@@ -3,8 +3,8 @@
  * sford
  */
 
-#ifndef MBED_SPI_H
-#define MBED_SPI_H
+#ifndef MBED_SPISLAVE_H
+#define MBED_SPISLAVE_H
 
 #include "platform.h"
 #include "PinNames.h"
@@ -13,44 +13,50 @@
 
 namespace mbed {
 
-/* Class: SPI
- *  A SPI Master, used for communicating with SPI slave devices
+/* Class: SPISlave
+ *  A SPI slave, used for communicating with a SPI Master device
  *
  * The default format is set to 8-bits, mode 0, and a clock frequency of 1MHz
  *
- * Most SPI devices will also require Chip Select and Reset signals. These
- * can be controlled using <DigitalOut> pins
- *
  * Example:
- * > // Send a byte to a SPI slave, and record the response
+ * > // Reply to a SPI master as slave
  * >
  * > #include "mbed.h"
  * >
- * > SPI device(p5, p6, p7); // mosi, miso, sclk
+ * > SPISlave device(p5, p6, p7, p8); // mosi, miso, sclk, ssel
  * >
  * > int main() {
- * >     int response = device.write(0xFF);
+ * >     device.reply(0x00);              // Prime SPI with first reply
+ * >     while(1) {
+ * >         if(device.receive()) {
+ * >             int v = device.read();   // Read byte from master
+ * >             v = (v + 1) % 0x100;     // Add one to it, modulo 256
+ * >             device.reply(v);         // Make this the next reply
+ * >         }
+ * >     }
  * > }
  */ 
-class SPI : public Base {
+class SPISlave : public Base {
 
 public:
 
     /* Constructor: SPI
-     *  Create a SPI master connected to the specified pins
+     *  Create a SPI slave connected to the specified pins
      *
      * Variables:
      *  mosi - SPI Master Out, Slave In pin
      *  miso - SPI Master In, Slave Out pin
      *  sclk - SPI Clock pin
+     *  ssel - SPI chip select pin
      *  name - (optional) A string to identify the object     
      *
      * Pin Options:
-     *  (5, 6, 7) or (11, 12, 13)
+     *  (5, 6, 7i, 8) or (11, 12, 13, 14)
      *
      *  mosi or miso can be specfied as NC if not used
      */
-    SPI(PinName mosi, PinName miso, PinName sclk, const char *name = NULL);
+    SPISlave(PinName mosi, PinName miso, PinName sclk, PinName ssel,
+        const char *name = NULL);
 
     /* Function: format
      *  Configure the data transmission format
@@ -76,27 +82,35 @@ public:
      */
     void frequency(int hz = 1000000);
 
-    /* Function: write
-     *  Write to the SPI Slave and return the response
+    /* Function: receive
+     *  Polls the SPI to see if data has been received
      *
      * Variables:
-     *  value - Data to be sent to the SPI slave
-     *  returns - Response from the SPI slave
-    */
-    virtual int write(int value);
+     *  returns - zero if no data, 1 otherwise
+     */
+    int receive(void);
 
+    /* Function: read
+     *  Retrieve  data from receive buffer as slave
+     *
+     * Variables:
+     *  returns - the data in the receive buffer
+     */
+    int read(void);
 
-#ifdef MBED_RPC
-    virtual const struct rpc_method *get_rpc_methods();
-    static struct rpc_class *get_rpc_class();
-#endif
+    /* Function: reply
+     *  Fill the transmission buffer with the value to be written out
+     *  as slave on the next received message from the master.
+     *
+     * Variables:
+     *  value - the data to be transmitted next
+     */
+    void reply(int value);
 
 protected:
 
 	SPIName _spi;
 	
-	void aquire(void);
-    static SPI *_owner; 
     int _bits;
     int _mode;
     int _hz;
