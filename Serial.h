@@ -59,6 +59,11 @@ public:
         , Forced0
     };
 
+    enum IrqType {
+        RxIrq = 0
+        , TxIrq
+    };
+
     /* Function: format
      *  Set the transmission format used by the Serial port
      *
@@ -128,8 +133,9 @@ public:
      *
      * Variables:
      *  fptr - A pointer to a void function, or 0 to set as none
+     *  type - Which serial interrupt to attach the member function to (Seriall::RxIrq for receive, TxIrq for transmit buffer empty)
      */
-    void attach(void (*fptr)(void));
+    void attach(void (*fptr)(void), IrqType type = RxIrq);
 
     /* Function: attach
      *  Attach a member function to call whenever a serial interrupt is generated
@@ -137,11 +143,14 @@ public:
      * Variables:
      *  tptr - pointer to the object to call the member function on
      *  mptr - pointer to the member function to be called
+     *  type - Which serial interrupt to attach the member function to (Seriall::RxIrq for receive, TxIrq for transmit buffer empty)
      */
     template<typename T>
-    void attach(T* tptr, void (T::*mptr)(void)) {
-        _irq.attach(tptr, mptr);
-        setup_interrupt();
+    void attach(T* tptr, void (T::*mptr)(void), IrqType type = RxIrq) {
+        if((mptr != NULL) && (tptr != NULL)) {
+            _irq[type].attach(tptr, mptr);
+            setup_interrupt(type);
+        }
     }
 
 #ifdef MBED_RPC
@@ -151,14 +160,15 @@ public:
 
 protected:
 
-    void setup_interrupt();
-    void remove_interrupt();
+    void setup_interrupt(IrqType type);
+    void remove_interrupt(IrqType type);
 
     virtual int _getc();
     virtual int _putc(int c);
 
     UARTName _uart;
-    FunctionPointer _irq;
+    FunctionPointer _irq[2];
+    int _uidx;
 
 };
 

@@ -152,8 +152,9 @@ public:
      *
      * Variables:
      *  hz - The bus frequency in hertz
+     *  returns - 1 if successful, 0 otherwise
      */
-    void frequency(int hz);
+    int frequency(int hz);
     
     /* Function: write
      *  Write a CANMessage to the bus.
