@@ -6,7 +6,7 @@
 #ifndef MBED_H
 #define MBED_H
 
-#define MBED_LIBRARY_VERSION 23
+#define MBED_LIBRARY_VERSION 24
  
 // Useful C libraries
 #include <stdio.h>
@@ -37,6 +37,7 @@
 #include "SPISlave.h"
 #include "SPIHalfDuplex.h"
 #include "I2C.h"
+#include "I2CSlave.h"
 #include "Ethernet.h"
 #include "CAN.h"
 //#include "SPI3.h"

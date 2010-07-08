@@ -106,7 +106,7 @@ public:
      *
      * Variables:
      *  data - data to write out on bus
-     *  returns - a '1' if an ACK was retrieved, a '0' otherwise
+     *  returns - a '1' if an ACK was received, a '0' otherwise
      */
     int write(int data);
 
