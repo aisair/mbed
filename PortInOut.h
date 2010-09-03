@@ -32,8 +32,7 @@ public:
      *  value - An integer specifying a bit to write for every corresponding port pin
      */    
     void write(int value) {
-        _gpio->FIOSET = value & _mask;
-        _gpio->FIOCLR = ~(value) & _mask;
+        _gpio->FIOPIN = (_gpio->FIOPIN & ~_mask) | (value & _mask);
     }
 
     /* Function: read

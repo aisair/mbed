@@ -6,7 +6,7 @@
 #ifndef MBED_H
 #define MBED_H
 
-#define MBED_LIBRARY_VERSION 24
+#define MBED_LIBRARY_VERSION 26
  
 // Useful C libraries
 #include <stdio.h>
