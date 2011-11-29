@@ -1,6 +1,5 @@
 /* mbed Microcontroller Library - FileSystemLike
  * Copyright (c) 2008-2009 ARM Limited. All rights reserved.
- * sford
  */ 
  
 #ifndef MBED_FILESYSTEMLIKE_H

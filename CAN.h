@@ -1,10 +1,13 @@
 /* mbed Microcontroller Library - can
- * Copyright (c) 2009 ARM Limited. All rights reserved.
- * rmeyer
+ * Copyright (c) 2009-2011 ARM Limited. All rights reserved.
  */ 
 
 #ifndef MBED_CAN_H
 #define MBED_CAN_H
+
+#include "device.h"
+
+#if DEVICE_CAN
 
 #include "Base.h"
 #include "platform.h" 
@@ -238,3 +241,5 @@ private:
 } // namespace mbed
 
 #endif    // MBED_CAN_H
+
+#endif

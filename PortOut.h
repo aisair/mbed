@@ -1,9 +1,13 @@
 /* mbed Microcontroller Library - PortOut
- * Copyright (c) 2006-2009 ARM Limited. All rights reserved.
+ * Copyright (c) 2006-2011 ARM Limited. All rights reserved.
  */ 
  
 #ifndef MBED_PORTOUT_H
 #define MBED_PORTOUT_H
+
+#include "device.h"
+
+#if DEVICE_PORTOUT
 
 #include "platform.h"
 #include "PinNames.h"
@@ -93,5 +97,7 @@ private:
 };
 
 } // namespace mbed
+
+#endif
 
 #endif

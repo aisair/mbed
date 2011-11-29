@@ -1,6 +1,5 @@
 /* mbed Microcontroller Library - RPC
  * Copyright (c) 2008-2009 ARM Limited. All rights reserved.
- * sford
  */ 
  
 #ifndef MBED_RPC_H

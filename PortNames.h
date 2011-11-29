@@ -1,6 +1,5 @@
 /* mbed Microcontroller Library - PortName 
- * Copyright (c) 2010 ARM Limited. All rights reserved.
- * jward
+ * Copyright (c) 2010-2011 ARM Limited. All rights reserved.
  */
 
 #ifndef MBED_PORTNAMES_H
@@ -10,7 +9,8 @@
 extern "C" {
 #endif
 
-typedef enum PortName PortName;
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
+
 enum PortName {
     Port0 = 0
     , Port1 = 1
@@ -18,6 +18,18 @@ enum PortName {
     , Port3 = 3
     , Port4 = 4
 };
+typedef enum PortName PortName;
+
+#elif defined(TARGET_LPC11U24)
+
+enum PortName {
+    Port0 = 0
+    , Port1 = 1
+};
+typedef enum PortName PortName;
+
+
+#endif
 
 #ifdef __cplusplus
 }
