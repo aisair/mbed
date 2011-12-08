@@ -56,9 +56,7 @@ public:
      * Variables:
      *  value - An integer specifying a bit to write for every corresponding PortOut pin
      */    
-    void write(int value) {
-        _gpio->FIOPIN = (_gpio->FIOPIN & ~_mask) | (value & _mask);
-    }
+    void write(int value);
 
     /* Function: read
      *  Read the value currently output on the port
@@ -66,9 +64,7 @@ public:
      * Variables:
      *  returns - An integer with each bit corresponding to associated PortOut pin setting
      */
-    int read() {
-        return _gpio->FIOPIN & _mask;
-    }
+    int read();
 
     /* Function: operator=
      *  A shorthand for <write>
@@ -91,9 +87,11 @@ public:
     }
 
 private:
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
     LPC_GPIO_TypeDef    *_gpio;
-    PortName            _port; 
-    uint32_t            _mask;    
+#endif
+    PortName            _port;
+    uint32_t            _mask;
 };
 
 } // namespace mbed

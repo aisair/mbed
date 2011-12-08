@@ -54,9 +54,7 @@ public:
      * Variables:
      *  returns - An integer with each bit corresponding to associated port pin setting
      */
-    int read() {
-        return _gpio->FIOPIN & _mask;
-    }
+    int read();
 
     /* Function: mode
      *  Set the input pin mode
@@ -74,9 +72,11 @@ public:
     }
 
 private:
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
     LPC_GPIO_TypeDef    *_gpio;
+#endif
     PortName            _port;
-    uint32_t            _mask;    
+    uint32_t            _mask;
 };
 
 } // namespace mbed

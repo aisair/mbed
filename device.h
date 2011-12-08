@@ -33,9 +33,9 @@
 
 #elif defined(TARGET_LPC11U24)
 
-#define DEVICE_PORTIN 0
-#define DEVICE_PORTOUT 0
-#define DEVICE_PORTINOUT 0
+#define DEVICE_PORTIN 1
+#define DEVICE_PORTOUT 1
+#define DEVICE_PORTINOUT 1
 
 #define DEVICE_INTERRUPTIN 1
 
@@ -58,7 +58,7 @@
 
 #define DEVICE_ETHERNET 0
 
-#define DEVICE_PWMOUT 0
+#define DEVICE_PWMOUT 1
 
 #endif
 

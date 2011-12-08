@@ -96,6 +96,19 @@ enum PinMode {
 };
 typedef enum PinMode PinMode;
 
+// version of PINCON_TypeDef using register arrays
+typedef struct {
+  __IO uint32_t PINSEL[11];
+       uint32_t RESERVED0[5];
+  __IO uint32_t PINMODE[10];
+#ifndef TARGET_LPC2368
+// Open drain mode is not available on LPC2368
+  __IO uint32_t PINMODE_OD[5];
+#endif
+} PINCONARRAY_TypeDef;
+
+#define PINCONARRAY ((PINCONARRAY_TypeDef *)LPC_PINCON_BASE)
+
 
 #elif defined(TARGET_LPC11U24)
 
@@ -126,6 +139,10 @@ enum PinName {
   , P0_21 = 21
   , P0_22 = 22
   , P0_23 = 23
+  , P0_24 = 24
+  , P0_25 = 25
+  , P0_26 = 26
+  , P0_27 = 27
 
   , P1_0 = 32
   , P1_1 = 33

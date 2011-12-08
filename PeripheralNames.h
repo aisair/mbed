@@ -77,9 +77,6 @@ enum CANName {
 }; 
 typedef enum CANName CANName;
 
-#define STDIO_UART_TX     USBTX
-#define STDIO_UART_RX     USBRX
-#define STDIO_UART        UART_0
 #define US_TICKER_TIMER TIMER_3
 #define US_TICKER_TIMER_IRQn TIMER3_IRQn
 
@@ -96,8 +93,8 @@ enum I2CName {
 typedef enum I2CName I2CName;
 
 enum TimerName {
-    TIMER_0 = (int)LPC_CT32B0_BASE  
-    , TIMER_1 = (int)LPC_CT32B1_BASE       
+    TIMER_0 = (int)LPC_CT32B0_BASE
+    , TIMER_1 = (int)LPC_CT32B1_BASE
 };
 typedef enum TimerName TimerName;
 
@@ -119,14 +116,21 @@ enum SPIName {
 };
 typedef enum SPIName SPIName;
 
-#define STDIO_UART_TX     USBTX
-#define STDIO_UART_RX     USBRX
-#define STDIO_UART        UART_0
-
 #define US_TICKER_TIMER TIMER_1
 #define US_TICKER_TIMER_IRQn     TIMER_32_1_IRQn 
 
+typedef enum PWMName {
+    PWM_1 = 0
+    , PWM_2
+    , PWM_3
+    , PWM_4
+} PWMName;
+
 #endif
+
+#define STDIO_UART_TX     USBTX
+#define STDIO_UART_RX     USBRX
+#define STDIO_UART        UART_0
 
 #ifdef __cplusplus
 }
