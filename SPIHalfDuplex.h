@@ -7,7 +7,7 @@
 
 #include "device.h"
 
-#if DEVICE_SPIHALFDUPLEX
+#if DEVICE_SPI
 
 #include "SPI.h"
 
@@ -104,7 +104,6 @@ public:
     void slave_format(int sbits);
 
 protected:
-
     PinName _mosi;
     PinName _miso;
     int     _sbits;

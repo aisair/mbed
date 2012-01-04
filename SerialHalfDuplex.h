@@ -7,7 +7,7 @@
 
 #include "device.h"
 
-#if DEVICE_SERIALHALFDUPLEX
+#if DEVICE_SERIAL
 
 #include "Serial.h"
 #include "PinNames.h"
