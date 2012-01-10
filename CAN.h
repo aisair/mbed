@@ -227,7 +227,14 @@ public:
     *  mptr - pointer to the member function to be called
     */
    template<typename T>
-   void attach(T* tptr, void (T::*mptr)(void));
+   void attach(T* tptr, void (T::*mptr)(void)) {
+        if((mptr != NULL) && (tptr != NULL)) {
+            _rxirq.attach(tptr, mptr);
+            setup_interrupt();
+        } else {
+            remove_interrupt();
+        }
+    }
     
 private:
 
