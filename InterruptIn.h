@@ -23,39 +23,38 @@
 
 namespace mbed {
 
-/* Class: InterruptIn
- *  A digital interrupt input, used to call a function on a rising or falling edge
+/** A digital interrupt input, used to call a function on a rising or falling edge
  *
  * Example:
- * > // Flash an LED while waiting for events
- * >
- * > #include "mbed.h"
- * >
- * > InterruptIn event(p16);
- * > DigitalOut led(LED1);
- * >
- * > void trigger() {
- * >     printf("triggered!\n");
- * > }
- * >
- * > int main() {
- * >     event.rise(&trigger);
- * >     while(1) {
- * >         led = !led;
- * >         wait(0.25);
- * >     }
- * > }
+ * @code
+ * // Flash an LED while waiting for events
+ *
+ * #include "mbed.h"
+ *
+ * InterruptIn event(p16);
+ * DigitalOut led(LED1);
+ *
+ * void trigger() {
+ *     printf("triggered!\n");
+ * }
+ *
+ * int main() {
+ *     event.rise(&trigger);
+ *     while(1) {
+ *         led = !led;
+ *         wait(0.25);
+ *     }
+ * }
+ * @endcode
  */
 class InterruptIn : public Base {
 
 public:
 
-    /* Constructor: InterruptIn
-     *  Create an InterruptIn connected to the specified pin
+    /** Create an InterruptIn connected to the specified pin
      *
-     * Variables:
-     *  pin - InterruptIn pin to connect to
-     *  name - (optional) A string to identify the object
+     *  @param pin InterruptIn pin to connect to
+     *  @param name (optional) A string to identify the object
      */
     InterruptIn(PinName pin, const char *name = NULL);
 #if defined(TARGET_LPC11U24)
@@ -68,20 +67,16 @@ public:
 
 #endif
      
-    /* Function: rise
-     *  Attach a function to call when a rising edge occurs on the input
+    /** Attach a function to call when a rising edge occurs on the input
      *
-     * Variables:
-     *  fptr - A pointer to a void function, or 0 to set as none
+     *  @param fptr A pointer to a void function, or 0 to set as none
      */
     void rise(void (*fptr)(void));
 
-    /* Function: rise
-     *  Attach a member function to call when a rising edge occurs on the input
+    /** Attach a member function to call when a rising edge occurs on the input
      *     
-     * Variables:
-     *  tptr - pointer to the object to call the member function on
-     *  mptr - pointer to the member function to be called
+     *  @param tptr pointer to the object to call the member function on
+     *  @param mptr pointer to the member function to be called
      */
     template<typename T>
     void rise(T* tptr, void (T::*mptr)(void)) {
@@ -89,20 +84,16 @@ public:
         setup_interrupt(1, 1);
     }
 
-    /* Function: fall
-     *  Attach a function to call when a falling edge occurs on the input
+    /** Attach a function to call when a falling edge occurs on the input
      *
-     * Variables:
-     *  fptr - A pointer to a void function, or 0 to set as none
+     *  @param fptr A pointer to a void function, or 0 to set as none
      */
     void fall(void (*fptr)(void));
 
-    /* Function: fall
-     *  Attach a member function to call when a falling edge occurs on the input
+    /** Attach a member function to call when a falling edge occurs on the input
      *     
-     * Variables:
-     *  tptr - pointer to the object to call the member function on
-     *  mptr - pointer to the member function to be called
+     *  @param tptr pointer to the object to call the member function on
+     *  @param mptr pointer to the member function to be called
      */
     template<typename T>
     void fall(T* tptr, void (T::*mptr)(void)) {
@@ -110,11 +101,9 @@ public:
         setup_interrupt(0, 1);
     }
 
-    /* Function: mode
-     *  Set the input pin mode
+    /** Set the input pin mode
      *
-     * Variables:
-     *  mode - PullUp, PullDown, PullNone
+     *  @param mode PullUp, PullDown, PullNone
      */
     void mode(PinMode pull);
     

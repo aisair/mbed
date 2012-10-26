@@ -16,74 +16,68 @@
 #include "PortNames.h"
 
 namespace mbed {
-/* Class: PortOut
- *   A multiple pin digital out
+/** A multiple pin digital out
  *
  * Example:
- * > // Toggle all four LEDs
- * >
- * > #include "mbed.h"
- * >
- * > // LED1 = P1.18  LED2 = P1.20  LED3 = P1.21  LED4 = P1.23
- * > #define LED_MASK 0x00B40000
- * >
- * > PortOut ledport(Port1, LED_MASK);
- * >
- * > int main() {
- * >     while(1) {
- * >         ledport = LED_MASK;
- * >         wait(1);
- * >         ledport = 0;
- * >         wait(1);
- * >     }
- * > }
+ * @code
+ * // Toggle all four LEDs
+ * 
+ * #include "mbed.h"
+ *
+ * // LED1 = P1.18  LED2 = P1.20  LED3 = P1.21  LED4 = P1.23
+ * #define LED_MASK 0x00B40000
+ *
+ * PortOut ledport(Port1, LED_MASK);
+ *
+ * int main() {
+ *     while(1) {
+ *         ledport = LED_MASK;
+ *         wait(1);
+ *         ledport = 0;
+ *         wait(1);
+ *     }
+ * }
+ * @endcode
  */  
 class PortOut {
 public:
 
-    /* Constructor: PortOut
-     *  Create an PortOut, connected to the specified port
+    /** Create an PortOut, connected to the specified port
      *
-     * Variables:
-     *  port - Port to connect to (Port0-Port5)
-     *  mask - A bitmask to identify which bits in the port should be included (0 - ignore)
-   	 */ 
+     *  @param port Port to connect to (Port0-Port5)
+     *  @param mask A bitmask to identify which bits in the port should be included (0 - ignore)
+     */ 
     PortOut(PortName port, int mask = 0xFFFFFFFF);
 
-    /* Function: write
-     *  Write the value to the output port
+    /** Write the value to the output port
      *
-     * Variables:
-     *  value - An integer specifying a bit to write for every corresponding PortOut pin
+     *  @param value An integer specifying a bit to write for every corresponding PortOut pin
      */    
     void write(int value);
 
-    /* Function: read
-     *  Read the value currently output on the port
+    /** Read the value currently output on the port
      *
-     * Variables:
-     *  returns - An integer with each bit corresponding to associated PortOut pin setting
+     *  @returns
+     *    An integer with each bit corresponding to associated PortOut pin setting
      */
     int read();
 
-    /* Function: operator=
-     *  A shorthand for <write>
+    /** A shorthand for write()
      */    
     PortOut& operator= (int value) { 
-    	write(value);
-	    return *this;
+        write(value);
+        return *this;
     }
     
     PortOut& operator= (PortOut& rhs) { 
-    	write(rhs.read());
-	    return *this;
+        write(rhs.read());
+        return *this;
     }
     
-    /* Function: operator int()
-     *  A shorthand for <read>
+    /** A shorthand for read()
      */
     operator int() { 
-	    return read();
+        return read();
     }
 
 private:

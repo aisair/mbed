@@ -10,18 +10,16 @@
 
 namespace mbed {
 
-/* Class FileLike
- *  A file-like object is one that can be opened with fopen by
+/** A file-like object is one that can be opened with fopen by
  *  fopen("/name", mode). It is intersection of the classes Base and
  *  FileHandle.
  */ 
 class FileLike : public Base, public FileHandle {
     
  public:
-    /* Constructor FileLike
+    /** FileLike constructor
      *
-     * Variables
-     *  name - The name to use to open the file.
+     *  @param name The name to use to open the file.
      */
     FileLike(const char *name) : Base(name) { }
     virtual ~FileLike();

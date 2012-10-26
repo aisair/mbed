@@ -16,67 +16,62 @@
 
 namespace mbed {
 
-/* Class: AnalogIn
- *  An analog input, used for reading the voltage on a pin 
+/** An analog input, used for reading the voltage on a pin 
  *
  * Example:
- * > // Print messages when the AnalogIn is greater than 50%
- * >
- * > #include "mbed.h"
- * >
- * > AnalogIn temperature(p20);
- * >
- * > int main() {
- * >     while(1) {
- * >         if(temperature > 0.5) {
- * >             printf("Too hot! (%f)", temperature.read());             
- * >         }
- * >     }
- * > }
+ * @code
+ * // Print messages when the AnalogIn is greater than 50%
+ * 
+ * #include "mbed.h"
+ * 
+ * AnalogIn temperature(p20);
+ * 
+ * int main() {
+ *     while(1) {
+ *         if(temperature > 0.5) {
+ *             printf("Too hot! (%f)", temperature.read());             
+ *         }
+ *     }
+ * }
+ * @endcode
  */
 class AnalogIn :  public Base {
 
 public:
 
-    /* Constructor: AnalogIn
-     *  Create an AnalogIn, connected to the specified pin
+    /** Create an AnalogIn, connected to the specified pin
      *
-     * Variables:
-     *  pin - AnalogIn pin to connect to 
-     *  name - (optional) A string to identify the object
+     * @param pin AnalogIn pin to connect to 
+     * @param name (optional) A string to identify the object
      */
-	AnalogIn(PinName pin, const char *name = NULL);
-	
-    /* Function: read
-     * Read the input voltage, represented as a float in the range [0.0, 1.0]
+    AnalogIn(PinName pin, const char *name = NULL);
+    
+    /** Read the input voltage, represented as a float in the range [0.0, 1.0]
      *
-     * Variables:
-     *  returns - A floating-point value representing the current input voltage,
-     *            measured as a percentage
+     * @returns A floating-point value representing the current input voltage, measured as a percentage
      */
-    float read();	
+    float read();    
 
-    /* Function: read_u16
-     *  Read the input voltage, represented as an unsigned short in the range [0x0, 0xFFFF]
+    /** Read the input voltage, represented as an unsigned short in the range [0x0, 0xFFFF]
      *
-     * Variables:
-     *  returns - 16-bit unsigned short representing the current input voltage,
-     *            normalised to a 16-bit value 
+     * @returns
+     *   16-bit unsigned short representing the current input voltage, normalised to a 16-bit value 
      */
     unsigned short read_u16();
 
 #ifdef MBED_OPERATORS
-    /* Function: operator float
-     *  An operator shorthand for <read()>
+    /** An operator shorthand for read()
      *
-     * The float() operator can be used as a shorthand for <read()> to simplify common code sequences
+     * The float() operator can be used as a shorthand for read() to simplify common code sequences
      *
      * Example:
-     * > float x = volume.read();
-     * > float x = volume;
-     * >
-     * > if(volume.read() > 0.25) { ... }
-     * > if(volume > 0.25) { ... }
+     * @code
+     * float x = volume.read();
+     * float x = volume;
+     * 
+     * if(volume.read() > 0.25) { ... }
+     * if(volume > 0.25) { ... }
+     * @endcode
      */
     operator float();
 #endif

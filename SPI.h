@@ -16,75 +16,72 @@
 
 namespace mbed {
 
-/* Class: SPI
- *  A SPI Master, used for communicating with SPI slave devices
+/** A SPI Master, used for communicating with SPI slave devices
  *
- * The default format is set to 8-bits, mode 0, and a clock frequency of 1MHz
+ *  The default format is set to 8-bits, mode 0, and a clock frequency of 1MHz
  *
- * Most SPI devices will also require Chip Select and Reset signals. These
- * can be controlled using <DigitalOut> pins
+ *  Most SPI devices will also require Chip Select and Reset signals. These
+ *  can be controlled using <DigitalOut> pins
  *
  * Example:
- * > // Send a byte to a SPI slave, and record the response
- * >
- * > #include "mbed.h"
- * >
- * > SPI device(p5, p6, p7); // mosi, miso, sclk
- * >
- * > int main() {
- * >     int response = device.write(0xFF);
- * > }
+ * @code
+ * // Send a byte to a SPI slave, and record the response
+ *
+ * #include "mbed.h"
+ *
+ * SPI device(p5, p6, p7); // mosi, miso, sclk
+ *
+ * int main() {
+ *     int response = device.write(0xFF);
+ * }
+ * @endcode
  */ 
 class SPI : public Base {
 
 public:
 
-    /* Constructor: SPI
-     *  Create a SPI master connected to the specified pins
+    /** Create a SPI master connected to the specified pins
      *
-     * Variables:
-     *  mosi - SPI Master Out, Slave In pin
-     *  miso - SPI Master In, Slave Out pin
-     *  sclk - SPI Clock pin
-     *  name - (optional) A string to identify the object     
-     *
-     * Pin Options:
-     *  (5, 6, 7) or (11, 12, 13)
+     *  Pin Options:
+     *    (5, 6, 7) or (11, 12, 13)
      *
      *  mosi or miso can be specfied as NC if not used
+     *
+     *  @param mosi SPI Master Out, Slave In pin
+     *  @param miso SPI Master In, Slave Out pin
+     *  @param sclk SPI Clock pin
+     *  @param name (optional) A string to identify the object     
      */
     SPI(PinName mosi, PinName miso, PinName sclk, const char *name = NULL);
 
-    /* Function: format
-     *  Configure the data transmission format
+    /** Configure the data transmission format
      *
-     * Variables:
-     *  bits - Number of bits per SPI frame (4 - 16)
-     *  mode - Clock polarity and phase mode (0 - 3)
+     *  @param bits Number of bits per SPI frame (4 - 16)
+     *  @param mode Clock polarity and phase mode (0 - 3)
      *
-     * > mode | POL PHA 
-     * > -----+--------	 
-     * >   0  |  0   0 
-     * >   1  |  0   1
-     * >   2  |  1   0 
-     * >   3  |  1   1
+     * @code
+     * mode | POL PHA 
+     * -----+--------     
+     *   0  |  0   0 
+     *   1  |  0   1
+     *   2  |  1   0 
+     *   3  |  1   1
+     * @endcode
      */
     void format(int bits, int mode = 0);
 
-    /* Function: frequency
-     *  Set the spi bus clock frequency
+    /** Set the spi bus clock frequency
      *
-     * Variables:
-     *  hz - SCLK frequency in hz (default = 1MHz)
+     *  @param hz SCLK frequency in hz (default = 1MHz)
      */
     void frequency(int hz = 1000000);
 
-    /* Function: write
-     *  Write to the SPI Slave and return the response
+    /** Write to the SPI Slave and return the response
      *
-     * Variables:
-     *  value - Data to be sent to the SPI slave
-     *  returns - Response from the SPI slave
+     *  @param value Data to be sent to the SPI slave
+     *
+     *  @returns
+     *    Response from the SPI slave
     */
     virtual int write(int value);
 
@@ -96,9 +93,9 @@ public:
 
 protected:
 
-	SPIName _spi;
-	
-	void aquire(void);
+    SPIName _spi;
+    
+    void aquire(void);
     static SPI *_owner; 
     int _bits;
     int _mode;

@@ -13,22 +13,17 @@
 
 namespace mbed {
 
-/* Class: BusIn
- *  A digital input bus, used for reading the state of a collection of pins
+/** A digital input bus, used for reading the state of a collection of pins
  */
 class BusIn : public Base {
 
 public:
 
-    /* Group: Configuration Methods */
-
-    /* Constructor: BusIn
-     *  Create an BusIn, connected to the specified pins
+    /** Create an BusIn, connected to the specified pins
      *
-     * Variables:
-     *  p<n> - DigitalIn pin to connect to bus bit <n> (p5-p30, NC)
+     * @param <n> DigitalIn pin to connect to bus bit <n> (p5-p30, NC)
      *
-     * Note:
+     * @note
      *  It is only required to specify as many pin variables as is required
      *  for the bus; the rest will default to NC (not connected)
      */ 
@@ -39,24 +34,18 @@ public:
           const char *name = NULL);
 
     BusIn(PinName pins[16], const char *name = NULL);
-		
-	virtual ~BusIn();
-	
-	/* Group: Access Methods */
-		
-	/* Function: read
-	 *  Read the value of the input bus
-	 *
-	 * Variables:
-	 *  returns - An integer with each bit corresponding to the value read from the associated DigitalIn pin
-	 */
+        
+    virtual ~BusIn();
+        
+    /** Read the value of the input bus
+     *
+     *  @returns
+     *   An integer with each bit corresponding to the value read from the associated DigitalIn pin
+     */
     int read();
 
 #ifdef MBED_OPERATORS
-    /* Group: Access Method Shorthand */
-		
-    /* Function: operator int()
-     *  A shorthand for <read>
+    /** A shorthand for read()
      */
     operator int();
 #endif
@@ -67,7 +56,7 @@ public:
 #endif
 
 protected:
-	
+    
     DigitalIn* _pin[16];
 
 #ifdef MBED_RPC    

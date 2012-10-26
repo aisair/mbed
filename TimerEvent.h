@@ -7,36 +7,51 @@
 
 namespace mbed {
 
-// Base abstraction for timer interrupts
+/** Base abstraction for timer interrupts
+*/
 class TimerEvent {
 
 public:
 
     TimerEvent();
     
-    // The handler registered with the underlying timer interrupt
+    /** The handler registered with the underlying timer interrupt
+     */
     static void irq();
 
-    // Destruction removes it...    
+    /** Destruction removes it...
+     */
     virtual ~TimerEvent();
 
 protected:
 
-    // The handler called to service the timer event of the derived class
+    /** The handler called to service the timer event of the derived class
+     */
     virtual void handler() = 0;
     
-    // insert in to linked list
+    /** Insert in to linked list
+     */
     void insert(unsigned int timestamp);
     
-    // remove from linked list, if in it
+    /** Remove from linked list, if in it
+     */
     void remove();
     
-    // Get the current usec timestamp
+    /** Get the current usec timestamp
+     */
     static unsigned int timestamp();
 
-    static TimerEvent *_head;   // The head of the list of the events, NULL if none
-    TimerEvent *_next;          // Pointer to the next in the list, NULL if last
-    unsigned int _timestamp;    // The timestamp at which the even should be triggered
+    /** The head of the list of the events, NULL if none
+     */
+    static TimerEvent *_head;
+    
+    /** Pointer to the next in the list, NULL if last
+     */
+    TimerEvent *_next;
+    
+    /** The timestamp at which the even should be triggered
+     */
+    unsigned int _timestamp;
 
 };
 

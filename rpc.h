@@ -5,8 +5,7 @@
 #ifndef MBED_RPC_H
 #define MBED_RPC_H
 
-/* Section rpc
- *  Helpers for rpc handling.
+/**  Helpers for rpc handling.
  */
 
 #include <stdlib.h>
@@ -20,12 +19,10 @@
 
 namespace mbed {
 
-/* Function parse_arg
- *  Parses and returns a value from a string.
+/** Parses and returns a value from a string.
  *
- * Variable
- *  arg - The string to pase
- *  next - If not NULL a pointer to after the last 
+ *  @param arg The string to pase
+ *  @param next If not NULL a pointer to after the last 
  *    character parsed is written here
  */
 template<typename T> T parse_arg(const char *arg, const char **next);
@@ -222,7 +219,7 @@ inline PinName parse_pins(const char *str) {
                   pin = pin * 10 + pin2;
         }
         if(pin < 5 || pin > 30) {
-	          return NC;
+              return NC;
         }
         return pin_names[pin - 5];
     } else if(str[0] == 'L') {  // LEDn
@@ -259,12 +256,10 @@ template<> inline PinName parse_arg<PinName>(const char *arg, const char **next)
 }
 
 
-/* Function write_result
- *  Writes a value in to a result string in an appropriate manner
+/** Writes a value in to a result string in an appropriate manner
  *
- * Variable
- *  val - The value to write
- *  result - A pointer to the array to write the value into
+ *  @param val The value to write
+ *  @param result A pointer to the array to write the value into
  */
 template<typename T> void write_result(T val, char *result);
 
@@ -356,7 +351,7 @@ inline const char *next_arg(const char* next) {
 }
 
 
-/* Function rpc_method_caller
+/** rpc_method_caller
  */
 template<class T, void (T::*member)(const char *,char *)> 
 void rpc_method_caller(Base *this_ptr, const char *arguments, char *result) {
@@ -364,7 +359,7 @@ void rpc_method_caller(Base *this_ptr, const char *arguments, char *result) {
 }
 
 
-/* Function rpc_method_caller
+/** rpc_method_caller
  */
 template<class T, void (T::*member)()> 
 void rpc_method_caller(Base *this_ptr, const char *arguments, char *result) { 
@@ -375,7 +370,7 @@ void rpc_method_caller(Base *this_ptr, const char *arguments, char *result) {
 }
 
 
-/* Function rpc_method_caller
+/** rpc_method_caller
  */
 template<class T, typename A1, void (T::*member)(A1)> 
 void rpc_method_caller(Base *this_ptr, const char *arguments, char *result) {
@@ -390,7 +385,7 @@ void rpc_method_caller(Base *this_ptr, const char *arguments, char *result) {
 }
 
 
-/* Function rpc_method_caller
+/** rpc_method_caller
  */
 template<class T, typename A1, typename A2, void (T::*member)(A1,A2)> 
 void rpc_method_caller(Base *this_ptr, const char *arguments, char *result) {
@@ -406,7 +401,7 @@ void rpc_method_caller(Base *this_ptr, const char *arguments, char *result) {
 }
 
 
-/* Function rpc_method_caller
+/** rpc_method_caller
  */
 template<class T, typename A1, typename A2, typename A3, void (T::*member)(A1,A2,A3)> 
 void rpc_method_caller(Base *this_ptr, const char *arguments, char *result) {
@@ -423,7 +418,7 @@ void rpc_method_caller(Base *this_ptr, const char *arguments, char *result) {
 }
 
 
-/* Function rpc_method_caller
+/** rpc_method_caller
  */
 template<typename R, class T, R (T::*member)()> 
 void rpc_method_caller(Base *this_ptr, const char *arguments, char *result) { 
@@ -434,7 +429,7 @@ void rpc_method_caller(Base *this_ptr, const char *arguments, char *result) {
 }
 
 
-/* Function rpc_method_caller
+/** rpc_method_caller
  */
 template<typename R, class T, typename A1, R (T::*member)(A1)> 
 void rpc_method_caller(Base *this_ptr, const char *arguments, char *result) {
@@ -449,7 +444,7 @@ void rpc_method_caller(Base *this_ptr, const char *arguments, char *result) {
 }
 
 
-/* Function rpc_method_caller
+/** rpc_method_caller
  */
 template<typename R, class T, typename A1, typename A2, R (T::*member)(A1,A2)> 
 void rpc_method_caller(Base *this_ptr, const char *arguments, char *result) {
@@ -465,7 +460,7 @@ void rpc_method_caller(Base *this_ptr, const char *arguments, char *result) {
 }
 
 
-/* Function rpc_method_caller
+/** rpc_method_caller
  */
 template<typename R, class T, typename A1, typename A2, typename A3, R (T::*member)(A1,A2,A3)> 
 void rpc_method_caller(Base *this_ptr, const char *arguments, char *result) {
@@ -482,7 +477,7 @@ void rpc_method_caller(Base *this_ptr, const char *arguments, char *result) {
 }
 
 
-/* Function rpc_function caller
+/** rpc_function caller
  */
 template<typename R, R (*func)()>
 void rpc_function_caller(const char *arguments, char *result) {
@@ -493,7 +488,7 @@ void rpc_function_caller(const char *arguments, char *result) {
 }
 
 
-/* Function rpc_function caller
+/** rpc_function caller
  */
 template<typename R, typename A1, R (*func)(A1)>
 void rpc_function_caller(const char *arguments, char *result) {
@@ -505,7 +500,7 @@ void rpc_function_caller(const char *arguments, char *result) {
 }
 
 
-/* Function rpc_function caller
+/** rpc_function caller
  */
 template<typename R, typename A1, typename A2, R (*func)(A1,A2)>
 void rpc_function_caller(const char *arguments, char *result) {
@@ -521,7 +516,7 @@ void rpc_function_caller(const char *arguments, char *result) {
 }
 
 
-/* Function rpc_function caller
+/** rpc_function caller
  */
 template<typename R, typename A1, typename A2, typename A3, R (*func)(A1,A2,A3)>
 void rpc_function_caller(const char *arguments, char *result) {
@@ -538,7 +533,7 @@ void rpc_function_caller(const char *arguments, char *result) {
 }
 
 
-/* Function rpc_function caller
+/** rpc_function caller
  */
 template<typename R, typename A1, typename A2, typename A3, typename A4, R (*func)(A1,A2,A3,A4)>
 void rpc_function_caller(const char *arguments, char *result) {
@@ -574,15 +569,13 @@ const struct rpc_method *rpc_super(Base *this_ptr) {
 #define RPC_METHOD_END { NULL, NULL }
 #define RPC_METHOD_SUPER(C) { NULL, (rpc_method::caller_t)(rpc_method::super_t)rpc_super<C> }
 
-/* Function rpc
- *  Parse a string describing a call and then do it
+/** Parse a string describing a call and then do it
  *
- * Variables
- *  call - A pointer to a string describing the call, which has
- *    the form /object/method arg ... argn. Arguments are
- *    delimited by space characters, and the string is terminated
- *    by a null character.
- *  result - A pointer to an array to write the result into.
+ * @param call A pointer to a string describing the call, which has
+ *   the form /object/method arg ... argn. Arguments are
+ *   delimited by space characters, and the string is terminated
+ *   by a null character.
+ * @param result A pointer to an array to write the result into.
  */
 bool rpc(const char *buf, char *result = 0);
 

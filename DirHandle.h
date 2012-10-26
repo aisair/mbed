@@ -19,8 +19,7 @@ struct dirent {
 
 namespace mbed {
 
-/* Class DirHandle
- *  Represents a directory stream. Objects of this type are returned
+/** Represents a directory stream. Objects of this type are returned
  *  by a FileSystemLike's opendir method. Implementations must define
  *  at least closedir, readdir and rewinddir.
  *
@@ -36,44 +35,39 @@ namespace mbed {
 class DirHandle {
 
  public:
-    /* Function closedir
-     *  Closes the directory.
+    /** Closes the directory.
      *
-     * Variables
-     *  returns - 0 on success, or -1 on error.
+     *  @returns
+     *    0 on success,
+     *   -1 on error.
      */
     virtual int closedir()=0;
 
-    /* Function readdir
-     *  Return the directory entry at the current position, and
+    /** Return the directory entry at the current position, and
      *  advances the position to the next entry.
      *
-     * Returns
-     *  A pointer to a dirent structure representing the
-     *  directory entry at the current position, or NULL on reaching
-     *  end of directory or error.
+     * @returns
+     *   A pointer to a dirent structure representing the
+     *   directory entry at the current position, or NULL on reaching
+     *   end of directory or error.
      */
     virtual struct dirent *readdir()=0;
 
-    /* Function rewinddir
-     *  Resets the position to the beginning of the directory.
+    /** Resets the position to the beginning of the directory.
      */
     virtual void rewinddir()=0;
 
-    /* Function telldir
-     *  Returns the current position of the DirHandle.
+    /** Returns the current position of the DirHandle.
      *
-     * Returns
-     *  The current position, or -1 on error.
+     * @returns
+     *   the current position,
+     *  -1 on error.
      */
     virtual off_t telldir() { return -1; }
 
-    /* Function seekdir
-     *  Sets the position of the DirHandle.
+    /** Sets the position of the DirHandle.
      *
-     * Variables
-     *  location - The location to seek to. Must be a value returned
-     *   by telldir.
+     *  @param location The location to seek to. Must be a value returned by telldir.
      */
     virtual void seekdir(off_t location) { }
 

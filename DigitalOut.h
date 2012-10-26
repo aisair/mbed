@@ -12,40 +12,37 @@
 
 namespace mbed {
 
-/* Class: DigitalOut
- *  A digital output, used for setting the state of a pin
+/** A digital output, used for setting the state of a pin
  *
  * Example:
- * > // Toggle a LED
- * > #include "mbed.h"
- * >
- * > DigitalOut led(LED1);
- * >
- * > int main() {
- * >     while(1) {
- * >         led = !led;
- * >         wait(0.2);
- * >     }
- * > }
+ * @code
+ * // Toggle a LED
+ * #include "mbed.h"
+ * 
+ * DigitalOut led(LED1);
+ * 
+ * int main() {
+ *     while(1) {
+ *         led = !led;
+ *         wait(0.2);
+ *     }
+ * }
+ * @endcode
  */
 class DigitalOut : public Base {
 
 public:
 
-    /* Constructor: DigitalOut
-     *  Create a DigitalOut connected to the specified pin
+    /** Create a DigitalOut connected to the specified pin
      *
-     * Variables:
-     *  pin - DigitalOut pin to connect to
+     *  @param pin DigitalOut pin to connect to
      */
     DigitalOut(PinName pin, const char* name = NULL);
 
-    /* Function: write
-     *  Set the output, specified as 0 or 1 (int)
+    /** Set the output, specified as 0 or 1 (int)
      *
-     * Variables:
-     *  value - An integer specifying the pin output value, 
-     *      0 for logical 0 and 1 (or any other non-zero value) for logical 1 
+     *  @param value An integer specifying the pin output value, 
+     *      0 for logical 0, 1 (or any other non-zero value) for logical 1 
      */
     void write(int value) {
 
@@ -68,12 +65,11 @@ public:
 
     }
 
-    /* Function: read
-     *  Return the output setting, represented as 0 or 1 (int)
+    /** Return the output setting, represented as 0 or 1 (int)
      *
-     * Variables:
-     *  returns - An integer representing the output setting of the pin, 
-     *      0 for logical 0 and 1 for logical 1
+     *  @returns
+     *    an integer representing the output setting of the pin, 
+     *    0 for logical 0, 1 for logical 1
      */
     int read() {
 #if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
@@ -86,8 +82,7 @@ public:
 
 
 #ifdef MBED_OPERATORS
-    /* Function: operator=
-     *  A shorthand for <write>
+    /** A shorthand for write()
      */
     DigitalOut& operator= (int value) {
         write(value);
@@ -100,8 +95,7 @@ public:
     }
 
     
-    /* Function: operator int()
-     *  A shorthand for <read>
+    /** A shorthand for read()
      */
     operator int() {
         return read();

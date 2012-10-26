@@ -12,25 +12,26 @@
 
 namespace mbed {
 
-/* Class: Timer
- *  A general purpose timer 
+/** A general purpose timer 
  *
  * Example:
- * > // Count the time to toggle a LED
- * >
- * > #include "mbed.h"
- * > 
- * > Timer timer;
- * > DigitalOut led(LED1);
- * > int begin, end;
- * > 
- * > int main() {
- * >     timer.start();
- * >     begin = timer.read_us();
- * >     led = !led;
- * >     end = timer.read_us();
- * >     printf("Toggle the led takes %d us", end - begin);
- * > }
+ * @code
+ * // Count the time to toggle a LED
+ *
+ * #include "mbed.h"
+ * 
+ * Timer timer;
+ * DigitalOut led(LED1);
+ * int begin, end;
+ * 
+ * int main() {
+ *     timer.start();
+ *     begin = timer.read_us();
+ *     led = !led;
+ *     end = timer.read_us();
+ *     printf("Toggle the led takes %d us", end - begin);
+ * }
+ * @endcode
  */
 class Timer : public Base {
 
@@ -38,35 +39,29 @@ public:
 
     Timer(const char *name = NULL);
     
-    /* Function: start
-     *  Start the timer
+    /** Start the timer
      */
     void start(); 
 
-    /* Function: stop
-     *  Stop the timer
+    /** Stop the timer
      */
     void stop(); 
 
-    /* Function: reset
-     *  Reset the timer to 0. 
+    /** Reset the timer to 0. 
      *
      * If it was already counting, it will continue
      */
     void reset();
 
-    /* Function: read
-     *  Get the time passed in seconds
+    /** Get the time passed in seconds
      */
     float read();
 
-    /* Function: read_ms
-     *  Get the time passed in mili-seconds
+    /** Get the time passed in mili-seconds
      */
     int read_ms();
 
-    /* Function: read_us
-     *  Get the time passed in micro-seconds
+    /** Get the time passed in micro-seconds
      */
     int read_us();
 

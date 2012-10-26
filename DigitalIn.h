@@ -12,45 +12,43 @@
 
 namespace mbed {
 
-/* Class: DigitalIn
- *  A digital input, used for reading the state of a pin
+/** A digital input, used for reading the state of a pin
  *
  * Example:
- * > // Flash an LED while a DigitalIn is true
- * >
- * > #include "mbed.h"
- * >
- * > DigitalIn enable(p5);
- * > DigitalOut led(LED1);
- * >
- * > int main() {
- * >     while(1) {
- * >         if(enable) {
- * >             led = !led;
- * >         }
- * >         wait(0.25);
- * >     }
- * > }
+ * @code
+ * // Flash an LED while a DigitalIn is true
+ * 
+ * #include "mbed.h"
+ * 
+ * DigitalIn enable(p5);
+ * DigitalOut led(LED1);
+ * 
+ * int main() {
+ *     while(1) {
+ *         if(enable) {
+ *             led = !led;
+ *         }
+ *         wait(0.25);
+ *     }
+ * }
+ * @endcode
  */
 class DigitalIn : public Base {
 
 public:
 
-    /* Constructor: DigitalIn
-     *  Create a DigitalIn connected to the specified pin
+    /** Create a DigitalIn connected to the specified pin
      *
-     * Variables:
-     *  pin - DigitalIn pin to connect to
-     *  name - (optional) A string to identify the object
+     *  @param pin DigitalIn pin to connect to
+     *  @param name (optional) A string to identify the object
      */
     DigitalIn(PinName pin, const char *name = NULL);
 
-    /* Function: read
-     *  Read the input, represented as 0 or 1 (int)
+    /** Read the input, represented as 0 or 1 (int)
      *
-     * Variables:
-     *  returns - An integer representing the state of the input pin, 
-     *      0 for logical 0 and 1 for logical 1
+     *  @returns
+     *    An integer representing the state of the input pin, 
+     *    0 for logical 0, 1 for logical 1
      */
     int read() {
 #if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
@@ -61,17 +59,14 @@ public:
     }
 
 
-    /* Function: mode
-     *  Set the input pin mode
+    /** Set the input pin mode
      *
-     * Variables:
-     *  mode - PullUp, PullDown, PullNone, OpenDrain
+     *  @param mode PullUp, PullDown, PullNone, OpenDrain
      */
     void mode(PinMode pull);
     
 #ifdef MBED_OPERATORS    
-    /* Function: operator int()
-     *  An operator shorthand for <read()>
+    /** An operator shorthand for read()
      */
     operator int() {
         return read();

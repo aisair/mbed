@@ -17,43 +17,41 @@
 
 namespace mbed {
 
-/* Class: Serial
- *  A serial port (UART) for communication with other serial devices
+/** A serial port (UART) for communication with other serial devices
  *
- * Can be used for Full Duplex communication, or Simplex by specifying 
- * one pin as NC (Not Connected)
+ *  Can be used for Full Duplex communication, or Simplex by specifying 
+ *  one pin as NC (Not Connected)
  *
  * Example:
- * > // Print "Hello World" to the PC
- * >
- * > #include "mbed.h"
- * >
- * > Serial pc(USBTX, USBRX);
- * >
- * > int main() {
- * >     pc.printf("Hello World\n");
- * > }
+ * @code
+ * // Print "Hello World" to the PC
+ *
+ * #include "mbed.h"
+ *
+ * Serial pc(USBTX, USBRX);
+ *
+ * int main() {
+ *     pc.printf("Hello World\n");
+ * }
+ * @endcode
  */
 class Serial : public Stream {
 
 public:
 
-    /* Constructor: Serial
-     *  Create a Serial port, connected to the specified transmit and receive pins
+    /** Create a Serial port, connected to the specified transmit and receive pins
      *
-     * Variables:
-     *  tx - Transmit pin 
-     *  rx - Receive pin
+     *  @param tx Transmit pin 
+     *  @param rx Receive pin
      *
-     *  Note: Either tx or rx may be specified as NC if unused
+     *  @note
+     *    Either tx or rx may be specified as NC if unused
      */
     Serial(PinName tx, PinName rx, const char *name = NULL);
 
-    /* Function: baud
-     *  Set the baud rate of the serial port
+    /** Set the baud rate of the serial port
      *  
-     * Variables:
-     *  baudrate - The baudrate of the serial port (default = 9600).
+     *  @param baudrate The baudrate of the serial port (default = 9600).
      */
     void baud(int baudrate);
 
@@ -70,90 +68,75 @@ public:
         , TxIrq
     };
 
-    /* Function: format
-     *  Set the transmission format used by the Serial port
+    /** Set the transmission format used by the Serial port
      *
-     * Variables:
-     *  bits - The number of bits in a word (5-8; default = 8)
-     *  parity - The parity used (Serial::None, Serial::Odd, Serial::Even, Serial::Forced1, Serial::Forced0; default = Serial::None)
-     *  stop - The number of stop bits (1 or 2; default = 1)
+     *  @param bits The number of bits in a word (5-8; default = 8)
+     *  @param parity The parity used (Serial::None, Serial::Odd, Serial::Even, Serial::Forced1, Serial::Forced0; default = Serial::None)
+     *  @param stop The number of stop bits (1 or 2; default = 1)
      */
     void format(int bits = 8, Parity parity = Serial::None, int stop_bits = 1); 
 
 #if 0 // Inhereted from Stream, for documentation only
 
-    /* Function: putc
-     *  Write a character
+    /** Write a character
      *
-     * Variables:
-     *  c - The character to write to the serial port
+     *  @param c The character to write to the serial port
      */
     int putc(int c);
 
-    /* Function: getc
-     *  Read a character
+    /** Reads a character from the serial port. This will block until 
+     *  a character is available. To see if a character is available, 
+     *  see readable()
      *
-     * Reads a character from the serial port. This will block until 
-     * a character is available. To see if a character is available, 
-     * see <readable>
-     *
-     * Variables:
-     *  returns - The character read from the serial port
+     *  @returns
+     *    The character read from the serial port
      */
     int getc();
 
-    /* Function: printf
-     *  Write a formated string
+    /** Write a formated string
      *
-     * Variables:
-     *  format - A printf-style format string, followed by the 
-     *      variables to use in formating the string.
+     *  @param format A printf-style format string, followed by the 
+     *    variables to use in formating the string.
      */
     int printf(const char* format, ...);
 
-    /* Function: scanf
-     *  Read a formated string 
+    /** Read a formated string 
      *
-     * Variables:
-     *  format - A scanf-style format string,
-     *      followed by the pointers to variables to store the results. 
+     *  @param format A scanf-style format string,
+     *    followed by the pointers to variables to store the results. 
      */
     int scanf(const char* format, ...);
  
 #endif
  
-    /* Function: readable
-     *  Determine if there is a character available to read
+    /** Determine if there is a character available to read
      *
-     * Variables:
-     *  returns - 1 if there is a character available to read, else 0
+     *  @returns
+     *    1 if there is a character available to read,
+     *    0 otherwise
      */
     int readable();
 
-    /* Function: writeable
-     *  Determine if there is space available to write a character
+    /** Determine if there is space available to write a character
      * 
-     * Variables:
-     *  returns - 1 if there is space to write a character, else 0
+     *  @returns
+     *    1 if there is space to write a character,
+     *    0 otherwise
      */
     int writeable();
 
-    /* Function: attach
-     *  Attach a function to call whenever a serial interrupt is generated
+    /** Attach a function to call whenever a serial interrupt is generated
      *
-     * Variables:
-     *  fptr - A pointer to a void function, or 0 to set as none
-     *  type - Which serial interrupt to attach the member function to (Seriall::RxIrq for receive, TxIrq for transmit buffer empty)
+     *  @param fptr A pointer to a void function, or 0 to set as none
+     *  @param type Which serial interrupt to attach the member function to (Seriall::RxIrq for receive, TxIrq for transmit buffer empty)
      */
     void attach(void (*fptr)(void), IrqType type = RxIrq);
 
-    /* Function: attach
-     *  Attach a member function to call whenever a serial interrupt is generated
+    /** Attach a member function to call whenever a serial interrupt is generated
      *     
-     * Variables:
-     *  tptr - pointer to the object to call the member function on
-     *  mptr - pointer to the member function to be called
-     *  type - Which serial interrupt to attach the member function to (Seriall::RxIrq for receive, TxIrq for transmit buffer empty)
+     *  @param tptr pointer to the object to call the member function on
+     *  @param mptr pointer to the member function to be called
+     *  @param type Which serial interrupt to attach the member function to (Seriall::RxIrq for receive, TxIrq for transmit buffer empty)
      */
     template<typename T>
     void attach(T* tptr, void (T::*mptr)(void), IrqType type = RxIrq) {

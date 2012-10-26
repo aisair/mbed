@@ -14,73 +14,61 @@
 
 namespace mbed {
 
-/* Class: PortInOut
- *  A multiple pin digital in/out used to set/read multiple bi-directional pins
+/** A multiple pin digital in/out used to set/read multiple bi-directional pins
  */
 class PortInOut {
 public:
 
-    /* Constructor: PortInOut
-     *  Create an PortInOut, connected to the specified port
+    /** Create an PortInOut, connected to the specified port
      *
-     * Variables:
-     *  port - Port to connect to (Port0-Port5)
-     *  mask - A bitmask to identify which bits in the port should be included (0 - ignore)
-   	 */ 
+     *  @param port Port to connect to (Port0-Port5)
+     *  @param mask A bitmask to identify which bits in the port should be included (0 - ignore)
+     */ 
     PortInOut(PortName port, int mask = 0xFFFFFFFF);
 
-    /* Function: write
-     *  Write the value to the output port
+    /** Write the value to the output port
      *
-     * Variables:
-     *  value - An integer specifying a bit to write for every corresponding port pin
+     *  @param value An integer specifying a bit to write for every corresponding port pin
      */    
     void write(int value);
 
-    /* Function: read
-     *  Read the value currently output on the port
+    /** Read the value currently output on the port
      *
-     * Variables:
-     *  returns - An integer with each bit corresponding to associated port pin setting
+     *  @returns
+     *    An integer with each bit corresponding to associated port pin setting
      */
     int read();
 
-    /* Function: output
-     *  Set as an output
+    /** Set as an output
      */
     void output();
 
-    /* Function: input
-     *  Set as an input
+    /** Set as an input
      */
     void input();
 
-    /* Function: mode
-     *  Set the input pin mode
+    /** Set the input pin mode
      *
-     * Variables:
-     *  mode - PullUp, PullDown, PullNone, OpenDrain
+     *  @param mode PullUp, PullDown, PullNone, OpenDrain
      */
     void mode(PinMode mode);
 
-    /* Function: operator=
-     *  A shorthand for <write>
+    /** A shorthand for write()
      */    
     PortInOut& operator= (int value) { 
-    	write(value);
-	    return *this;
+        write(value);
+        return *this;
     }
     
     PortInOut& operator= (PortInOut& rhs) { 
-    	write(rhs.read());
-	    return *this;
+        write(rhs.read());
+        return *this;
     }
     
-    /* Function: operator int()
-     *  A shorthand for <read>
+    /** A shorthand for read()
      */
     operator int() { 
-	    return read();
+        return read();
     }
 
 private:

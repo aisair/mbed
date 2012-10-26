@@ -13,25 +13,20 @@
 
 namespace mbed {
 
-/* Class: BusOut
- *  A digital output bus, used for setting the state of a collection of pins
+/** A digital output bus, used for setting the state of a collection of pins
  */
 class BusOut : public Base {
 
 public:
 
-    /* Group: Configuration Methods */
-
-    /* Constructor: BusOut
-     *  Create an BusOut, connected to the specified pins
+    /** Create an BusOut, connected to the specified pins
      *
-     * Variables:
-     *  p<n> - DigitalOut pin to connect to bus bit <n> (p5-p30, NC)
+     *  @param p<n> DigitalOut pin to connect to bus bit <n> (p5-p30, NC)
      *
-     * Note:
-     *  It is only required to specify as many pin variables as is required
-     *  for the bus; the rest will default to NC (not connected)
-   	 */ 
+     *  @note
+     *    It is only required to specify as many pin variables as is required
+     *    for the bus; the rest will default to NC (not connected)
+     */ 
     BusOut(PinName p0, PinName p1 = NC, PinName p2 = NC, PinName p3 = NC,
            PinName p4 = NC, PinName p5 = NC, PinName p6 = NC, PinName p7 = NC,
            PinName p8 = NC, PinName p9 = NC, PinName p10 = NC, PinName p11 = NC,
@@ -41,37 +36,29 @@ public:
     BusOut(PinName pins[16], const char *name = NULL);
 
     virtual ~BusOut();
-
-    /* Group: Access Methods */
-		
-    /* Function: write
-     *  Write the value to the output bus
+    
+    /** Write the value to the output bus
      *
-     * Variables:
-     *  value - An integer specifying a bit to write for every corresponding DigitalOut pin
+     *  @param value An integer specifying a bit to write for every corresponding DigitalOut pin
      */
     void write(int value);
 
-		
-    /* Function: read
-     *  Read the value currently output on the bus
+        
+    /** Read the value currently output on the bus
      *
-     * Variables:
-     *  returns - An integer with each bit corresponding to associated DigitalOut pin setting
+     *  @returns
+     *    An integer with each bit corresponding to associated DigitalOut pin setting
      */
     int read();
 
 #ifdef MBED_OPERATORS
-    /* Group: Access Method Shorthand */
-	   
-   	/* Function: operator=
-     *  A shorthand for <write>
+       
+    /** A shorthand for write()
      */
     BusOut& operator= (int v);
     BusOut& operator= (BusOut& rhs);
 
-    /* Function: operator int()
-     *  A shorthand for <read>
+    /** A shorthand for read()
      */
     operator int();
 #endif
@@ -88,7 +75,7 @@ protected:
 #ifdef MBED_RPC
     static void construct(const char *arguments, char *res);
 #endif
-			
+            
 };
 
 } // namespace mbed

@@ -35,33 +35,34 @@ protected:
     int pos;
 };
 
-/* Class: LocalFileSystem
- *  A filesystem for accessing the local mbed Microcontroller USB disk drive 
+/** A filesystem for accessing the local mbed Microcontroller USB disk drive 
  *
  *  This allows programs to read and write files on the same disk drive that is used to program the 
  *  mbed Microcontroller. Once created, the standard C file access functions are used to open, 
  *  read and write files.
  *
  * Example:
- * > #include "mbed.h"
- * >
- * > LocalFileSystem local("local");             // Create the local filesystem under the name "local"
- * >
- * > int main() {
- * >     FILE *fp = fopen("/local/out.txt", "w");  // Open "out.txt" on the local file system for writing
- * >     fprintf(fp, "Hello World!");              
- * >     fclose(fp);                               
- * >     remove("/local/out.txt");                 // Removes the file "out.txt" from the local file system
- * >
- * >     DIR *d = opendir("/local");               // Opens the root directory of the local file system
- * >     struct dirent *p;
- * >     while((p = readdir(d)) != NULL) {         // Print the names of the files in the local file system
- * >       printf("%s\n", p->d_name);              // to stdout.
- * >     }
- * >     closedir(d);
- * > }
+ * @code
+ * #include "mbed.h"
  *
- * Implementation Notes:
+ * LocalFileSystem local("local");               // Create the local filesystem under the name "local"
+ *
+ * int main() {
+ *     FILE *fp = fopen("/local/out.txt", "w");  // Open "out.txt" on the local file system for writing
+ *     fprintf(fp, "Hello World!");              
+ *     fclose(fp);                               
+ *     remove("/local/out.txt");                 // Removes the file "out.txt" from the local file system
+ *
+ *     DIR *d = opendir("/local");               // Opens the root directory of the local file system
+ *     struct dirent *p;
+ *     while((p = readdir(d)) != NULL) {         // Print the names of the files in the local file system
+ *       printf("%s\n", p->d_name);              // to stdout.
+ *     }
+ *     closedir(d);
+ * }
+ * @endcode
+ *
+ * @note
  *  If the microcontroller program makes an access to the local drive, it will be marked as "removed"
  *  on the Host computer. This means it is no longer accessible from the Host Computer.
  *
@@ -75,7 +76,7 @@ public:
     LocalFileSystem(const char* n) : FileSystemLike(n) {
 
     }
-	
+    
     virtual FileHandle *open(const char* name, int flags);
     virtual int remove(const char *filename);
     virtual DirHandle *opendir(const char *name);
