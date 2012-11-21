@@ -1,7 +1,24 @@
-/* mbed Microcontroller Library - error
- * Copyright (c) 2006-2009 ARM Limited. All rights reserved.
- */ 
- 
+/* mbed Microcontroller Library
+ * Copyright (c) 2006-2012 ARM Limited
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 #ifndef MBED_ERROR_H
 #define MBED_ERROR_H
 
@@ -14,7 +31,7 @@
  * If the compiler evaluates this line, it will report the error and stop the compile.
  *
  * For example, you could use this to check some user-defined compile-time variables:
- * 
+ *
  * @code
  * #define NUM_PORTS 7
  * #if (NUM_PORTS > 4)
@@ -41,25 +58,15 @@
  * }
  * #endcode
  */
- 
-#if 0 // for documentation only
-/** Report a fatal runtime error
- *
- *  Outputs the specified error message to stderr so it will appear via the USB 
- *  serial port, and then calls exit(1) to die with the blue lights of death.
- *
- *  @param format printf-style format string, followed by associated variables
- */
-void error(const char* format, ...);
-#endif  
 
 #include <stdlib.h>
+#include "device.h"
 
-#ifdef NDEBUG
-    #define error(...) (exit(1))
-#else
+#ifdef DEVICE_STDIO_ERROR
     #include <stdio.h>
     #define error(...) (fprintf(stderr, __VA_ARGS__), exit(1))
+#else
+    #define error(...) (exit(1))
 #endif
 
 #endif

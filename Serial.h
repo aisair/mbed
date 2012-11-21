@@ -1,26 +1,41 @@
-/* mbed Microcontroller Library - Serial
- * Copyright (c) 2007-2011 ARM Limited. All rights reserved.
- */ 
- 
+/* mbed Microcontroller Library
+ * Copyright (c) 2006-2012 ARM Limited
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 #ifndef MBED_SERIAL_H
 #define MBED_SERIAL_H
 
-#include "device.h"
+#include "platform.h"
 
 #if DEVICE_SERIAL
 
-#include "platform.h"
-#include "PinNames.h"
-#include "PeripheralNames.h"
 #include "Stream.h"
 #include "FunctionPointer.h"
+#include "serial_api.h"
 
 namespace mbed {
 
 /** A serial port (UART) for communication with other serial devices
  *
- *  Can be used for Full Duplex communication, or Simplex by specifying 
- *  one pin as NC (Not Connected)
+ * Can be used for Full Duplex communication, or Simplex by specifying 
+ * one pin as NC (Not Connected)
  *
  * Example:
  * @code
@@ -47,26 +62,18 @@ public:
      *  @note
      *    Either tx or rx may be specified as NC if unused
      */
-    Serial(PinName tx, PinName rx, const char *name = NULL);
+    Serial(PinName tx, PinName rx) {
+        serial_init(&_serial, tx, rx);
+        serial_irq_handler(&_serial, Serial::_irq_handler, (uint32_t)this);
+    }
 
     /** Set the baud rate of the serial port
      *  
      *  @param baudrate The baudrate of the serial port (default = 9600).
      */
-    void baud(int baudrate);
-
-    enum Parity {
-        None = 0
-        , Odd
-        , Even
-        , Forced1    
-        , Forced0
-    };
-
-    enum IrqType {
-        RxIrq = 0
-        , TxIrq
-    };
+    void baud(int baudrate) {
+        serial_baud(&_serial, baudrate);
+    }
 
     /** Set the transmission format used by the Serial port
      *
@@ -74,48 +81,19 @@ public:
      *  @param parity The parity used (Serial::None, Serial::Odd, Serial::Even, Serial::Forced1, Serial::Forced0; default = Serial::None)
      *  @param stop The number of stop bits (1 or 2; default = 1)
      */
-    void format(int bits = 8, Parity parity = Serial::None, int stop_bits = 1); 
+    void format(int bits = 8, SerialParity parity=ParityNone, int stop_bits=1) {
+        serial_format(&_serial, bits, parity, stop_bits);
+    }
 
-#if 0 // Inhereted from Stream, for documentation only
-
-    /** Write a character
-     *
-     *  @param c The character to write to the serial port
-     */
-    int putc(int c);
-
-    /** Reads a character from the serial port. This will block until 
-     *  a character is available. To see if a character is available, 
-     *  see readable()
-     *
-     *  @returns
-     *    The character read from the serial port
-     */
-    int getc();
-
-    /** Write a formated string
-     *
-     *  @param format A printf-style format string, followed by the 
-     *    variables to use in formating the string.
-     */
-    int printf(const char* format, ...);
-
-    /** Read a formated string 
-     *
-     *  @param format A scanf-style format string,
-     *    followed by the pointers to variables to store the results. 
-     */
-    int scanf(const char* format, ...);
- 
-#endif
- 
     /** Determine if there is a character available to read
      *
      *  @returns
      *    1 if there is a character available to read,
      *    0 otherwise
      */
-    int readable();
+    int readable() {
+        return serial_readable(&_serial);
+    }
 
     /** Determine if there is space available to write a character
      * 
@@ -123,14 +101,23 @@ public:
      *    1 if there is space to write a character,
      *    0 otherwise
      */
-    int writeable();
+    int writeable() {
+        return serial_writable(&_serial);
+    }
 
     /** Attach a function to call whenever a serial interrupt is generated
      *
      *  @param fptr A pointer to a void function, or 0 to set as none
      *  @param type Which serial interrupt to attach the member function to (Seriall::RxIrq for receive, TxIrq for transmit buffer empty)
      */
-    void attach(void (*fptr)(void), IrqType type = RxIrq);
+    void attach(void (*fptr)(void), SerialIrq type=RxIrq) {
+        if (fptr) {
+            _irq[type].attach(fptr);
+            serial_irq_set(&_serial, type, 1);
+        } else {
+            serial_irq_set(&_serial, type, 0);
+        }
+    }
 
     /** Attach a member function to call whenever a serial interrupt is generated
      *     
@@ -139,30 +126,30 @@ public:
      *  @param type Which serial interrupt to attach the member function to (Seriall::RxIrq for receive, TxIrq for transmit buffer empty)
      */
     template<typename T>
-    void attach(T* tptr, void (T::*mptr)(void), IrqType type = RxIrq) {
+    void attach(T* tptr, void (T::*mptr)(void), SerialIrq type=RxIrq) {
         if((mptr != NULL) && (tptr != NULL)) {
             _irq[type].attach(tptr, mptr);
-            setup_interrupt(type);
+            serial_irq_set(&_serial, type, 1);
         }
     }
-
-#ifdef MBED_RPC
-    virtual const struct rpc_method *get_rpc_methods();
-    static struct rpc_class *get_rpc_class();
-#endif
+    
+    static void _irq_handler(uint32_t id, SerialIrq irq_type) {
+        Serial *handler = (Serial*)id;
+        handler->_irq[irq_type].call();
+    }
 
 protected:
-
-    void setup_interrupt(IrqType type);
-    void remove_interrupt(IrqType type);
-
-    virtual int _getc();
-    virtual int _putc(int c);
-
-    UARTName _uart;
+    virtual int _getc() {
+        return serial_getc(&_serial);
+    }
+    
+    virtual int _putc(int c) {
+        serial_putc(&_serial, c);
+        return c;
+    }
+    
+    serial_t   _serial;
     FunctionPointer _irq[2];
-    int _uidx;
-
 };
 
 } // namespace mbed

@@ -1,7 +1,24 @@
-/* mbed Microcontroller Library - DirHandler
- * Copyright (c) 2008-2009 ARM Limited. All rights reserved.
- */ 
- 
+/* mbed Microcontroller Library
+ * Copyright (c) 2006-2012 ARM Limited
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 #ifndef MBED_DIRHANDLE_H
 #define MBED_DIRHANDLE_H
 
@@ -25,7 +42,7 @@ namespace mbed {
  *
  *  If a FileSystemLike class defines the opendir method, then the
  *  directories of an object of that type can be accessed by 
- *  DIR *d = opendir("/example/directory") (or opendir("/example") 
+ *  DIR *d = opendir("/example/directory") (or opendir("/example")
  *  to open the root of the filesystem), and then using readdir(d) etc.
  *
  *  The root directory is considered to contain all FileLike and
@@ -34,7 +51,7 @@ namespace mbed {
  */
 class DirHandle {
 
- public:
+public:
     /** Closes the directory.
      *
      *  @returns
@@ -42,14 +59,14 @@ class DirHandle {
      *   -1 on error.
      */
     virtual int closedir()=0;
-
+    
     /** Return the directory entry at the current position, and
      *  advances the position to the next entry.
      *
      * @returns
-     *   A pointer to a dirent structure representing the
-     *   directory entry at the current position, or NULL on reaching
-     *   end of directory or error.
+     *  A pointer to a dirent structure representing the
+     *  directory entry at the current position, or NULL on reaching
+     *  end of directory or error.
      */
     virtual struct dirent *readdir()=0;
 
@@ -70,7 +87,8 @@ class DirHandle {
      *  @param location The location to seek to. Must be a value returned by telldir.
      */
     virtual void seekdir(off_t location) { }
-
+    
+    virtual ~DirHandle() {}
 };
 
 } // namespace mbed

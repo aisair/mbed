@@ -1,18 +1,32 @@
-/* mbed Microcontroller Library - I2CSlave
- * Copyright (c) 2007-2011 ARM Limited. All rights reserved.
- */ 
- 
+/* mbed Microcontroller Library
+ * Copyright (c) 2006-2012 ARM Limited
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 #ifndef MBED_I2C_SLAVE_H
 #define MBED_I2C_SLAVE_H
 
-#include "device.h"
+#include "platform.h"
 
 #if DEVICE_I2CSLAVE
 
-#include "platform.h"
-#include "PinNames.h"
-#include "PeripheralNames.h"
-#include "Base.h"
+#include "i2c_api.h"
 
 namespace mbed {
 
@@ -50,15 +64,14 @@ namespace mbed {
  * }
  * @endcode                  
  */
-class I2CSlave : public Base {
+class I2CSlave {
 
 public:
-    
     enum RxStatus {
-        NoData              = 0
-        , ReadAddressed     = 1
-        , WriteGeneral      = 2
-        , WriteAddressed    = 3
+        NoData         = 0,
+        ReadAddressed  = 1,
+        WriteGeneral   = 2,
+        WriteAddressed = 3
     };
 
     /** Create an I2C Slave interface, connected to the specified pins.
@@ -66,7 +79,7 @@ public:
      *  @param sda I2C data line pin
      *  @param scl I2C clock line pin
      */
-    I2CSlave(PinName sda, PinName scl, const char *name = NULL);
+    I2CSlave(PinName sda, PinName scl);
 
     /** Set the frequency of the I2C interface
      *
@@ -127,8 +140,8 @@ public:
     /** Sets the I2C slave address.
      *
      *  @param address The address to set for the slave (ignoring the least
-     *    signifcant bit). If set to 0, the slave will only respond to the
-     *    general call address.
+     *  signifcant bit). If set to 0, the slave will only respond to the
+     *  general call address.
      */
     void address(int address);
 
@@ -137,8 +150,7 @@ public:
     void stop(void);
 
 protected:
-
-    I2CName     _i2c;
+    i2c_t _i2c;
 };
 
 } // namespace mbed
@@ -146,4 +158,3 @@ protected:
 #endif
 
 #endif
-

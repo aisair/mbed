@@ -178,6 +178,10 @@ typedef struct
 #define __STREXH(value, ptr)              __strex(value, ptr)
 #define __STREXW(value, ptr)              __strex(value, ptr)
 
+#define __disable_irq()         unsigned tmp_IntEnable = LPC_VIC->IntEnable; \
+                                LPC_VIC->IntEnClr = 0xffffffff
+
+#define __enable_irq()          LPC_VIC->IntEnable = tmp_IntEnable
 
 #elif (defined (__ICCARM__)) /*------------------ ICC Compiler -------------------*/
 

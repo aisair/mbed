@@ -7,10 +7,6 @@
 #ifndef MBED_CMSIS_H
 #define MBED_CMSIS_H
 
-#ifndef TARGET_LPC2368
-#define TARGET_LPC2368
-#endif
-
 #include "LPC23xx.h"
 #include "cmsis_nvic.h"
 

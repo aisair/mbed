@@ -1,23 +1,34 @@
-/* mbed Microcontroller Library - can
- * Copyright (c) 2009-2011 ARM Limited. All rights reserved.
- */ 
-
+/* mbed Microcontroller Library
+ * Copyright (c) 2006-2012 ARM Limited
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 #ifndef MBED_CAN_H
 #define MBED_CAN_H
 
-#include "device.h"
+#include "platform.h"
 
 #if DEVICE_CAN
 
-#include "Base.h"
-#include "platform.h" 
-#include "PinNames.h"
-#include "PeripheralNames.h"
-
+#include "can_api.h"
 #include "can_helper.h" 
 #include "FunctionPointer.h"
-
-#include <string.h>
 
 namespace mbed {
 
@@ -26,15 +37,14 @@ namespace mbed {
 class CANMessage : public CAN_Message {
 
 public:
-
     /** Creates empty CAN message.
      */
     CANMessage() {
-      len    = 8;
-      type   = CANData;
-      format = CANStandard;
-      id     = 0;
-      memset(data, 0, 8);
+        len    = 8;
+        type   = CANData;
+        format = CANStandard;
+        id     = 0;
+        memset(data, 0, 8);
     }
     
     /** Creates CAN message with specific content.
@@ -56,50 +66,13 @@ public:
       id     = _id;
       memset(data, 0, 8);
     }
-#if 0 // Inhereted from CAN_Message, for documentation only
-
-    /** The message id.
-     *
-     * - If format is CANStandard it must be an 11 bit long id.
-     * - If format is CANExtended it must be an 29 bit long id.
-     */
-    unsigned int   id;
-    
-    /** Space for 8 byte payload.
-     *
-     * If type is CANData data can store up to 8 byte data.
-     */
-    unsigned char  data[8];
-    
-    /** Length of data in bytes.
-     *
-     * If type is CANData data can store up to 8 byte data.
-     */
-    unsigned char  len;
-    
-    /** Defines if the message has standard or extended format.
-     *
-     * Defines the type of message id:
-     * Default is CANStandard which implies 11 bit id.
-     * CANExtended means 29 bit message id.
-     */
-    CANFormat      format;
-    
-    /** Defines the type of a message.
-     *
-     * The message type can rather be CANData for a message with data (default).
-     * Or CANRemote for a request of a specific CAN message.
-     */
-    CANType        type;               // 0 - DATA FRAME, 1 - REMOTE FRAME
-#endif
 };
 
 /** A can bus client, used for communicating with can devices
  */
-class CAN : public Base {
+class CAN {
 
 public:
-
     /** Creates an CAN interface connected to specific pins.
      *
      *  @param rd read from transmitter
@@ -176,7 +149,7 @@ public:
      * To use after error overflow.
      */
     void reset();
-
+    
     /** Puts or removes the CAN interface into silent monitoring mode
      *
      *  @param silent boolean indicating whether to go into silent mode or not
@@ -215,16 +188,15 @@ public:
     }
     
 private:
-
-    CANName _id;
+    can_t _can;
     FunctionPointer _rxirq;
-
+    
     void setup_interrupt(void);
     void remove_interrupt(void);
 };
 
 } // namespace mbed
 
-#endif    // MBED_CAN_H
-
 #endif
+
+#endif    // MBED_CAN_H

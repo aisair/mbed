@@ -1,22 +1,38 @@
-/* mbed Microcontroller Library - PortInOut
- * Copyright (c) 2006-2011 ARM Limited. All rights reserved.
- */ 
- 
+/* mbed Microcontroller Library
+ * Copyright (c) 2006-2012 ARM Limited
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 #ifndef MBED_PORTIN_H
 #define MBED_PORTIN_H
 
-#include "device.h"
+#include "platform.h"
 
 #if DEVICE_PORTIN
 
-#include "PortNames.h"
-#include "PinNames.h"
+#include "port_api.h"
 
 namespace mbed {
 
 /** A multiple pin digital input
  *
- * Example:
+ *  Example:
  * @code
  * // Switch on an LED if any of mbed pins 21-26 is high
  *
@@ -44,21 +60,27 @@ public:
      *
      *  @param port Port to connect to (Port0-Port5)
      *  @param mask A bitmask to identify which bits in the port should be included (0 - ignore)
-     */ 
-    PortIn(PortName port, int mask = 0xFFFFFFFF);
-
+        */ 
+    PortIn(PortName port, int mask = 0xFFFFFFFF) {
+        port_init(&_port, port, mask, PIN_INPUT);
+    }
+    
     /** Read the value currently output on the port
      *
      *  @returns
      *    An integer with each bit corresponding to associated port pin setting
      */
-    int read();
-
+    int read() {
+        return port_read(&_port);
+    }
+    
     /** Set the input pin mode
      *
      *  @param mode PullUp, PullDown, PullNone, OpenDrain
      */
-    void mode(PinMode mode);
+    void mode(PinMode mode) {
+        port_mode(&_port, mode);
+    }
     
     /** A shorthand for read()
      */
@@ -67,11 +89,7 @@ public:
     }
 
 private:
-#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
-    LPC_GPIO_TypeDef    *_gpio;
-#endif
-    PortName            _port;
-    uint32_t            _mask;
+    port_t _port;
 };
 
 } // namespace mbed

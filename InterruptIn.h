@@ -1,25 +1,35 @@
-/* mbed Microcontroller Library - InterruptIn
- * Copyright (c) 2006-2011 ARM Limited. All rights reserved.
- */ 
- 
+/* mbed Microcontroller Library
+ * Copyright (c) 2006-2012 ARM Limited
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 #ifndef MBED_INTERRUPTIN_H
 #define MBED_INTERRUPTIN_H
 
-#include "device.h"
+#include "platform.h"
 
 #if DEVICE_INTERRUPTIN
 
-#include "platform.h"
-#include "PinNames.h"
-#include "PeripheralNames.h"
-#include "Base.h"
-#include "FunctionPointer.h"
+#include "gpio_api.h"
+#include "gpio_irq_api.h"
 
-#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
-#define CHANNEL_NUM   48
-#elif defined(TARGET_LPC11U24)
-#define CHANNEL_NUM    8
-#endif
+#include "FunctionPointer.h"
 
 namespace mbed {
 
@@ -47,7 +57,7 @@ namespace mbed {
  * }
  * @endcode
  */
-class InterruptIn : public Base {
+class InterruptIn {
 
 public:
 
@@ -56,11 +66,9 @@ public:
      *  @param pin InterruptIn pin to connect to
      *  @param name (optional) A string to identify the object
      */
-    InterruptIn(PinName pin, const char *name = NULL);
-#if defined(TARGET_LPC11U24)
+    InterruptIn(PinName pin);
     virtual ~InterruptIn();
-#endif
- 
+    
      int read();
 #ifdef MBED_OPERATORS
     operator int();
@@ -81,7 +89,7 @@ public:
     template<typename T>
     void rise(T* tptr, void (T::*mptr)(void)) {
         _rise.attach(tptr, mptr);
-        setup_interrupt(1, 1);
+        gpio_irq_set(&gpio_irq, IRQ_RISE, 1);
     }
 
     /** Attach a function to call when a falling edge occurs on the input
@@ -98,7 +106,7 @@ public:
     template<typename T>
     void fall(T* tptr, void (T::*mptr)(void)) {
         _fall.attach(tptr, mptr);
-        setup_interrupt(0, 1);
+        gpio_irq_set(&gpio_irq, IRQ_FALL, 1);
     }
 
     /** Set the input pin mode
@@ -107,28 +115,14 @@ public:
      */
     void mode(PinMode pull);
     
-    static InterruptIn *_irq_objects[CHANNEL_NUM];
+    static void _irq_handler(uint32_t id, gpio_irq_event event);
     
-#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
-    static void _irq();
-#elif defined(TARGET_LPC11U24)
-    static void handle_interrupt_in(unsigned int channel);
-    static void _irq0(); static void _irq1();
-    static void _irq2(); static void _irq3();
-    static void _irq4(); static void _irq5();
-    static void _irq6(); static void _irq7();
-#endif
-
 protected:
-    PinName _pin;
-#if defined(TARGET_LPC11U24)
-    Channel _channel;
-#endif
+    gpio_t gpio;
+    gpio_irq_t gpio_irq;
+    
     FunctionPointer _rise;
     FunctionPointer _fall;
-
-    void setup_interrupt(int rising, int enable);
-    
 };
 
 } // namespace mbed

@@ -1,18 +1,32 @@
-/* mbed Microcontroller Library - I2C
- * Copyright (c) 2007-2011 ARM Limited. All rights reserved.
- */ 
- 
+/* mbed Microcontroller Library
+ * Copyright (c) 2006-2012 ARM Limited
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 #ifndef MBED_I2C_H
 #define MBED_I2C_H
 
-#include "device.h"
+#include "platform.h"
 
 #if DEVICE_I2C
 
-#include "platform.h"
-#include "PinNames.h"
-#include "PeripheralNames.h"
-#include "Base.h"
+#include "i2c_api.h"
 
 namespace mbed {
 
@@ -33,20 +47,19 @@ namespace mbed {
  * }
  * @endcode
  */
-class I2C : public Base {
+class I2C {
 
 public:
-
     enum RxStatus {
-        NoData
-        , MasterGeneralCall
-        , MasterWrite
-        , MasterRead
+        NoData,
+        MasterGeneralCall,
+        MasterWrite,
+        MasterRead
     };
 
     enum Acknowledge {
-          NoACK = 0
-        , ACK   = 1
+        NoACK = 0,
+        ACK   = 1
     };
 
     /** Create an I2C Master interface, connected to the specified pins
@@ -54,7 +67,7 @@ public:
      *  @param sda I2C data line pin
      *  @param scl I2C clock line pin
      */
-    I2C(PinName sda, PinName scl, const char *name = NULL);
+    I2C(PinName sda, PinName scl);
 
     /** Set the frequency of the I2C interface
      *
@@ -64,8 +77,8 @@ public:
 
     /** Read from an I2C slave
      *
-     *  Performs a complete read transaction. The bottom bit of
-     *  the address is forced to 1 to indicate a read.
+     * Performs a complete read transaction. The bottom bit of
+     * the address is forced to 1 to indicate a read.
      *
      *  @param address 8-bit I2C slave address [ addr | 1 ]
      *  @param data Pointer to the byte-array to read data in to 
@@ -76,7 +89,7 @@ public:
      *       0 on success (ack),
      *   non-0 on failure (nack)
      */ 
-    int read(int address, char *data, int length, bool repeated = false); 
+    int read(int address, char *data, int length, bool repeated = false);
 
     /** Read a single byte from the I2C bus
      *
@@ -89,8 +102,8 @@ public:
 
     /** Write to an I2C slave
      *
-     *  Performs a complete write transaction. The bottom bit of
-     *  the address is forced to 0 to indicate a write.
+     * Performs a complete write transaction. The bottom bit of
+     * the address is forced to 0 to indicate a write.
      *
      *  @param address 8-bit I2C slave address [ addr | 0 ]
      *  @param data Pointer to the byte-array data to send 
@@ -115,6 +128,7 @@ public:
 
     /** Creates a start condition on the I2C bus
      */
+
     void start(void);
 
     /** Creates a stop condition on the I2C bus
@@ -122,13 +136,11 @@ public:
     void stop(void);
 
 protected:
-
     void aquire();
-
-    I2CName     _i2c;
+    
+    i2c_t _i2c;
     static I2C  *_owner;
     int         _hz;
-
 };
 
 } // namespace mbed
@@ -136,4 +148,3 @@ protected:
 #endif
 
 #endif
-

@@ -1,27 +1,41 @@
-/* mbed Microcontroller Library - SPI
- * Copyright (c) 2010-2011 ARM Limited. All rights reserved. 
+/* mbed Microcontroller Library
+ * Copyright (c) 2006-2012 ARM Limited
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
-
 #ifndef MBED_SPI_H
 #define MBED_SPI_H
 
-#include "device.h"
+#include "platform.h"
 
 #if DEVICE_SPI
 
-#include "platform.h"
-#include "PinNames.h"
-#include "PeripheralNames.h"
-#include "Base.h"
+#include "spi_api.h"
 
 namespace mbed {
 
 /** A SPI Master, used for communicating with SPI slave devices
  *
- *  The default format is set to 8-bits, mode 0, and a clock frequency of 1MHz
+ * The default format is set to 8-bits, mode 0, and a clock frequency of 1MHz
  *
- *  Most SPI devices will also require Chip Select and Reset signals. These
- *  can be controlled using <DigitalOut> pins
+ * Most SPI devices will also require Chip Select and Reset signals. These
+ * can be controlled using <DigitalOut> pins
  *
  * Example:
  * @code
@@ -35,24 +49,23 @@ namespace mbed {
  *     int response = device.write(0xFF);
  * }
  * @endcode
- */ 
-class SPI : public Base {
+ */
+class SPI {
 
 public:
 
     /** Create a SPI master connected to the specified pins
      *
-     *  Pin Options:
-     *    (5, 6, 7) or (11, 12, 13)
+     * Pin Options:
+     *  (5, 6, 7) or (11, 12, 13)
      *
      *  mosi or miso can be specfied as NC if not used
      *
      *  @param mosi SPI Master Out, Slave In pin
      *  @param miso SPI Master In, Slave Out pin
      *  @param sclk SPI Clock pin
-     *  @param name (optional) A string to identify the object     
      */
-    SPI(PinName mosi, PinName miso, PinName sclk, const char *name = NULL);
+    SPI(PinName mosi, PinName miso, PinName sclk);
 
     /** Configure the data transmission format
      *
@@ -85,22 +98,14 @@ public:
     */
     virtual int write(int value);
 
-
-#ifdef MBED_RPC
-    virtual const struct rpc_method *get_rpc_methods();
-    static struct rpc_class *get_rpc_class();
-#endif
-
 protected:
-
-    SPIName _spi;
+    spi_t _spi;
     
     void aquire(void);
-    static SPI *_owner; 
+    static SPI *_owner;
     int _bits;
     int _mode;
     int _hz;
-
 };
 
 } // namespace mbed

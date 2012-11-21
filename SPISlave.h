@@ -1,24 +1,38 @@
-/* mbed Microcontroller Library - SPISlave
- * Copyright (c) 2010-2011 ARM Limited. All rights reserved. 
+/* mbed Microcontroller Library
+ * Copyright (c) 2006-2012 ARM Limited
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
-
 #ifndef MBED_SPISLAVE_H
 #define MBED_SPISLAVE_H
 
-#include "device.h"
+#include "platform.h"
 
 #if DEVICE_SPISLAVE
 
-#include "platform.h"
-#include "PinNames.h"
-#include "PeripheralNames.h"
-#include "Base.h"
+#include "spi_api.h"
 
 namespace mbed {
 
 /** A SPI slave, used for communicating with a SPI Master device
  *
- *  The default format is set to 8-bits, mode 0, and a clock frequency of 1MHz
+ * The default format is set to 8-bits, mode 0, and a clock frequency of 1MHz
  *
  * Example:
  * @code
@@ -39,14 +53,14 @@ namespace mbed {
  *     }
  * }
  * @endcode
- */ 
-class SPISlave : public Base {
+ */
+class SPISlave {
 
 public:
 
     /** Create a SPI slave connected to the specified pins
      *
-     *  Pin Options:
+     * Pin Options:
      *  (5, 6, 7i, 8) or (11, 12, 13, 14)
      *
      *  mosi or miso can be specfied as NC if not used
@@ -55,10 +69,9 @@ public:
      *  @param miso SPI Master In, Slave Out pin
      *  @param sclk SPI Clock pin
      *  @param ssel SPI chip select pin
-     *  @param name (optional) A string to identify the object     
+     *  @param name (optional) A string to identify the object
      */
-    SPISlave(PinName mosi, PinName miso, PinName sclk, PinName ssel,
-        const char *name = NULL);
+    SPISlave(PinName mosi, PinName miso, PinName sclk, PinName ssel);
 
     /** Configure the data transmission format
      *
@@ -105,13 +118,11 @@ public:
     void reply(int value);
 
 protected:
-
-    SPIName _spi;
+    spi_t _spi;
     
     int _bits;
     int _mode;
     int _hz;
-
 };
 
 } // namespace mbed

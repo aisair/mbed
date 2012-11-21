@@ -1,15 +1,30 @@
-/* mbed Microcontroller Library - Ethernet
- * Copyright (c) 2009-2011 ARM Limited. All rights reserved.
- */ 
- 
+/* mbed Microcontroller Library
+ * Copyright (c) 2006-2012 ARM Limited
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 #ifndef MBED_ETHERNET_H
 #define MBED_ETHERNET_H
 
-#include "device.h"
+#include "platform.h"
 
 #if DEVICE_ETHERNET
-
-#include "Base.h"
 
 namespace mbed {
 
@@ -20,7 +35,7 @@ namespace mbed {
  * // Read destination and source from every ethernet packet
  * 
  * #include "mbed.h"
- * 
+ *
  * Ethernet eth;
  *  
  * int main() {
@@ -41,7 +56,7 @@ namespace mbed {
  * }
  * @endcode
  */
-class Ethernet : public Base {
+class Ethernet {
 
 public:
     
@@ -54,11 +69,11 @@ public:
     virtual ~Ethernet();
 
     enum Mode {
-        AutoNegotiate
-        , HalfDuplex10
-        , FullDuplex10
-        , HalfDuplex100
-        , FullDuplex100
+        AutoNegotiate,
+        HalfDuplex10,
+        FullDuplex10,
+        HalfDuplex100,
+        FullDuplex100
     };
 
     /** Writes into an outgoing ethernet packet.
@@ -69,7 +84,7 @@ public:
      *  @param size The size of data.
      *
      *  @returns
-     *    The number of written bytes.
+     *   The number of written bytes.
      */
     int write(const char *data, int size);
 
@@ -106,7 +121,7 @@ public:
      *  Each time read will start reading after the last read byte before.
      *
      *  @returns
-     *    The number of byte read.
+     *  The number of byte read.
      */
     int read(char *data, int size);
     
@@ -128,7 +143,7 @@ public:
      * #include "mbed.h"
      * 
      * Ethernet eth;
-     * 
+     *
      * int main() {
      *     wait(1); // Needed after startup.
      *     if (eth.link()) {
@@ -152,7 +167,6 @@ public:
      *  @param mode the speed and duplex mode to set the link to:
      */
     void set_link(Mode mode);
-
 };
 
 } // namespace mbed
