@@ -39,8 +39,8 @@ typedef enum {
 } SerialParity;
 
 typedef enum {
-    TxIrq,
-    RxIrq
+    RxIrq,
+    TxIrq
 } SerialIrq;
 
 typedef void (*uart_irq_handler)(uint32_t id, SerialIrq event);
