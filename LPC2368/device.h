@@ -53,7 +53,7 @@
 
 #define DEVICE_DEBUG_AWARENESS  0
 
-#define DEVICE_STDIO_ERROR      1
+#define DEVICE_STDIO_MESSAGES   1
 
 #include "objects.h"
 
