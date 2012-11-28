@@ -137,8 +137,6 @@ public:
     
     const char* fileName(void);
     FileSystemLike* fileSystem(void);
-    
-    static FileSystemLike* getFileSystem(const char* path);
 
 private:
     const char* file_name;
