@@ -766,7 +766,7 @@ typedef struct
 #define CM3_BASE              (0xE0000000UL)
 */
 
-// TODO - #define VIC_BASE_ADDR    0xFFFFF000
+// TODO - #define VIC_BASE_ADDR	0xFFFFF000
 
 #define LPC_WDT_BASE              (0xE0000000)
 #define LPC_TIM0_BASE             (0xE0004000)
