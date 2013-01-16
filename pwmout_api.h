@@ -28,7 +28,7 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif 
+#endif
 
 typedef struct pwmout_s pwmout_t;
 

@@ -26,18 +26,18 @@
 
 namespace mbed {
 
-/** A general purpose timer 
+/** A general purpose timer
  *
  * Example:
  * @code
  * // Count the time to toggle a LED
  *
  * #include "mbed.h"
- * 
+ *
  * Timer timer;
  * DigitalOut led(LED1);
  * int begin, end;
- * 
+ *
  * int main() {
  *     timer.start();
  *     begin = timer.read_us();
@@ -51,16 +51,16 @@ class Timer {
 
 public:
     Timer();
-    
+
     /** Start the timer
      */
-    void start(); 
+    void start();
 
     /** Stop the timer
      */
-    void stop(); 
+    void stop();
 
-    /** Reset the timer to 0. 
+    /** Reset the timer to 0.
      *
      * If it was already counting, it will continue
      */
@@ -78,7 +78,7 @@ public:
      */
     int read_us();
 
-#ifdef MBED_OPERATORS 
+#ifdef MBED_OPERATORS
     operator float();
 #endif
 

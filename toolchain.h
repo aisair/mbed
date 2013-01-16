@@ -30,4 +30,12 @@
 typedef int FILEHANDLE;
 #endif
 
+#if defined (__ICCARM__)
+#   define WEAK     __weak
+#   define PACKED   __packed
+#else
+#   define WEAK     __attribute__((weak))
+#   define PACKED   __attribute__((packed))
+#endif
+
 #endif

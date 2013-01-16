@@ -33,9 +33,9 @@ namespace mbed {
  * @code
  * // Toggle a LED
  * #include "mbed.h"
- * 
+ *
  * DigitalOut led(LED1);
- * 
+ *
  * int main() {
  *     while(1) {
  *         led = !led;
@@ -54,26 +54,26 @@ public:
     DigitalOut(PinName pin) {
         gpio_init(&gpio, pin, PIN_OUTPUT);
     }
-    
+
     /** Set the output, specified as 0 or 1 (int)
      *
-     *  @param value An integer specifying the pin output value, 
-     *      0 for logical 0, 1 (or any other non-zero value) for logical 1 
+     *  @param value An integer specifying the pin output value,
+     *      0 for logical 0, 1 (or any other non-zero value) for logical 1
      */
     void write(int value) {
         gpio_write(&gpio, value);
     }
-    
+
     /** Return the output setting, represented as 0 or 1 (int)
      *
      *  @returns
-     *    an integer representing the output setting of the pin, 
+     *    an integer representing the output setting of the pin,
      *    0 for logical 0, 1 for logical 1
      */
     int read() {
         return gpio_read(&gpio);
     }
-    
+
 #ifdef MBED_OPERATORS
     /** A shorthand for write()
      */
@@ -81,12 +81,12 @@ public:
         write(value);
         return *this;
     }
-    
+
     DigitalOut& operator= (DigitalOut& rhs) {
         write(rhs.read());
         return *this;
     }
-    
+
     /** A shorthand for read()
      */
     operator int() {
@@ -100,4 +100,4 @@ protected:
 
 } // namespace mbed
 
-#endif 
+#endif

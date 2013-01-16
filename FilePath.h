@@ -32,12 +32,12 @@ namespace mbed {
 class FilePath {
 public:
     FilePath(const char* file_path);
-    
+
     const char* fileName(void);
-    
+
     bool          isFileSystem(void);
     FileSystemLike* fileSystem(void);
-    
+
     bool    isFile(void);
     FileLike* file(void);
 

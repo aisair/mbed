@@ -40,38 +40,38 @@ public:
     DigitalInOut(PinName pin) {
         gpio_init(&gpio, pin, PIN_INPUT);
     }
-    
+
     /** Set the output, specified as 0 or 1 (int)
      *
-     *  @param value An integer specifying the pin output value, 
-     *      0 for logical 0, 1 (or any other non-zero value) for logical 1 
+     *  @param value An integer specifying the pin output value,
+     *      0 for logical 0, 1 (or any other non-zero value) for logical 1
      */
     void write(int value) {
         gpio_write(&gpio, value);
     }
-    
+
     /** Return the output setting, represented as 0 or 1 (int)
      *
      *  @returns
-     *    an integer representing the output setting of the pin if it is an output, 
+     *    an integer representing the output setting of the pin if it is an output,
      *    or read the input if set as an input
      */
     int read() {
         return gpio_read(&gpio);
     }
-    
+
     /** Set as an output
      */
     void output() {
         gpio_dir(&gpio, PIN_OUTPUT);
     }
-    
+
     /** Set as an input
      */
     void input() {
         gpio_dir(&gpio, PIN_INPUT);
     }
-    
+
     /** Set the input pin mode
      *
      *  @param mode PullUp, PullDown, PullNone, OpenDrain
@@ -79,7 +79,7 @@ public:
     void mode(PinMode pull) {
         gpio_mode(&gpio, pull);
     }
-    
+
 #ifdef MBED_OPERATORS
     /** A shorthand for write()
      */
@@ -87,12 +87,12 @@ public:
         write(value);
         return *this;
     }
-    
+
     DigitalInOut& operator= (DigitalInOut& rhs) {
         write(rhs.read());
         return *this;
     }
-    
+
     /** A shorthand for read()
      */
     operator int() {

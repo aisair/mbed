@@ -26,7 +26,7 @@ typedef int FILEHANDLE;
 
 #include <stdio.h>
 
-#ifdef __ARMCC_VERSION
+#if defined(__ARMCC_VERSION) || defined(__ICCARM__)
 #    define O_RDONLY 0
 #    define O_WRONLY 1
 #    define O_RDWR   2
@@ -58,19 +58,19 @@ typedef enum {
 class FileBase {
 public:
     FileBase(const char *name, PathType t);
-    
+
     virtual ~FileBase();
-    
+
     const char* getName(void);
     PathType    getPathType(void);
-    
+
     static FileBase *lookup(const char *name, unsigned int len);
-    
+
     static FileBase *get(int n);
 
-protected: 
+protected:
     static FileBase *_head;
-    
+
     FileBase   *_next;
     const char *_name;
     PathType    _path_type;

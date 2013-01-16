@@ -34,7 +34,7 @@ namespace mbed {
 
 /** A serial port (UART) for communication with other serial devices
  *
- * Can be used for Full Duplex communication, or Simplex by specifying 
+ * Can be used for Full Duplex communication, or Simplex by specifying
  * one pin as NC (Not Connected)
  *
  * Example:
@@ -55,20 +55,20 @@ class Serial : public Stream {
 public:
     /** Create a Serial port, connected to the specified transmit and receive pins
      *
-     *  @param tx Transmit pin 
+     *  @param tx Transmit pin
      *  @param rx Receive pin
      *
      *  @note
      *    Either tx or rx may be specified as NC if unused
      */
     Serial(PinName tx, PinName rx, const char *name=NULL);
-    
+
     /** Set the baud rate of the serial port
-     *  
+     *
      *  @param baudrate The baudrate of the serial port (default = 9600).
      */
     void baud(int baudrate);
-    
+
     enum Parity {
         None = 0,
         Odd,
@@ -76,7 +76,7 @@ public:
         Forced1,
         Forced0
     };
-    
+
     enum IrqType {
         RxIrq = 0,
         TxIrq
@@ -89,7 +89,7 @@ public:
      *  @param stop The number of stop bits (1 or 2; default = 1)
      */
     void format(int bits = 8, Parity parity=Serial::None, int stop_bits=1);
-    
+
     /** Determine if there is a character available to read
      *
      *  @returns
@@ -97,24 +97,24 @@ public:
      *    0 otherwise
      */
     int readable();
-    
+
     /** Determine if there is space available to write a character
-     * 
+     *
      *  @returns
      *    1 if there is space to write a character,
      *    0 otherwise
      */
     int writeable();
-    
+
     /** Attach a function to call whenever a serial interrupt is generated
      *
      *  @param fptr A pointer to a void function, or 0 to set as none
      *  @param type Which serial interrupt to attach the member function to (Seriall::RxIrq for receive, TxIrq for transmit buffer empty)
      */
     void attach(void (*fptr)(void), IrqType type=RxIrq);
-    
+
     /** Attach a member function to call whenever a serial interrupt is generated
-     *     
+     *
      *  @param tptr pointer to the object to call the member function on
      *  @param mptr pointer to the member function to be called
      *  @param type Which serial interrupt to attach the member function to (Seriall::RxIrq for receive, TxIrq for transmit buffer empty)
@@ -126,13 +126,13 @@ public:
             serial_irq_set(&_serial, (SerialIrq)type, 1);
         }
     }
-    
+
     static void _irq_handler(uint32_t id, SerialIrq irq_type);
 
 protected:
     virtual int _getc();
     virtual int _putc(int c);
-    
+
     serial_t        _serial;
     FunctionPointer _irq[2];
 };

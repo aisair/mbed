@@ -25,14 +25,16 @@
 typedef int FILEHANDLE;
 
 #include <stdio.h>
-#ifdef __ARMCC_VERSION
+
+#if defined(__ARMCC_VERSION) || defined(__ICCARM__)
 typedef int ssize_t;
 typedef long off_t;
+
 #else
-#include <sys/types.h>
+#   include <sys/types.h>
 #endif
 
-namespace mbed { 
+namespace mbed {
 
 /** An OO equivalent of the internal FILEHANDLE variable
  *  and associated _sys_* functions.
@@ -40,7 +42,7 @@ namespace mbed {
  * FileHandle is an abstract class, needing at least sys_write and
  *  sys_read to be implmented for a simple interactive device.
  *
- * No one ever directly tals to/instanciates a FileHandle - it gets 
+ * No one ever directly tals to/instanciates a FileHandle - it gets
  *  created by FileSystem, and wrapped up by stdio.
  */
 class FileHandle {
@@ -114,7 +116,7 @@ public:
         lseek(pos, SEEK_SET);
         return res;
     }
-    
+
     virtual ~FileHandle();
 };
 

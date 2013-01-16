@@ -47,6 +47,7 @@
 
 #define DEVICE_PWMOUT           1
 
+#define DEVICE_SEMIHOST         1
 #define DEVICE_LOCALFILESYSTEM  1
 
 #define DEVICE_SLEEP            0

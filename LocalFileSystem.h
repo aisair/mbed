@@ -36,19 +36,19 @@ class LocalFileHandle : public FileHandle {
 
 public:
     LocalFileHandle(FILEHANDLE fh);
-    
+
     virtual int close();
-    
+
     virtual ssize_t write(const void *buffer, size_t length);
-    
+
     virtual ssize_t read(void *buffer, size_t length);
-    
+
     virtual int isatty();
-    
+
     virtual off_t lseek(off_t position, int whence);
-    
+
     virtual int fsync();
-    
+
     virtual off_t flen();
 
 protected:
@@ -56,10 +56,10 @@ protected:
     int pos;
 };
 
-/** A filesystem for accessing the local mbed Microcontroller USB disk drive 
+/** A filesystem for accessing the local mbed Microcontroller USB disk drive
  *
- *  This allows programs to read and write files on the same disk drive that is used to program the 
- *  mbed Microcontroller. Once created, the standard C file access functions are used to open, 
+ *  This allows programs to read and write files on the same disk drive that is used to program the
+ *  mbed Microcontroller. Once created, the standard C file access functions are used to open,
  *  read and write files.
  *
  * Example:
@@ -70,8 +70,8 @@ protected:
  *
  * int main() {
  *     FILE *fp = fopen("/local/out.txt", "w");  // Open "out.txt" on the local file system for writing
- *     fprintf(fp, "Hello World!");              
- *     fclose(fp);                               
+ *     fprintf(fp, "Hello World!");
+ *     fclose(fp);
  *     remove("/local/out.txt");                 // Removes the file "out.txt" from the local file system
  *
  *     DIR *d = opendir("/local");               // Opens the root directory of the local file system
@@ -94,7 +94,7 @@ class LocalFileSystem : public FileSystemLike {
 
 public:
     LocalFileSystem(const char* n) : FileSystemLike(n) {
-        
+
     }
 
     virtual FileHandle *open(const char* name, int flags);

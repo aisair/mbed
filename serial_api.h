@@ -65,7 +65,7 @@ void serial_pinout_tx(PinName tx);
 
 #ifdef __cplusplus
 }
-#endif 
+#endif
 
 #endif
 

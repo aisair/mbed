@@ -37,7 +37,7 @@ namespace mbed {
  * #include "mbed.h"
  *
  * PwmOut led(LED1);
- * 
+ *
  * int main() {
  *     while(1) {
  *         led = led + 0.01;
@@ -70,7 +70,7 @@ public:
 
     /** Set the ouput duty-cycle, specified as a percentage (float)
      *
-     *  @param value A floating-point value representing the output duty-cycle, 
+     *  @param value A floating-point value representing the output duty-cycle,
      *    specified as a percentage. The value should lie between
      *    0.0f (representing on 0%) and 1.0f (representing on 100%).
      *    Values outside this range will be saturated to 0.0f or 1.0f.
@@ -82,7 +82,7 @@ public:
     /** Return the current output duty-cycle setting, measured as a percentage (float)
      *
      *  @returns
-     *    A floating-point value representing the current duty-cycle being output on the pin, 
+     *    A floating-point value representing the current duty-cycle being output on the pin,
      *    measured as a percentage. The returned value will lie between
      *    0.0f (representing on 0%) and 1.0f (representing on 100%).
      *
@@ -92,7 +92,7 @@ public:
     float read() {
         return pwmout_read(&_pwm);
     }
-    
+
     /** Set the PWM period, specified in seconds (float), keeping the duty cycle the same.
      *
      *  @note
@@ -140,12 +140,12 @@ public:
         write(value);
         return *this;
     }
-    
+
     PwmOut& operator= (PwmOut& rhs) {
         write(rhs.read());
         return *this;
     }
-    
+
     /** An operator shorthand for read()
      */
     operator float() {

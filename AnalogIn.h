@@ -35,11 +35,11 @@ namespace mbed {
  * Example:
  * @code
  * // Print messages when the AnalogIn is greater than 50%
- * 
+ *
  * #include "mbed.h"
- * 
+ *
  * AnalogIn temperature(p20);
- * 
+ *
  * int main() {
  *     while(1) {
  *         if(temperature > 0.5) {
@@ -55,13 +55,13 @@ public:
 
     /** Create an AnalogIn, connected to the specified pin
      *
-     * @param pin AnalogIn pin to connect to 
+     * @param pin AnalogIn pin to connect to
      * @param name (optional) A string to identify the object
      */
     AnalogIn(PinName pin) {
         analogin_init(&_adc, pin);
     }
-    
+
     /** Read the input voltage, represented as a float in the range [0.0, 1.0]
      *
      * @returns A floating-point value representing the current input voltage, measured as a percentage
@@ -73,7 +73,7 @@ public:
     /** Read the input voltage, represented as an unsigned short in the range [0x0, 0xFFFF]
      *
      * @returns
-     *   16-bit unsigned short representing the current input voltage, normalised to a 16-bit value 
+     *   16-bit unsigned short representing the current input voltage, normalised to a 16-bit value
      */
     unsigned short read_u16() {
         return analogin_read_u16(&_adc);
@@ -88,7 +88,7 @@ public:
      * @code
      * float x = volume.read();
      * float x = volume;
-     * 
+     *
      * if(volume.read() > 0.25) { ... }
      * if(volume > 0.25) { ... }
      * @endcode

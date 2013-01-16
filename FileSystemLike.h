@@ -44,12 +44,12 @@ public:
      *  @param name The name to use for the filesystem.
      */
     FileSystemLike(const char *name);
-    
+
     virtual ~FileSystemLike();
-    
+
     static DirHandle *opendir();
     friend class BaseDirHandle;
-    
+
     /** Opens a file from the filesystem
      *
      *  @param filename The name of the file to open.
@@ -101,7 +101,7 @@ public:
      *   -1 on failure.
      */
     virtual int mkdir(const char *name, mode_t mode) { return -1; }
-    
+
     // TODO other filesystem functions (mkdir, rm, rn, ls etc)
 };
 

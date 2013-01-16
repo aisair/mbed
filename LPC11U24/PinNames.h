@@ -96,9 +96,9 @@ typedef enum {
     P1_27 = 59,
     P1_28 = 60,
     P1_29 = 61,
-    
+
     P1_31 = 63,
-    
+
     // mbed DIP Pin Names
     p5  = P0_9,
     p6  = P0_8,
@@ -126,21 +126,21 @@ typedef enum {
     p28 = P0_5,
     p29 = P1_5,
     p30 = P1_2,
-    
+
     p33 = P0_3,
     p34 = P1_15,
     p35 = P0_20,
     p36 = P0_21,
-    
+
     // Other mbed Pin Names
     LED1 = P1_8,
     LED2 = P1_9,
     LED3 = P1_10,
     LED4 = P1_11,
-    
+
     USBTX = P0_19,
     USBRX = P0_18,
-    
+
     // Not connected
     NC = (int)0xFFFFFFFF,
 } PinName;

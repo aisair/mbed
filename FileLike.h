@@ -41,7 +41,7 @@ public:
      *  name - The name to use to open the file.
      */
     FileLike(const char *name);
-    
+
     virtual ~FileLike();
 };
 

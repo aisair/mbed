@@ -22,12 +22,14 @@
 #ifndef MBED_DIRHANDLE_H
 #define MBED_DIRHANDLE_H
 
-#ifdef __ARMCC_VERSION
-# define NAME_MAX 255
+#if defined(__ARMCC_VERSION) || defined(__ICCARM__)
+#   define NAME_MAX 255
 typedef int mode_t;
+
 #else
-# include <sys/syslimits.h>
+#   include <sys/syslimits.h>
 #endif
+
 #include "FileHandle.h"
 
 struct dirent {
@@ -41,7 +43,7 @@ namespace mbed {
  *  at least closedir, readdir and rewinddir.
  *
  *  If a FileSystemLike class defines the opendir method, then the
- *  directories of an object of that type can be accessed by 
+ *  directories of an object of that type can be accessed by
  *  DIR *d = opendir("/example/directory") (or opendir("/example")
  *  to open the root of the filesystem), and then using readdir(d) etc.
  *
@@ -59,7 +61,7 @@ public:
      *   -1 on error.
      */
     virtual int closedir()=0;
-    
+
     /** Return the directory entry at the current position, and
      *  advances the position to the next entry.
      *
@@ -87,7 +89,7 @@ public:
      *  @param location The location to seek to. Must be a value returned by telldir.
      */
     virtual void seekdir(off_t location) { }
-    
+
     virtual ~DirHandle() {}
 };
 

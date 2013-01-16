@@ -28,23 +28,23 @@ namespace mbed {
 
 /** A Timeout is used to call a function at a point in the future
  *
- * You can use as many seperate Timeout objects as you require. 
+ * You can use as many seperate Timeout objects as you require.
  *
  * Example:
  * @code
  * // Blink until timeout.
  *
  * #include "mbed.h"
- * 
+ *
  * Timeout timeout;
  * DigitalOut led(LED1);
- * 
+ *
  * int on = 1;
- * 
+ *
  * void attimeout() {
  *     on = 0;
  * }
- * 
+ *
  * int main() {
  *     timeout.attach(&attimeout, 5);
  *     while(on) {

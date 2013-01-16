@@ -33,12 +33,12 @@ namespace mbed {
  * Example:
  * @code
  * // Flash an LED while a DigitalIn is true
- * 
+ *
  * #include "mbed.h"
- * 
+ *
  * DigitalIn enable(p5);
  * DigitalOut led(LED1);
- * 
+ *
  * int main() {
  *     while(1) {
  *         if(enable) {
@@ -60,17 +60,17 @@ public:
     DigitalIn(PinName pin) {
         gpio_init(&gpio, pin, PIN_INPUT);
     }
-    
+
     /** Read the input, represented as 0 or 1 (int)
      *
      *  @returns
-     *    An integer representing the state of the input pin, 
+     *    An integer representing the state of the input pin,
      *    0 for logical 0, 1 for logical 1
      */
     int read() {
         return gpio_read(&gpio);
     }
-    
+
     /** Set the input pin mode
      *
      *  @param mode PullUp, PullDown, PullNone, OpenDrain
@@ -78,7 +78,7 @@ public:
     void mode(PinMode pull) {
         gpio_mode(&gpio, pull);
     }
-    
+
 #ifdef MBED_OPERATORS
     /** An operator shorthand for read()
      */

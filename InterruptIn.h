@@ -68,13 +68,13 @@ public:
      */
     InterruptIn(PinName pin);
     virtual ~InterruptIn();
-    
+
      int read();
 #ifdef MBED_OPERATORS
     operator int();
 
 #endif
-     
+
     /** Attach a function to call when a rising edge occurs on the input
      *
      *  @param fptr A pointer to a void function, or 0 to set as none
@@ -82,7 +82,7 @@ public:
     void rise(void (*fptr)(void));
 
     /** Attach a member function to call when a rising edge occurs on the input
-     *     
+     *
      *  @param tptr pointer to the object to call the member function on
      *  @param mptr pointer to the member function to be called
      */
@@ -99,7 +99,7 @@ public:
     void fall(void (*fptr)(void));
 
     /** Attach a member function to call when a falling edge occurs on the input
-     *     
+     *
      *  @param tptr pointer to the object to call the member function on
      *  @param mptr pointer to the member function to be called
      */
@@ -114,13 +114,13 @@ public:
      *  @param mode PullUp, PullDown, PullNone
      */
     void mode(PinMode pull);
-    
+
     static void _irq_handler(uint32_t id, gpio_irq_event event);
-    
+
 protected:
     gpio_t gpio;
     gpio_irq_t gpio_irq;
-    
+
     FunctionPointer _rise;
     FunctionPointer _fall;
 };

@@ -44,7 +44,7 @@ int  spi_busy         (spi_t *obj);
 
 #ifdef __cplusplus
 }
-#endif 
+#endif
 
 #endif
 

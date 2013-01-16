@@ -47,7 +47,7 @@ namespace mbed {
  *     while (1) {
  *         int i = slave.receive();
  *         switch (i) {
- *             case I2CSlave::ReadAddressed: 
+ *             case I2CSlave::ReadAddressed:
  *                 slave.write(msg, strlen(msg) + 1); // Includes null char
  *                 break;
  *             case I2CSlave::WriteGeneral:
@@ -62,7 +62,7 @@ namespace mbed {
  *         for(int i = 0; i < 10; i++) buf[i] = 0;    // Clear buffer
  *     }
  * }
- * @endcode                  
+ * @endcode
  */
 class I2CSlave {
 
@@ -94,7 +94,7 @@ public:
      *  - NoData            - the slave has not been addressed
      *  - ReadAddressed     - the master has requested a read from this slave
      *  - WriteAddressed    - the master is writing to this slave
-     *  - WriteGeneral      - the master is writing to all slave 
+     *  - WriteGeneral      - the master is writing to all slave
      */
     int receive(void);
 
@@ -107,7 +107,7 @@ public:
      *       0 on success,
      *   non-0 otherwise
      */
-    int read(char *data, int length); 
+    int read(char *data, int length);
 
     /** Read a single byte from an I2C master.
      *

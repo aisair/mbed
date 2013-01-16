@@ -31,11 +31,11 @@ namespace mbed {
 class TimerEvent {
 public:
     TimerEvent();
-    
+
     /** The handler registered with the underlying timer interrupt
      */
     static void irq(uint32_t id);
-    
+
     /** Destruction removes it...
      */
     virtual ~TimerEvent();
@@ -43,13 +43,13 @@ public:
 protected:
     // The handler called to service the timer event of the derived class
     virtual void handler() = 0;
-    
+
     // insert in to linked list
     void insert(unsigned int timestamp);
-    
+
     // remove from linked list, if in it
     void remove();
-    
+
     ticker_event_t event;
 };
 

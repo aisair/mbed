@@ -26,7 +26,7 @@
 
 #if DEVICE_CAN
 
-#include "PinNames.h" 
+#include "PinNames.h"
 #include "PeripheralNames.h"
 #include "can_helper.h"
 

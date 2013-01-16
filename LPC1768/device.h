@@ -47,9 +47,17 @@
 
 #define DEVICE_PWMOUT           1
 
-#define DEVICE_LOCALFILESYSTEM  1
+#if defined (__ICCARM__)
+#define DEVICE_SEMIHOST         0
+#else
+#define DEVICE_SEMIHOST         1
+#endif
 
-#define DEVICE_SLEEP            0
+#if DEVICE_SEMIHOST
+#define DEVICE_LOCALFILESYSTEM  1
+#endif
+
+#define DEVICE_SLEEP            1
 
 #define DEVICE_DEBUG_AWARENESS  1
 

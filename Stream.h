@@ -39,7 +39,7 @@ public:
     char *gets(char *s, int size);
     int printf(const char* format, ...);
     int scanf(const char* format, ...);
-    
+
     operator std::FILE*() {return _file;}
 
 protected:
@@ -53,7 +53,7 @@ protected:
 
     virtual int _putc(int c) = 0;
     virtual int _getc() = 0;
-    
+
     std::FILE *_file;
 };
 

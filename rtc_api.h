@@ -30,7 +30,7 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif 
+#endif
 
 void rtc_init(void);
 void rtc_free(void);

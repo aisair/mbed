@@ -29,7 +29,7 @@ extern "C" {
 typedef struct {
     PinName  pin;
     uint32_t mask;
-    
+
     __IO uint32_t *reg_dir;
     __IO uint32_t *reg_set;
     __IO uint32_t *reg_clr;

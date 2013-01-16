@@ -41,16 +41,16 @@ public:
      * @note
      *  It is only required to specify as many pin variables as is required
      *  for the bus; the rest will default to NC (not connected)
-     */ 
+     */
     BusIn(PinName p0, PinName p1 = NC, PinName p2 = NC, PinName p3 = NC,
           PinName p4 = NC, PinName p5 = NC, PinName p6 = NC, PinName p7 = NC,
           PinName p8 = NC, PinName p9 = NC, PinName p10 = NC, PinName p11 = NC,
           PinName p12 = NC, PinName p13 = NC, PinName p14 = NC, PinName p15 = NC);
 
     BusIn(PinName pins[16]);
-    
+
     virtual ~BusIn();
-    
+
     /** Read the value of the input bus
      *
      *  @returns

@@ -60,11 +60,11 @@ public:
      *
      *  @param port Port to connect to (Port0-Port5)
      *  @param mask A bitmask to identify which bits in the port should be included (0 - ignore)
-        */ 
+        */
     PortIn(PortName port, int mask = 0xFFFFFFFF) {
         port_init(&_port, port, mask, PIN_INPUT);
     }
-    
+
     /** Read the value currently output on the port
      *
      *  @returns
@@ -73,7 +73,7 @@ public:
     int read() {
         return port_read(&_port);
     }
-    
+
     /** Set the input pin mode
      *
      *  @param mode PullUp, PullDown, PullNone, OpenDrain
@@ -81,10 +81,10 @@ public:
     void mode(PinMode mode) {
         port_mode(&_port, mode);
     }
-    
+
     /** A shorthand for read()
      */
-    operator int() { 
+    operator int() {
         return read();
     }
 

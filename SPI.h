@@ -73,11 +73,11 @@ public:
      *  @param mode Clock polarity and phase mode (0 - 3)
      *
      * @code
-     * mode | POL PHA 
-     * -----+--------     
-     *   0  |  0   0 
+     * mode | POL PHA
+     * -----+--------
+     *   0  |  0   0
      *   1  |  0   1
-     *   2  |  1   0 
+     *   2  |  1   0
      *   3  |  1   1
      * @endcode
      */
@@ -100,7 +100,7 @@ public:
 
 protected:
     spi_t _spi;
-    
+
     void aquire(void);
     static SPI *_owner;
     int _bits;

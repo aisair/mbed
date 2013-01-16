@@ -24,7 +24,7 @@
 
 #include <string.h>
 
-namespace mbed { 
+namespace mbed {
 
 /** A class for storing and calling a pointer to a static or member void function
  */
@@ -32,31 +32,31 @@ class FunctionPointer {
 public:
 
     /** Create a FunctionPointer, attaching a static function
-     * 
+     *
      *  @param function The void static function to attach (default is none)
      */
     FunctionPointer(void (*function)(void) = 0);
 
     /** Create a FunctionPointer, attaching a member function
-     * 
+     *
      *  @param object The object pointer to invoke the member function on (i.e. the this pointer)
-     *  @param function The address of the void member function to attach 
+     *  @param function The address of the void member function to attach
      */
     template<typename T>
     FunctionPointer(T *object, void (T::*member)(void)) {
         attach(object, member);
     }
-    
+
     /** Attach a static function
-     * 
+     *
      *  @param function The void static function to attach (default is none)
      */
     void attach(void (*function)(void) = 0);
-    
+
     /** Attach a member function
-     * 
+     *
      *  @param object The object pointer to invoke the member function on (i.e. the this pointer)
-     *  @param function The address of the void member function to attach 
+     *  @param function The address of the void member function to attach
      */
     template<typename T>
     void attach(T *object, void (T::*member)(void)) {
@@ -65,7 +65,7 @@ public:
         _membercaller = &FunctionPointer::membercaller<T>;
         _function = 0;
     }
-    
+
     /** Call the attached static or member function
      */
     void call();
@@ -78,7 +78,7 @@ private:
         memcpy((char*)&m, member, sizeof(m));
         (o->*m)();
     }
-    
+
     void (*_function)(void);                // static function pointer - 0 if none attached
     void *_object;                            // object this pointer - 0 if none attached
     char _member[16];                        // raw member function pointer storage - converted back by registered _membercaller

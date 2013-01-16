@@ -29,8 +29,8 @@ extern "C" {
 /** Implementation of the C time.h functions
  *
  * Provides mechanisms to set and read the current time, based
- * on the microcontroller Real-Time Clock (RTC), plus some 
- * standard C manipulation and formating functions. 
+ * on the microcontroller Real-Time Clock (RTC), plus some
+ * standard C manipulation and formating functions.
  *
  * Example:
  * @code
@@ -38,18 +38,18 @@ extern "C" {
  *
  * int main() {
  *     set_time(1256729737);  // Set RTC time to Wed, 28 Oct 2009 11:35:37
- *      
- *     while(1) {    
+ *
+ *     while(1) {
  *         time_t seconds = time(NULL);
- *         
+ *
  *         printf("Time as seconds since January 1, 1970 = %d\n", seconds);
- *  
+ *
  *         printf("Time as a basic string = %s", ctime(&seconds));
  *
  *         char buffer[32];
  *         strftime(buffer, 32, "%I:%M %p\n", localtime(&seconds));
  *         printf("Time as a custom formatted string = %s", buffer);
- *    
+ *
  *         wait(1);
  *     }
  * }
@@ -59,10 +59,10 @@ extern "C" {
 /** Set the current time
  *
  * Initialises and sets the time of the microcontroller Real-Time Clock (RTC)
- * to the time represented by the number of seconds since January 1, 1970 
- * (the UNIX timestamp). 
- * 
- * @param t Number of seconds since January 1, 1970 (the UNIX timestamp) 
+ * to the time represented by the number of seconds since January 1, 1970
+ * (the UNIX timestamp).
+ *
+ * @param t Number of seconds since January 1, 1970 (the UNIX timestamp)
  *
  * Example:
  * @code
@@ -72,7 +72,7 @@ extern "C" {
  *     set_time(1256729737); // Set time to Wed, 28 Oct 2009 11:35:37
  * }
  * @endcode
- */ 
+ */
 void set_time(time_t t);
 
 #ifdef __cplusplus

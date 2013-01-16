@@ -81,14 +81,14 @@ public:
      * the address is forced to 1 to indicate a read.
      *
      *  @param address 8-bit I2C slave address [ addr | 1 ]
-     *  @param data Pointer to the byte-array to read data in to 
+     *  @param data Pointer to the byte-array to read data in to
      *  @param length Number of bytes to read
      *  @param repeated Repeated start, true - don't send stop at end
      *
      *  @returns
      *       0 on success (ack),
      *   non-0 on failure (nack)
-     */ 
+     */
     int read(int address, char *data, int length, bool repeated = false);
 
     /** Read a single byte from the I2C bus
@@ -106,14 +106,14 @@ public:
      * the address is forced to 0 to indicate a write.
      *
      *  @param address 8-bit I2C slave address [ addr | 0 ]
-     *  @param data Pointer to the byte-array data to send 
+     *  @param data Pointer to the byte-array data to send
      *  @param length Number of bytes to send
      *  @param repeated Repeated start, true - do not send stop at end
      *
      *  @returns
      *       0 on success (ack),
      *   non-0 on failure (nack)
-     */ 
+     */
     int write(int address, const char *data, int length, bool repeated = false);
 
     /** Write single byte out on the I2C bus
@@ -137,7 +137,7 @@ public:
 
 protected:
     void aquire();
-    
+
     i2c_t _i2c;
     static I2C  *_owner;
     int         _hz;

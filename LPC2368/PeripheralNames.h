@@ -26,7 +26,7 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif 
+#endif
 
 typedef enum {
     UART_0 = (int)LPC_UART0_BASE,
@@ -66,11 +66,11 @@ typedef enum {
     PWM_2,
     PWM_3,
     PWM_4,
-    PWM_5, 
-    PWM_6 
+    PWM_5,
+    PWM_6
 } PWMName;
 
-typedef enum { 
+typedef enum {
      CAN_1 = (int)LPC_CAN1_BASE,
      CAN_2 = (int)LPC_CAN2_BASE
 } CANName;

@@ -32,7 +32,7 @@ extern "C" {
 #include <stdarg.h>
 
 /** Output a debug message
- * 
+ *
  * @param format printf-style format string, followed by variables
  */
 static inline void debug(const char *format, ...) {
@@ -41,12 +41,12 @@ static inline void debug(const char *format, ...) {
     vfprintf(stderr, format, args);
     va_end(args);
 }
- 
+
 /** Conditionally output a debug message
- * 
+ *
  * NOTE: If the condition is constant false (!= 1) and the compiler optimization
  * level is greater than 0, then the whole function will be compiled away.
- * 
+ *
  * @param condition output only if condition is true (== 1)
  * @param format printf-style format string, followed by variables
  */

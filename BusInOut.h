@@ -31,7 +31,7 @@ namespace mbed {
 class BusInOut {
 
 public:
-    
+
     /** Create an BusInOut, connected to the specified pins
      *
      *  @param p<n> DigitalInOut pin to connect to bus bit p<n> (p5-p30, NC)
@@ -57,7 +57,7 @@ public:
      */
     void write(int value);
 
-        
+
     /** Read the value currently output on the bus
      *
      *  @returns
@@ -78,7 +78,7 @@ public:
      *  @param mode PullUp, PullDown, PullNone
      */
     void mode(PinMode pull);
- 
+
 #ifdef MBED_OPERATORS
      /** A shorthand for write()
      */

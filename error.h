@@ -46,12 +46,12 @@
  * error("That shouldn't have happened!");
  * @endcode
  *
- * If the mbed running the program executes this function, it will print the 
+ * If the mbed running the program executes this function, it will print the
  * message via the USB serial port, and then die with the blue lights of death!
  *
- * The message can use printf-style formatting, so you can report variables in the 
+ * The message can use printf-style formatting, so you can report variables in the
  * message too. For example, you could use this to check a run-time condition:
- * 
+ *
  * @code
  * if(x >= 5) {
  *     error("expected x to be less than 5, but got %d", x);

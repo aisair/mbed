@@ -35,9 +35,9 @@ namespace mbed {
  * Example:
  * @code
  * // Make a sawtooth output
- *  
+ *
  * #include "mbed.h"
- *  
+ *
  * AnalogOut tri(p18);
  * int main() {
  *     while(1) {
@@ -55,16 +55,16 @@ class AnalogOut {
 public:
 
     /** Create an AnalogOut connected to the specified pin
-     * 
+     *
      *  @param AnalogOut pin to connect to (18)
      */
     AnalogOut(PinName pin) {
         analogout_init(&_dac, pin);
     }
-    
+
     /** Set the output voltage, specified as a percentage (float)
      *
-     *  @param value A floating-point value representing the output voltage, 
+     *  @param value A floating-point value representing the output voltage,
      *    specified as a percentage. The value should lie between
      *    0.0f (representing 0v / 0%) and 1.0f (representing 3.3v / 100%).
      *    Values outside this range will be saturated to 0.0f or 1.0f.
@@ -72,7 +72,7 @@ public:
     void write(float value) {
         analogout_write(&_dac, value);
     }
-    
+
     /** Set the output voltage, represented as an unsigned short in the range [0x0, 0xFFFF]
      *
      *  @param value 16-bit unsigned short representing the output voltage,
@@ -85,7 +85,7 @@ public:
     /** Return the current output voltage setting, measured as a percentage (float)
      *
      *  @returns
-     *    A floating-point value representing the current voltage being output on the pin, 
+     *    A floating-point value representing the current voltage being output on the pin,
      *    measured as a percentage. The returned value will lie between
      *    0.0f (representing 0v / 0%) and 1.0f (representing 3.3v / 100%).
      *
@@ -103,7 +103,7 @@ public:
         write(percent);
         return *this;
     }
-    
+
     AnalogOut& operator= (AnalogOut& rhs) {
         write(rhs.read());
         return *this;

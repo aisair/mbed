@@ -34,7 +34,7 @@ namespace mbed {
  * Example:
  * @code
  * // Toggle all four LEDs
- * 
+ *
  * #include "mbed.h"
  *
  * // LED1 = P1.18  LED2 = P1.20  LED3 = P1.21  LED4 = P1.23
@@ -51,7 +51,7 @@ namespace mbed {
  *     }
  * }
  * @endcode
- */  
+ */
 class PortOut {
 public:
 
@@ -59,19 +59,19 @@ public:
      *
      *  @param port Port to connect to (Port0-Port5)
      *  @param mask A bitmask to identify which bits in the port should be included (0 - ignore)
-     */ 
+     */
     PortOut(PortName port, int mask = 0xFFFFFFFF) {
         port_init(&_port, port, mask, PIN_OUTPUT);
     }
-    
+
     /** Write the value to the output port
      *
      *  @param value An integer specifying a bit to write for every corresponding PortOut pin
-     */    
+     */
     void write(int value) {
         port_write(&_port, value);
     }
-    
+
     /** Read the value currently output on the port
      *
      *  @returns
@@ -82,20 +82,20 @@ public:
     }
 
     /** A shorthand for write()
-     */    
-    PortOut& operator= (int value) { 
+     */
+    PortOut& operator= (int value) {
         write(value);
         return *this;
     }
-    
-    PortOut& operator= (PortOut& rhs) { 
+
+    PortOut& operator= (PortOut& rhs) {
         write(rhs.read());
         return *this;
     }
-    
+
     /** A shorthand for read()
      */
-    operator int() { 
+    operator int() {
         return read();
     }
 
