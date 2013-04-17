@@ -13,30 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef MBED_PINMAP_H
-#define MBED_PINMAP_H
-
-#include "PinNames.h"
+#ifndef MBED_PORTNAMES_H
+#define MBED_PORTNAMES_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef struct {
-    PinName pin;
-    int peripheral;
-    int function;
-} PinMap;
-
-void pin_function(PinName pin, int function);
-void pin_mode    (PinName pin, PinMode mode);
-
-uint32_t pinmap_peripheral(PinName pin, const PinMap* map);
-uint32_t pinmap_merge     (uint32_t a, uint32_t b);
-void     pinmap_pinout    (PinName pin, const PinMap *map);
+typedef enum {
+    Port0 = 0,
+} PortName;
 
 #ifdef __cplusplus
 }
 #endif
-
 #endif

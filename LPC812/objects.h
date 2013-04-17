@@ -13,27 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef MBED_PINMAP_H
-#define MBED_PINMAP_H
+#ifndef MBED_OBJECTS_H
+#define MBED_OBJECTS_H
 
+#include "cmsis.h"
+#include "PortNames.h"
+#include "PeripheralNames.h"
 #include "PinNames.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef struct {
-    PinName pin;
-    int peripheral;
-    int function;
-} PinMap;
+struct gpio_irq_s {
+    uint32_t ch;
+};
 
-void pin_function(PinName pin, int function);
-void pin_mode    (PinName pin, PinMode mode);
+struct serial_s {
+    LPC_USART_TypeDef *uart;
+    unsigned char index;
+};
 
-uint32_t pinmap_peripheral(PinName pin, const PinMap* map);
-uint32_t pinmap_merge     (uint32_t a, uint32_t b);
-void     pinmap_pinout    (PinName pin, const PinMap *map);
+struct i2c_s {
+    LPC_I2C_TypeDef *i2c;
+};
+
+struct spi_s {
+    LPC_SPI_TypeDef *spi;
+    unsigned char spi_n;
+};
+
+#include "gpio_object.h"
 
 #ifdef __cplusplus
 }
