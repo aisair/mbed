@@ -13,23 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef MBED_TOOLCHAIN_H
-#define MBED_TOOLCHAIN_H
+#ifndef MBED_GPIO_OBJECT_H
+#define MBED_GPIO_OBJECT_H
 
-#if defined(TOOLCHAIN_ARM)
-#include <rt_sys.h>
+#ifdef __cplusplus
+extern "C" {
 #endif
 
-#ifndef FILEHANDLE
-typedef int FILEHANDLE;
-#endif
+typedef struct {
+    PinName  pin;
+    uint32_t mask;
 
-#if defined (__ICCARM__)
-#   define WEAK     __weak
-#   define PACKED   __packed
-#else
-#   define WEAK     __attribute__((weak))
-#   define PACKED   __attribute__((packed))
+    __IO uint32_t *reg_dir;
+    __IO uint32_t *reg_set;
+    __IO uint32_t *reg_clr;
+    __I  uint32_t *reg_in;
+} gpio_t;
+
+static inline void gpio_write(gpio_t *obj, int value) {
+    if (value)
+        *obj->reg_set = obj->mask;
+    else
+        *obj->reg_clr = obj->mask;
+}
+
+static inline int gpio_read(gpio_t *obj) {
+    return ((*obj->reg_in & obj->mask) ? 1 : 0);
+}
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif

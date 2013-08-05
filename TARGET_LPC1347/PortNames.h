@@ -13,23 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef MBED_TOOLCHAIN_H
-#define MBED_TOOLCHAIN_H
+#ifndef MBED_PORTNAMES_H
+#define MBED_PORTNAMES_H
 
-#if defined(TOOLCHAIN_ARM)
-#include <rt_sys.h>
+#ifdef __cplusplus
+extern "C" {
 #endif
 
-#ifndef FILEHANDLE
-typedef int FILEHANDLE;
-#endif
+typedef enum {
+    Port0 = 0,
+    Port1 = 1
+} PortName;
 
-#if defined (__ICCARM__)
-#   define WEAK     __weak
-#   define PACKED   __packed
-#else
-#   define WEAK     __attribute__((weak))
-#   define PACKED   __attribute__((packed))
+#ifdef __cplusplus
+}
 #endif
-
 #endif

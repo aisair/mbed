@@ -13,23 +13,58 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef MBED_TOOLCHAIN_H
-#define MBED_TOOLCHAIN_H
+#ifndef MBED_OBJECTS_H
+#define MBED_OBJECTS_H
 
-#if defined(TOOLCHAIN_ARM)
-#include <rt_sys.h>
+#include "cmsis.h"
+#include "PortNames.h"
+#include "PeripheralNames.h"
+#include "PinNames.h"
+
+#ifdef __cplusplus
+extern "C" {
 #endif
 
-#ifndef FILEHANDLE
-typedef int FILEHANDLE;
-#endif
+struct gpio_irq_s {
+    uint32_t ch;
+};
 
-#if defined (__ICCARM__)
-#   define WEAK     __weak
-#   define PACKED   __packed
-#else
-#   define WEAK     __attribute__((weak))
-#   define PACKED   __attribute__((packed))
+struct port_s {
+    __IO uint32_t *reg_dir;
+    __IO uint32_t *reg_mpin;
+    PortName port;
+    uint32_t mask;
+};
+
+
+struct pwmout_s {
+    PWMName pwm;
+};
+
+
+struct serial_s {
+    LPC_USART_Type *uart;
+    int index;
+};
+
+struct analogin_s {
+    ADCName adc;
+};
+
+
+struct i2c_s {
+    LPC_I2C_Type *i2c;
+};
+
+
+struct spi_s {
+    LPC_SSPx_Type *spi;
+};
+
+#include "gpio_object.h"
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif

@@ -13,29 +13,56 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef MBED_GPIO_API_H
-#define MBED_GPIO_API_H
+#ifndef MBED_PERIPHERALNAMES_H
+#define MBED_PERIPHERALNAMES_H
 
-#include "device.h"
+#include "cmsis.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-/* Set the given pin as GPIO
- * @param pin The pin to be set as GPIO
- * @return The GPIO port mask for this pin
- **/
-uint32_t gpio_set(PinName pin);
+typedef enum {
+    UART_0 = (int)LPC_USART_BASE
+} UARTName;
 
-/* GPIO object */
-void gpio_init (gpio_t *obj, PinName pin, PinDirection direction);
+typedef enum {
+    I2C_0 = (int)LPC_I2C_BASE
+} I2CName;
 
-void gpio_mode (gpio_t *obj, PinMode mode);
-void gpio_dir  (gpio_t *obj, PinDirection direction);
+typedef enum {
+    ADC0_0 = 0,
+    ADC0_1,
+    ADC0_2,
+    ADC0_3,
+    ADC0_4,
+    ADC0_5,
+    ADC0_6,
+    ADC0_7
+} ADCName;
 
-void gpio_write(gpio_t *obj, int value);
-int  gpio_read (gpio_t *obj);
+typedef enum {
+    SPI_0 = (int)LPC_SSP0_BASE,
+    SPI_1 = (int)LPC_SSP1_BASE
+} SPIName;
+
+typedef enum {
+    PWM_1 = 0,
+    PWM_2,
+    PWM_3,
+    PWM_4,
+    PWM_5,
+    PWM_6,
+    PWM_7,
+    PWM_8,
+    PWM_9,
+    PWM_10,
+    PWM_11
+} PWMName;
+
+#define STDIO_UART_TX     UART_TX
+#define STDIO_UART_RX     UART_RX
+#define STDIO_UART        UART_0
 
 #ifdef __cplusplus
 }
