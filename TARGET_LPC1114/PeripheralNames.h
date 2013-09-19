@@ -51,13 +51,7 @@ typedef enum {
     PWM_2,
     PWM_3,
     PWM_4,
-    PWM_5,
-    PWM_6,
-    PWM_7,
-    PWM_8,
-    PWM_9,
-    PWM_10,
-    PWM_11
+    PWM_5
 } PWMName;
 
 #define STDIO_UART_TX     USBTX
