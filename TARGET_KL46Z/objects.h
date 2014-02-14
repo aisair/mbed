@@ -25,6 +25,10 @@
 extern "C" {
 #endif
 
+#ifdef TARGET_KL46Z
+#define UARTLP_Type UART0_Type
+#endif
+
 struct gpio_irq_s {
     uint32_t port;
     uint32_t pin;
@@ -46,7 +50,7 @@ struct pwmout_s {
 };
 
 struct serial_s {
-    UART0_Type *uart;
+    UARTLP_Type *uart;
     int index;
 };
 
