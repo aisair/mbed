@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_rtc_ex.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   Header file of PWR HAL Extension module.
   ******************************************************************************
   * @attention
@@ -80,10 +80,10 @@ typedef struct
                                              This parameter can be a value of @ref RTCEx_Tamper_Filter_Definitions */
 
   uint32_t SamplingFrequency;           /*!< Specifies the sampling frequency.
-                                             This parameter can be a value of @ref RTCEx_Tamper_SamplingFrequencies_Definitions */
+                                             This parameter can be a value of @ref RTCEx_Tamper_Sampling_Frequencies_Definitions */
 
   uint32_t PrechargeDuration;           /*!< Specifies the Precharge Duration .
-                                             This parameter can be a value of @ref RTCEx_Tamper_PinPrechargeDuration_Definitions */
+                                             This parameter can be a value of @ref RTCEx_Tamper_Pin_Precharge_Duration_Definitions */
 
   uint32_t TamperPullUp;                /*!< Specifies the Tamper PullUp .
                                              This parameter can be a value of @ref RTCEx_Tamper_PullUP_Definitions */
@@ -127,7 +127,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup RTCEx_Tamper_Pins_Definitions 
+/** @defgroup RTCEx_Tamper_Pins_Definitions
   * @{
   */
 #define RTC_TAMPER_1                    RTC_TAMPCR_TAMP1E
@@ -223,7 +223,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup RTCEx_Tamper_Sampling_Frequencies_Definitions 
+/** @defgroup RTCEx_Tamper_Sampling_Frequencies_Definitions
   * @{
   */
 #define RTC_TAMPERSAMPLINGFREQ_RTCCLK_DIV32768  ((uint32_t)0x00000000)  /*!< Each of the tamper inputs are sampled
@@ -255,7 +255,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup RTCEx_Tamper_Pin_Precharge_Duration_Definitions 
+/** @defgroup RTCEx_Tamper_Pin_Precharge_Duration_Definitions
   * @{
   */
 #define RTC_TAMPERPRECHARGEDURATION_1RTCCLK ((uint32_t)0x00000000)  /*!< Tamper pins are pre-charged before
@@ -321,7 +321,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup RTCEx_Digital_Calibration_Definitions 
+/** @defgroup RTCEx_Digital_Calibration_Definitions
   * @{
   */
 #define RTC_CALIBSIGN_POSITIVE            ((uint32_t)0x00000000)
@@ -335,7 +335,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup RTCEx_Smooth_calib_period_Definitions 
+/** @defgroup RTCEx_Smooth_calib_period_Definitions
   * @{
   */
 #define RTC_SMOOTHCALIB_PERIOD_32SEC   ((uint32_t)0x00000000)  /*!< If RTCCLK = 32768 Hz, Smooth calibation

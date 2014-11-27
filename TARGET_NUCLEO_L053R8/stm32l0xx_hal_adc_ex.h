@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_adc_ex.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief  This file contains all the functions prototypes for the ADC firmware 
   *          library.
   ******************************************************************************
@@ -70,7 +70,7 @@
   */
    
   
-/** @defgroup ADCEx_Channel_Mode 
+/** @defgroup ADCEx_Channel_Mode
   * @{
   */   
 #define ADC_SINGLE_ENDED                        (uint32_t)0x00000000   /* dummy value */

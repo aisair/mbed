@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_rcc_ex.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   Header file of RCC HAL Extension module.
   ******************************************************************************
   * @attention
@@ -70,7 +70,7 @@ typedef struct
                                         This parameter can be a value of @ref RCCEx_USART2_Clock_Source */
                                    
   uint32_t Lpuart1ClockSelection;  /*!< LPUART1 clock source      
-                                        This parameter can be a value of @ref RCCEx_LPUART1_Clock_Source */
+                                        This parameter can be a value of @ref RCCEx_LPUART_Clock_Source */
                                    
   uint32_t I2c1ClockSelection;     /*!< I2C1 clock source      
                                         This parameter can be a value of @ref RCCEx_I2C1_Clock_Source */
@@ -79,7 +79,7 @@ typedef struct
                                         This parameter can be a value of @ref RCCEx_RTC_Clock_Source */
                                                                          
   uint32_t UsbClockSelection;      /*!< Specifies USB and RNG Clock  Selection
-                                        This parameter can be a value of @ref RCCEx_USB_Clock_Source */                                   
+                                        This parameter can be a value of @ref RCCEx_USB_Clock_Source */
 
   uint32_t LptimClockSelection;    /*!< LPTIM1 clock source
                                         This parameter can be a value of @ref RCCEx_LPTIM1_Clock_Source */
@@ -341,7 +341,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup RCCEx_StopWakeUp_Clock 
+/** @defgroup RCCEx_StopWakeUp_Clock
   * @{
   */
 
@@ -354,7 +354,7 @@ typedef struct
   * @}
   */ 
 
-/** @defgroup RCCEx_LSEDrive_Configuration 
+/** @defgroup RCCEx_LSEDrive_Configuration
   * @{
   */
 
@@ -1005,7 +1005,7 @@ typedef struct
 #define  RCC_CRS_IT_ERROR_MASK                 ((uint32_t)(RCC_CRS_IT_TRIMOVF | RCC_CRS_IT_SYNCERR | RCC_CRS_IT_SYNCMISS))
 
 #define __HAL_RCC_CRS_CLEAR_IT(__INTERRUPT__)   ((((__INTERRUPT__) &  RCC_CRS_IT_ERROR_MASK)!= 0) ? (CRS->ICR |= CRS_ICR_ERRC) : \
-                                            (CRS->ICR |= (__INTERRUPT__)))
+                                            (CRS->ICR = (__INTERRUPT__)))
 
 /**
   * @brief  Checks whether the specified CRS flag is set or not.
@@ -1040,7 +1040,7 @@ typedef struct
 #define RCC_CRS_FLAG_ERROR_MASK                 ((uint32_t)(RCC_CRS_FLAG_TRIMOVF | RCC_CRS_FLAG_SYNCERR | RCC_CRS_FLAG_SYNCMISS))
 
 #define __HAL_RCC_CRS_CLEAR_FLAG(__FLAG__)   ((((__FLAG__) & RCC_CRS_FLAG_ERROR_MASK)!= 0) ? (CRS->ICR |= CRS_ICR_ERRC) : \
-                                            (CRS->ICR |= (__FLAG__)))
+                                            (CRS->ICR = (__FLAG__)))
 
 
 /**

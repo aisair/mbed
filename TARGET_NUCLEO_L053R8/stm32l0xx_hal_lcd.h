@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_lcd.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   Header file of LCD Controller HAL module.
   ******************************************************************************
   * @attention
@@ -138,7 +138,7 @@ typedef struct
 
 #define IS_LCD_ALL_INSTANCE(INSTANCE) ((INSTANCE) == LCD)
 
-/** @defgroup LCD_Prescaler 
+/** @defgroup LCD_Prescaler
   * @{
   */
 
@@ -180,7 +180,7 @@ typedef struct
   * @}
   */
   
-/** @defgroup LCD_Divider 
+/** @defgroup LCD_Divider
   * @{
   */
 
@@ -223,7 +223,7 @@ typedef struct
   */
 
 
-/** @defgroup LCD_Duty 
+/** @defgroup LCD_Duty
   * @{
   */
   
@@ -244,7 +244,7 @@ typedef struct
   */ 
   
 
-/** @defgroup LCD_Bias 
+/** @defgroup LCD_Bias
   * @{
   */
   
@@ -259,7 +259,7 @@ typedef struct
   * @}
   */ 
     
-/** @defgroup LCD_Voltage_Source 
+/** @defgroup LCD_Voltage_Source
   * @{
   */
   
@@ -273,7 +273,7 @@ typedef struct
   * @}
   */  
 
-/** @defgroup LCD_Interrupts 
+/** @defgroup LCD_Interrupts
   * @{
   */
 #define LCD_IT_SOF                      LCD_FCR_SOFIE
@@ -287,7 +287,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup LCD_PulseOnDuration 
+/** @defgroup LCD_PulseOnDuration
   * @{
   */
 
@@ -313,7 +313,7 @@ typedef struct
   */
 
 
-/** @defgroup LCD_DeadTime 
+/** @defgroup LCD_DeadTime
   * @{
   */
 
@@ -338,7 +338,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup LCD_BlinkMode 
+/** @defgroup LCD_BlinkMode
   * @{
   */
 
@@ -356,7 +356,7 @@ typedef struct
   * @}
   */    
 
-/** @defgroup LCD_BlinkFrequency 
+/** @defgroup LCD_BlinkFrequency
   * @{
   */
 
@@ -381,7 +381,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup LCD_Contrast 
+/** @defgroup LCD_Contrast
   * @{
   */
 
@@ -406,7 +406,7 @@ typedef struct
   * @}
   */
       
-/** @defgroup LCD_Flag 
+/** @defgroup LCD_Flag
   * @{
   */
 
@@ -426,7 +426,7 @@ typedef struct
   * @}
   */   
 
-/** @defgroup LCD_RAMRegister 
+/** @defgroup LCD_RAMRegister
   * @{
   */
 
@@ -473,6 +473,10 @@ typedef struct
   */
 
 /* Exported macro ------------------------------------------------------------*/
+
+/** @defgroup LCD_Exported_Macros
+  * @{
+  */
 
 /** @brief Reset LCD handle state
   * @param  __HANDLE__: specifies the LCD Handle.
@@ -661,6 +665,10 @@ typedef struct
   */
 #define __HAL_LCD_CLEAR_FLAG(__HANDLE__, __FLAG__) ((__HANDLE__)->Instance->CLR = (__FLAG__))
 
+/**
+  * @}
+  */
+  
 /* Exported functions ------------------------------------------------------- */
 /* Initialization/de-initialization methods  **********************************/
 HAL_StatusTypeDef HAL_LCD_DeInit(LCD_HandleTypeDef *hlcd);

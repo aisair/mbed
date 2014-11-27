@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32f0xx_hal_crc.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    28-May-2014
+  * @version V1.1.0
+  * @date    03-Oct-2014
   * @brief   Header file of CRC HAL module.
   ******************************************************************************
   * @attention
@@ -50,12 +50,14 @@
   * @{
   */
 
-/** @addtogroup CRC
+/** @addtogroup CRC CRC HAL module driver
   * @{
   */ 
 
 /* Exported types ------------------------------------------------------------*/ 
-
+/** @defgroup CRC_Exported_Types CRC Exported Types
+  * @{
+  */
 /** 
   * @brief  CRC HAL State Structure definition  
   */ 
@@ -135,10 +137,15 @@ typedef struct
                                            Note that constant CRC_INPUT_FORMAT_UNDEFINED is defined but an initialization error
                                            must occur if InputBufferFormat is not one of the three values listed above  */ 
 }CRC_HandleTypeDef;
-
+/**
+  * @}
+  */
+  
 /* Exported constants --------------------------------------------------------*/
-
-/** @defgroup CRC_Default_Polynomial_Value    Default CRC generating polynomial
+/** @defgroup CRC_Exported_Constants CRC Exported Constants
+  * @{
+  */
+/** @defgroup CRC_Default_Polynomial_Value Default CRC generating polynomial
   * @{
   */
 #define DEFAULT_CRC32_POLY      0x04C11DB7
@@ -147,7 +154,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup CRC_Default_InitValue    Default CRC computation initialization value
+/** @defgroup CRC_Default_InitValue Default CRC computation initialization value
   * @{
   */
 #define DEFAULT_CRC_INITVALUE   0xFFFFFFFF
@@ -156,7 +163,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup CRC_Default_Polynomial    Indicates whether or not default polynomial is used
+/** @defgroup CRC_Default_Polynomial Indicates whether or not default polynomial is used
   * @{
   */
 #define DEFAULT_POLYNOMIAL_ENABLE       ((uint8_t)0x00)
@@ -200,9 +207,13 @@ typedef struct
   * @}
   */   
 
+/**
+  * @}
+  */
+
 /* Exported macros -----------------------------------------------------------*/
 
-/** @defgroup CRC_Exported_Macros
+/** @defgroup CRC_Exported_Macros CRC Exported Macros
   * @{
   */
 
@@ -236,26 +247,71 @@ typedef struct
 #include "stm32f0xx_hal_crc_ex.h"
 
 /* Exported functions --------------------------------------------------------*/
+/** @addtogroup CRC_Exported_Functions CRC Exported Functions
+  * @{
+  */
+
+/** @addtogroup CRC_Exported_Functions_Group1 Initialization/de-initialization functions 
+ *  @brief    Initialization and Configuration functions. 
+  * @{
+  */
 
 /* Initialization and de-initialization functions  ****************************/
 HAL_StatusTypeDef HAL_CRC_Init(CRC_HandleTypeDef *hcrc);
 HAL_StatusTypeDef HAL_CRC_DeInit (CRC_HandleTypeDef *hcrc);
 void HAL_CRC_MspInit(CRC_HandleTypeDef *hcrc);
 void HAL_CRC_MspDeInit(CRC_HandleTypeDef *hcrc);
-/* Aliases for inter STM32 series compatibility */
-#define HAL_CRC_Input_Data_Reverse   HAL_CRCEx_Input_Data_Reverse
-#define HAL_CRC_Output_Data_Reverse  HAL_CRCEx_Output_Data_Reverse
-
+/**
+  * @}
+  */
+  
+/** @addtogroup CRC_Exported_Functions_Group2 Peripheral Control functions 
+ *  @brief    management functions.
+ * @{
+ */ 
+ 
 /* Peripheral Control functions ***********************************************/
 uint32_t HAL_CRC_Accumulate(CRC_HandleTypeDef *hcrc, uint32_t pBuffer[], uint32_t BufferLength);
 uint32_t HAL_CRC_Calculate(CRC_HandleTypeDef *hcrc, uint32_t pBuffer[], uint32_t BufferLength);
-
+/**
+  * @}
+  */
+  
+/** @addtogroup CRC_Exported_Functions_Group3 Peripheral State functions 
+ *  @brief    Peripheral State functions.
+ * @{
+ */     
 /* Peripheral State and Error functions ***************************************/
 HAL_CRC_StateTypeDef HAL_CRC_GetState(CRC_HandleTypeDef *hcrc);
-
+/**
+  * @}
+  */
+  
 /**
   * @}
   */ 
+
+/** @addtogroup CRC_Exported_Constants CRC Exported Constants 
+ *  @brief    aliases for inter STM32 series compatibility
+ * @{
+ */
+/** @defgroup CRC_Aliases Aliases for inter STM32 series compatibility
+  * @{
+  */     
+/* Aliases for inter STM32 series compatibility */
+#define HAL_CRC_Input_Data_Reverse   HAL_CRCEx_Input_Data_Reverse
+#define HAL_CRC_Output_Data_Reverse  HAL_CRCEx_Output_Data_Reverse
+/**
+  * @}
+  */
+
+/**
+  * @}
+  */
+
+/**
+  * @}
+  */
 
 /**
   * @}
@@ -268,3 +324,4 @@ HAL_CRC_StateTypeDef HAL_CRC_GetState(CRC_HandleTypeDef *hcrc);
 #endif /* __STM32F0xx_HAL_CRC_H */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+

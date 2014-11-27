@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_tim_ex.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   Header file of TIM HAL module.
   ******************************************************************************
   * @attention
@@ -63,7 +63,7 @@ typedef struct {
   uint32_t  MasterOutputTrigger;   /*!< Trigger output (TRGO) selection 
                                       This parameter can be a value of @ref TIMEx_Master_Mode_Selection */ 
   uint32_t  MasterSlaveMode;       /*!< Master/slave mode selection 
-                                      This parameter can be a value of @ref TIMEx_Master_Slave_Mode */
+                                      This parameter can be a value of @ref TIM_Master_Slave_Mode */
 }TIM_MasterConfigTypeDef;
 
 
@@ -97,7 +97,7 @@ typedef struct {
   * @}
   */ 
 
-/** @defgroup TIMEx_Remap 
+/** @defgroup TIMEx_Remap
   * @{
   */
 

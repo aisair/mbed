@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_i2c.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   Header file of I2C HAL module.
   ******************************************************************************
   * @attention
@@ -78,10 +78,10 @@ typedef struct
                                   This parameter can be a 7-bit address. */
 
   uint32_t OwnAddress2Masks;    /*!< Specifies the acknoledge mask address second device own address if dual addressing mode is selected
-                                  This parameter can be a value of @ref I2C_own_address2_masks. */
+                                  This parameter can be a value of @ref I2C_own_address2_masks */
 
   uint32_t GeneralCallMode;     /*!< Specifies if general call mode is selected.
-                                  This parameter can be a value of @ref I2C_general_call_addressing_mode. */
+                                  This parameter can be a value of @ref I2C_general_call_addressing_mode */
 
   uint32_t NoStretchMode;       /*!< Specifies if nostretch mode is selected.
                                   This parameter can be a value of @ref I2C_nostretch_mode */
@@ -166,7 +166,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup I2C_dual_addressing_mode 
+/** @defgroup I2C_dual_addressing_mode
   * @{
   */
 
@@ -204,7 +204,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup I2C_general_call_addressing_mode 
+/** @defgroup I2C_general_call_addressing_mode
   * @{
   */
 #define I2C_GENERALCALL_DISABLED        ((uint32_t)0x00000000)
@@ -216,7 +216,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup I2C_nostretch_mode 
+/** @defgroup I2C_nostretch_mode
   * @{
   */
 #define I2C_NOSTRETCH_DISABLED          ((uint32_t)0x00000000)
@@ -228,7 +228,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup I2C_Memory_Address_Size 
+/** @defgroup I2C_Memory_Address_Size
   * @{
   */
 #define I2C_MEMADD_SIZE_8BIT            ((uint32_t)0x00000001)
@@ -240,7 +240,7 @@ typedef struct
   * @}
   */  
   
-/** @defgroup I2C_ReloadEndMode_definition 
+/** @defgroup I2C_ReloadEndMode_definition
   * @{
   */
 
@@ -255,7 +255,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup I2C_StartStopMode_definition 
+/** @defgroup I2C_StartStopMode_definition
   * @{
   */
 
@@ -292,7 +292,7 @@ typedef struct
   */
 
 
-/** @defgroup I2C_Flag_definition 
+/** @defgroup I2C_Flag_definition
   * @{
   */ 
 
@@ -410,7 +410,7 @@ typedef struct
   *   
   * @retval None
   */
-#define __HAL_I2C_CLEAR_FLAG(__HANDLE__, __FLAG__) ((__HANDLE__)->Instance->ICR |= ((__FLAG__) & I2C_FLAG_MASK))
+#define __HAL_I2C_CLEAR_FLAG(__HANDLE__, __FLAG__) ((__HANDLE__)->Instance->ICR = ((__FLAG__) & I2C_FLAG_MASK))
  
 
 #define __HAL_I2C_ENABLE(__HANDLE__)                            ((__HANDLE__)->Instance->CR1 |=  I2C_CR1_PE)

@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_flash_ex.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   Header file of FLASH HAL Extension module.
   ******************************************************************************
   * @attention
@@ -61,7 +61,7 @@
 typedef struct
 {
   uint32_t OptionType;     /*!< OptionType: Option byte to be configured for extension .
-                              This parameter can be a value of @ref FLASHEx_OptionEx_Type */
+                              This parameter can be a value of @ref FLASHEx_Option_Type */
 
   uint32_t PCROPState;    /*!< PCROPState: PCROP activation or deactivation.
                               This parameter can be a value of @ref FLASHEx_PCROP_State */
@@ -70,15 +70,15 @@ typedef struct
                             This parameter can be a value of @ref FLASHEx_Option_Bytes_PC_ReadWrite_Protection */
  
   uint16_t BootConfig;         /*!< BootConfig: specifies Option bytes for boot config
-                                This parameter can be a value of @ref FLASHEx_Dual_Boot */
+                                This parameter can be a value of @ref FLASHEx_Option_Bytes_BOOT1 */
 } FLASH_AdvOBProgramInitTypeDef;
 
 /* Exported constants --------------------------------------------------------*/
 
-/** @defgroup FLASHEx_Exported_Constants FLASH Exported Constants
+/** @defgroup FLASHEx_Exported_Constants
   * @{
   */  
-/** @defgroup FLASHEx_PCROP_State FLASH PCROP State
+/** @defgroup FLASHEx_PCROP_State
   * @{
   */ 
 #define PCROPSTATE_DISABLE       ((uint32_t)0x00)  /*!<Disable PCROP */
@@ -91,7 +91,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup FLASHEx_Option_Type FLASH Option Extended Type
+/** @defgroup FLASHEx_Option_Type
   * @{
   */ 
 #define OBEX_PCROP        ((uint32_t)0x01)  /*!<PCROP option byte configuration*/
@@ -103,7 +103,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup FLASHEx_Latency 
+/** @defgroup FLASHEx_Latency
   * @{
   */ 
 #define FLASH_LATENCY_0                ((uint8_t)0x00)  /*!< FLASH Zero Latency cycle */
@@ -115,7 +115,7 @@ typedef struct
 /**
   * @}
   */ 
-/** @defgroup FLASHEx_Option_Bytes_PC_ReadWrite_Protection FLASH Option Bytes PC ReadWrite Protection
+/** @defgroup FLASHEx_Option_Bytes_PC_ReadWrite_Protection
   * @{
   */
 #define OB_PCROP_Pages0to31              ((uint32_t)0x00000001) /* PC Read/Write  protection of Sector0 */
@@ -154,7 +154,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup  FLASHEx_Selection_Protection_Mode FLASH Selection Protection Mode
+/** @defgroup  FLASHEx_Selection_Protection_Mode
   * @{
   */
 #define OB_PCROP_DESELECTED     ((uint16_t)0x0000) /*!< Disabled PcROP, nWPRi bits used for Write Protection on sector i */
@@ -170,7 +170,7 @@ typedef struct
     
     
 /* Exported macro ------------------------------------------------------------*/
-/** @defgroup FLASHEx_Macros FLASH Macros
+/** @defgroup FLASHEx_Macros
  *  @brief macros to control FLASH features 
  *  @{
  */
@@ -255,14 +255,22 @@ typedef struct
 
 /* I/O operation functions  *****************************************************/
 /* Peripheral Control functions  ************************************************/
-HAL_StatusTypeDef HAL_DATA_EEPROMEx_Unlock(void);
-HAL_StatusTypeDef HAL_DATA_EEPROMEx_Lock(void);
+HAL_StatusTypeDef HAL_FLASHEx_DATAEEPROM_Unlock(void);
+HAL_StatusTypeDef HAL_FLASHEx_DATAEEPROM_Lock(void);
+HAL_StatusTypeDef HAL_FLASHEx_DATAEEPROM_Erase(uint32_t Address);
+HAL_StatusTypeDef HAL_FLASHEx_DATAEEPROM_Program(uint32_t TypeProgram, uint32_t Address, uint32_t Data);
 
-HAL_StatusTypeDef HAL_DATA_EEPROMEx_Erase(uint32_t Address);
-HAL_StatusTypeDef HAL_DATA_EEPROMEx_Program(uint32_t TypeProgram, uint32_t Address, uint32_t Data);
+/* Aliases for legacy HAL versions compatibility */
+#define  HAL_DATA_EEPROMEx_Unlock   HAL_FLASHEx_DATAEEPROM_Unlock
+#define  HAL_DATA_EEPROMEx_Lock     HAL_FLASHEx_DATAEEPROM_Lock
+#define  HAL_DATA_EEPROMEx_Erase    HAL_FLASHEx_DATAEEPROM_Erase
+#define  HAL_DATA_EEPROMEx_Program  HAL_FLASHEx_DATAEEPROM_Program
 
 HAL_StatusTypeDef HAL_FLASHEx_Erase(FLASH_EraseInitTypeDef *pEraseInit, uint32_t *PageError);
 HAL_StatusTypeDef HAL_FLASHEx_Erase_IT(FLASH_EraseInitTypeDef *pEraseInit);
+
+HAL_StatusTypeDef HAL_FLASHEx_OB_SelectPCROP(void);
+HAL_StatusTypeDef HAL_FLASHEx_OB_DeSelectPCROP(void);
 
 HAL_StatusTypeDef HAL_FLASHEx_OBProgram(FLASH_OBProgramInitTypeDef *pOBInit);
 void HAL_FLASHEx_OBGetConfig(FLASH_OBProgramInitTypeDef *pOBInit);

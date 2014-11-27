@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_cortex.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   Header file of CORTEX HAL module.
   ******************************************************************************
   * @attention
@@ -63,7 +63,7 @@
 
 #define IS_NVIC_PREEMPTION_PRIORITY(PRIORITY)  ((PRIORITY) < 0x4)
 
-/** @defgroup CORTEX_SysTick_clock_source 
+/** @defgroup CORTEX_SysTick_clock_source
   * @{
   */
 #define SYSTICK_CLKSOURCE_HCLK_DIV8    ((uint32_t)0x00000000)

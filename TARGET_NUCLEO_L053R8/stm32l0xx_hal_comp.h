@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_comp.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   Header file of COMP HAL module.
   ******************************************************************************
   * @attention
@@ -69,6 +69,9 @@ typedef struct
   uint32_t NonInvertingInput;  /*!< Selects the non inverting input of the comparator.
                                     This parameter can be a value of @ref COMP_NonInvertingInput */
 
+  uint32_t LPTIMConnection;     /*!< Selects if the COMP connection to the LPTIM is established or not.
+                                    This parameter can be a value of @ref COMP_LPTIMConnection */
+
   uint32_t OutputPol;          /*!< Selects the output polarity of the comparator.
                                     This parameter can be a value of @ref COMP_OutputPolarity */
 
@@ -97,7 +100,7 @@ typedef enum
 }HAL_COMP_StateTypeDef;
 
 /** 
-  * @brief  PPP Handle Structure definition  
+  * @brief  COMP Handle Structure definition  
   */ 
 typedef struct
 {
@@ -208,6 +211,17 @@ typedef struct
   * @}
   */
 
+/** @defgroup COMP_LPTIMConnection
+  * @{
+  */
+#define COMP_LPTIMCONNECTION_DISABLED               ((uint32_t)0x00000000)  /*!< COMPx signal is gated */
+#define COMP_LPTIMCONNECTION_ENABLED                COMP_CSR_COMP1LPTIM1IN1    /*!< COMPx signal is connected to LPTIM */
+#define IS_COMP_LPTIMCONNECTION(LPTIMCONNECTION)   (((LPTIMCONNECTION) == COMP_LPTIMCONNECTION_DISABLED) || \
+                                                    ((LPTIMCONNECTION) == COMP_LPTIMCONNECTION_ENABLED))
+
+/**
+  * @}
+  */
 
 /** @defgroup COMP_OutputLevel
   * @{
@@ -230,7 +244,7 @@ typedef struct
 
 #define COMP_STATE_BIT_LOCK                    ((uint32_t)0x10)
 
-/** @defgroup COMP_TriggerMode 
+/** @defgroup COMP_TriggerMode
   * @{
   */
 #define COMP_TRIGGERMODE_IT_RISING             ((uint32_t)0x00000001)   /*!< External Interrupt Mode with Rising edge trigger detection */
@@ -366,7 +380,7 @@ typedef struct
   *          This parameter can be a value of @ref COMP_ExtiLineEvent 
   * @retval None.
   */
-#define __HAL_COMP_EXTI_CLEAR_FLAG(__FLAG__)   (EXTI->PR |= (__FLAG__))
+#define __HAL_COMP_EXTI_CLEAR_FLAG(__FLAG__)   (EXTI->PR = (__FLAG__))
 
 
 /* Exported functions --------------------------------------------------------*/

@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32f0xx_hal_rtc_ex.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    28-May-2014
+  * @version V1.1.0
+  * @date    03-Oct-2014
   * @brief   Header file of RTC HAL Extension module.
   ******************************************************************************
   * @attention
@@ -56,6 +56,10 @@
 
 /* Exported types ------------------------------------------------------------*/ 
 
+/** @defgroup RTCEx_Exported_Types RTCEx Exported Types
+  * @{
+  */
+
 /**
   * @brief  RTC Tamper structure definition
   */
@@ -82,22 +86,25 @@ typedef struct
   uint32_t TimeStampOnTamperDetection;  /*!< Specifies the TimeStampOnTamperDetection.
                                              This parameter can be a value of @ref RTCEx_Tamper_TimeStampOnTamperDetection_Definitions */
 }RTC_TamperTypeDef;
+/**
+  * @}
+  */
 
 /* Exported constants --------------------------------------------------------*/
-/** @defgroup RTCEx_Exported_Constants
+/** @defgroup RTCEx_Exported_Constants RTCEx Exported Constants
   * @{
   */
 
-/** @defgroup RTCEx_Output_selection_Definitions
+/** @defgroup RTCEx_Output_selection_Definitions RTCEx Output Selection Definition
   * @{
   */
 #define RTC_OUTPUT_DISABLE             ((uint32_t)0x00000000)
 #define RTC_OUTPUT_ALARMA              ((uint32_t)0x00200000)
-#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx)
+#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || defined(STM32F091xC) || defined(STM32F098xx)
 #define RTC_OUTPUT_WAKEUP              ((uint32_t)0x00600000)
 #endif
 
-#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx)
+#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || defined(STM32F091xC) || defined(STM32F098xx)
 #define IS_RTC_OUTPUT(OUTPUT) (((OUTPUT) == RTC_OUTPUT_DISABLE) || \
                                ((OUTPUT) == RTC_OUTPUT_ALARMA)  || \
                                ((OUTPUT) == RTC_OUTPUT_WAKEUP))
@@ -110,7 +117,7 @@ typedef struct
   */
 
 #if !defined(STM32F030x6) && !defined(STM32F030x8)
-/** @defgroup RTCEx_Backup_Registers_Definitions
+/** @defgroup RTCEx_Backup_Registers_Definitions RTCEx Backup Registers Definition
   * @{
   */
 #define RTC_BKP_DR0                       ((uint32_t)0x00000000)
@@ -125,7 +132,7 @@ typedef struct
   */
 #endif /* !defined(STM32F030x6) && !defined(STM32F030x8) */
 
-/** @defgroup RTCEx_Time_Stamp_Edges_definitions
+/** @defgroup RTCEx_Time_Stamp_Edges_definitions RTCEx Time Stamp Edges definition
   * @{
   */
 #define RTC_TIMESTAMPEDGE_RISING          ((uint32_t)0x00000000)
@@ -137,16 +144,16 @@ typedef struct
   * @}
   */
 
-/** @defgroup RTCEx_Tamper_Pins_Definitions
+/** @defgroup RTCEx_Tamper_Pins_Definitions RTCEx Tamper Pins Definition
   * @{
   */
 #define RTC_TAMPER_1                    RTC_TAFCR_TAMP1E
 #define RTC_TAMPER_2                    RTC_TAFCR_TAMP2E
-#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx)
+#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || defined(STM32F091xC) || defined(STM32F098xx)
 #define RTC_TAMPER_3                    RTC_TAFCR_TAMP3E
 #endif
 
-#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx)
+#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || defined(STM32F091xC) || defined(STM32F098xx)
 #define IS_TAMPER(TAMPER)       (((TAMPER) == RTC_TAMPER_1) || \
                                  ((TAMPER) == RTC_TAMPER_2) || \
                                  ((TAMPER) == RTC_TAMPER_3))
@@ -158,7 +165,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup RTCEx_TimeStamp_Pin_Selection
+/** @defgroup RTCEx_TimeStamp_Pin_Selections RTCEx TimeStamp Pin Selection
   * @{
   */
 #define RTC_TIMESTAMPPIN_PC13              ((uint32_t)0x00000000)
@@ -168,7 +175,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup RTCEx_Tamper_Trigger_Definitions
+/** @defgroup RTCEx_Tamper_Trigger_Definitions RTCEx Tamper Trigger Definition
   * @{
   */
 #define RTC_TAMPERTRIGGER_RISINGEDGE       ((uint32_t)0x00000000)
@@ -185,7 +192,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup RTCEx_Tamper_Filter_Definitions
+/** @defgroup RTCEx_Tamper_Filter_Definitions RTCEx Tamper Filter Definition
   * @{
   */
 #define RTC_TAMPERFILTER_DISABLE   ((uint32_t)0x00000000)  /*!< Tamper filter is disabled */
@@ -205,7 +212,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup RTCEx_Tamper_Sampling_Frequencies_Definitions 
+/** @defgroup RTCEx_Tamper_Sampling_Frequencies_Definitions RTCEx Tamper Sampling Frequencies Definition  
   * @{
   */
 #define RTC_TAMPERSAMPLINGFREQ_RTCCLK_DIV32768  ((uint32_t)0x00000000)  /*!< Each of the tamper inputs are sampled
@@ -237,7 +244,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup RTCEx_Tamper_Pin_Precharge_Duration_Definitions
+/** @defgroup RTCEx_Tamper_Pin_Precharge_Duration_Definitions RTCEx Tamper Pin Precharge Duration Definition
   * @{
   */
 #define RTC_TAMPERPRECHARGEDURATION_1RTCCLK ((uint32_t)0x00000000)  /*!< Tamper pins are pre-charged before
@@ -257,7 +264,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup RTCEx_Tamper_TimeStampOnTamperDetection_Definitions
+/** @defgroup RTCEx_Tamper_TimeStampOnTamperDetection_Definitions RTCEx Tamper TimeStampOnTamperDetection Definition
   * @{
   */
 #define RTC_TIMESTAMPONTAMPERDETECTION_ENABLE  ((uint32_t)RTC_TAFCR_TAMPTS)  /*!< TimeStamp on Tamper Detection event saved */
@@ -269,7 +276,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup RTCEx_Tamper_Pull_UP_Definitions
+/** @defgroup RTCEx_Tamper_Pull_UP_Definitions RTCEx Tamper Pull UP Definition
   * @{
   */
 #define RTC_TAMPER_PULLUP_ENABLE  ((uint32_t)0x00000000)            /*!< TimeStamp on Tamper Detection event saved */
@@ -281,8 +288,8 @@ typedef struct
   * @}
   */
 
-#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx)
-/** @defgroup RTCEx_Wakeup_Timer_Definitions
+#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || defined(STM32F091xC) || defined(STM32F098xx)
+/** @defgroup RTCEx_Wakeup_Timer_Definitions RTCEx Wakeup Timer Definition
   * @{
   */
 #define RTC_WAKEUPCLOCK_RTCCLK_DIV16        ((uint32_t)0x00000000)
@@ -303,9 +310,9 @@ typedef struct
 /**
   * @}
   */
-#endif /* defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) */
+#endif /* defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || defined(STM32F091xC) || defined(STM32F098xx) */
 
-/** @defgroup RTCEx_Smooth_calib_period_Definitions
+/** @defgroup RTCEx_Smooth_calib_period_Definitions RTCEx Smooth calib period Definition
   * @{
   */
 #define RTC_SMOOTHCALIB_PERIOD_32SEC   ((uint32_t)0x00000000) /*!<  If RTCCLK = 32768 Hz, Smooth calibation
@@ -322,7 +329,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup RTCEx_Smooth_calib_Plus_pulses_Definitions
+/** @defgroup RTCEx_Smooth_calib_Plus_pulses_Definitions RTCEx Smooth calib Plus pulses Definition
   * @{
   */
 #define RTC_SMOOTHCALIB_PLUSPULSES_SET    ((uint32_t)0x00008000) /*!<  The number of RTCCLK pulses added
@@ -337,7 +344,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup RTCEx_Smooth_calib_Minus_pulses_Definitions
+/** @defgroup RTCEx_Smooth_calib_Minus_pulses_Definitions RTCEx Smooth calib Minus pulses Definition
   * @{
   */
 #define  IS_RTC_SMOOTH_CALIB_MINUS(VALUE) ((VALUE) <= 0x000001FF)
@@ -345,7 +352,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup RTCEx_Add_1_Second_Parameter_Definitions
+/** @defgroup RTCEx_Add_1_Second_Parameter_Definition RTCEx Add 1 Second Parameter Definition
   * @{
   */
 #define RTC_SHIFTADD1S_RESET      ((uint32_t)0x00000000)
@@ -357,7 +364,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup RTCEx_Substract_Fraction_Of_Second_Value
+/** @defgroup RTCEx_Substract_Fraction_Of_Second_Value RTCEx Substract Fraction Of Second Value
   * @{
   */
 #define IS_RTC_SHIFT_SUBFS(FS) ((FS) <= 0x00007FFF)
@@ -365,7 +372,7 @@ typedef struct
   * @}
   */
 
- /** @defgroup RTCEx_Calib_Output_selection_Definitions
+ /** @defgroup RTCEx_Calib_Output_selection_Definitions RTCEx Calib Output selection Definition
   * @{
   */
 #define RTC_CALIBOUTPUT_512HZ            ((uint32_t)0x00000000)
@@ -382,15 +389,18 @@ typedef struct
   */
 
 /* Exported macro ------------------------------------------------------------*/
-
-#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx)
+/** @defgroup RTCEx_Exported_Macros RTCEx Exported Macros
+  * @{
+  */
+  
+#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || defined(STM32F091xC) || defined(STM32F098xx)
 /**
   * @brief  Enable the RTC WakeUp Timer peripheral.
   * @param  __HANDLE__: specifies the RTC handle.
   * @retval None
   */
 #define __HAL_RTC_WAKEUPTIMER_ENABLE(__HANDLE__)                      ((__HANDLE__)->Instance->CR |= (RTC_CR_WUTE))
-#endif /* defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) */
+#endif /* defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || defined(STM32F091xC) || defined(STM32F098xx) */
 
 /**
   * @brief Enable the RTC TimeStamp peripheral.
@@ -399,14 +409,14 @@ typedef struct
   */
 #define __HAL_RTC_TIMESTAMP_ENABLE(__HANDLE__)                        ((__HANDLE__)->Instance->CR |= (RTC_CR_TSE))
 
-#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx)
+#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || defined(STM32F091xC) || defined(STM32F098xx)
 /**
   * @brief Disable the RTC WakeUp Timer peripheral.
   * @param  __HANDLE__: specifies the RTC handle.
   * @retval None
   */
 #define __HAL_RTC_WAKEUPTIMER_DISABLE(__HANDLE__)                     ((__HANDLE__)->Instance->CR &= ~(RTC_CR_WUTE))
-#endif /* defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) */
+#endif /* defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || defined(STM32F091xC) || defined(STM32F098xx) */
 
 /**
   * @brief Disable the RTC TimeStamp peripheral.
@@ -453,7 +463,7 @@ typedef struct
   */
 #define __HAL_RTC_TIMESTAMP_ENABLE_IT(__HANDLE__, __INTERRUPT__)      ((__HANDLE__)->Instance->CR |= (__INTERRUPT__))
 
-#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx)
+#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || defined(STM32F091xC) || defined(STM32F098xx)
 /**
   * @brief  Enable the RTC WakeUpTimer interrupt.
   * @param  __HANDLE__: specifies the RTC handle.
@@ -463,7 +473,7 @@ typedef struct
   * @retval None
   */
 #define __HAL_RTC_WAKEUPTIMER_ENABLE_IT(__HANDLE__, __INTERRUPT__)    ((__HANDLE__)->Instance->CR |= (__INTERRUPT__))
-#endif /* defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) */
+#endif /* defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || defined(STM32F091xC) || defined(STM32F098xx) */
 
 /**
   * @brief  Disable the RTC TimeStamp interrupt.
@@ -475,7 +485,7 @@ typedef struct
   */
 #define __HAL_RTC_TIMESTAMP_DISABLE_IT(__HANDLE__, __INTERRUPT__)     ((__HANDLE__)->Instance->CR &= ~(__INTERRUPT__))
 
-#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx)
+#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || defined(STM32F091xC) || defined(STM32F098xx)
 /**
   * @brief  Disable the RTC WakeUpTimer interrupt.
   * @param  __HANDLE__: specifies the RTC handle.
@@ -485,7 +495,7 @@ typedef struct
   * @retval None
   */
 #define __HAL_RTC_WAKEUPTIMER_DISABLE_IT(__HANDLE__, __INTERRUPT__)   ((__HANDLE__)->Instance->CR &= ~(__INTERRUPT__))
-#endif /* defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) */
+#endif /* defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || defined(STM32F091xC) || defined(STM32F098xx) */
 
 /**
   * @brief  Check whether the specified RTC Tamper interrupt has occurred or not.
@@ -497,7 +507,7 @@ typedef struct
   */
 #define __HAL_RTC_TAMPER_GET_IT(__HANDLE__, __FLAG__)                 (((((__HANDLE__)->Instance->ISR) & ((__FLAG__)>> 4)) != RESET)? SET : RESET)
 
-#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx)
+#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || defined(STM32F091xC) || defined(STM32F098xx)
 /**
   * @brief  Check whether the specified RTC WakeUpTimer interrupt has occurred or not.
   * @param  __HANDLE__: specifies the RTC handle.
@@ -507,7 +517,7 @@ typedef struct
   * @retval None
   */
 #define __HAL_RTC_WAKEUPTIMER_GET_IT(__HANDLE__, __FLAG__)            (((((__HANDLE__)->Instance->ISR) & ((__FLAG__)>> 4)) != RESET)? SET : RESET)
-#endif /* defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) */
+#endif /* defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || defined(STM32F091xC) || defined(STM32F098xx) */
 
 /**
   * @brief  Check whether the specified RTC TimeStamp interrupt has occurred or not.
@@ -530,7 +540,7 @@ typedef struct
   */
 #define __HAL_RTC_TIMESTAMP_GET_FLAG(__HANDLE__, __FLAG__)            (((((__HANDLE__)->Instance->ISR) & (__FLAG__)) != RESET)? SET : RESET)
 
-#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx)
+#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || defined(STM32F091xC) || defined(STM32F098xx)
 /**
   * @brief  Get the selected RTC WakeUpTimer's flag status.
   * @param  __HANDLE__: specifies the RTC handle.
@@ -541,7 +551,7 @@ typedef struct
   * @retval None
   */
 #define __HAL_RTC_WAKEUPTIMER_GET_FLAG(__HANDLE__, __FLAG__)          (((((__HANDLE__)->Instance->ISR) & (__FLAG__)) != RESET)? SET : RESET)
-#endif /* defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) */
+#endif /* defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || defined(STM32F091xC) || defined(STM32F098xx) */
 
 /**
   * @brief  Get the selected RTC Tamper's flag status.
@@ -583,7 +593,7 @@ typedef struct
   */
 #define __HAL_RTC_TAMPER_CLEAR_FLAG(__HANDLE__, __FLAG__)                 ((__HANDLE__)->Instance->ISR) = (~(((__FLAG__) | RTC_ISR_INIT)& 0x0000FFFF)|((__HANDLE__)->Instance->ISR & RTC_ISR_INIT))
 
-#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx)
+#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || defined(STM32F091xC) || defined(STM32F098xx)
 /**
   * @brief  Clear the RTC Wake Up timer's pending flags.
   * @param  __HANDLE__: specifies the RTC handle.
@@ -593,9 +603,19 @@ typedef struct
   * @retval None
   */
 #define __HAL_RTC_WAKEUPTIMER_CLEAR_FLAG(__HANDLE__, __FLAG__)            ((__HANDLE__)->Instance->ISR) = (~(((__FLAG__) | RTC_ISR_INIT)& 0x0000FFFF)|((__HANDLE__)->Instance->ISR & RTC_ISR_INIT)) 
-#endif /* defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) */
-
+#endif /* defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || defined(STM32F091xC) || defined(STM32F098xx) */
+/**
+  * @}
+  */
+  
 /* Exported functions --------------------------------------------------------*/
+/** @addtogroup RTCEx_Exported_Functions
+  * @{
+  */
+
+/** @addtogroup RTCEx_Exported_Functions_Group1
+ * @{
+ */ 
 
 /* RTC TimeStamp and Tamper functions *****************************************/
 HAL_StatusTypeDef HAL_RTCEx_SetTimeStamp(RTC_HandleTypeDef *hrtc, uint32_t TimeStampEdge, uint32_t RTC_TimeStampPin);
@@ -610,18 +630,25 @@ void              HAL_RTCEx_TamperTimeStampIRQHandler(RTC_HandleTypeDef *hrtc);
 
 void              HAL_RTCEx_Tamper1EventCallback(RTC_HandleTypeDef *hrtc);
 void              HAL_RTCEx_Tamper2EventCallback(RTC_HandleTypeDef *hrtc);
-#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx)
+#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || defined(STM32F091xC) || defined(STM32F098xx)
 void              HAL_RTCEx_Tamper3EventCallback(RTC_HandleTypeDef *hrtc);
 #endif
 void              HAL_RTCEx_TimeStampEventCallback(RTC_HandleTypeDef *hrtc);
 HAL_StatusTypeDef HAL_RTCEx_PollForTimeStampEvent(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
 HAL_StatusTypeDef HAL_RTCEx_PollForTamper1Event(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
 HAL_StatusTypeDef HAL_RTCEx_PollForTamper2Event(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
-#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx)
+#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || defined(STM32F091xC) || defined(STM32F098xx)
 HAL_StatusTypeDef HAL_RTCEx_PollForTamper3Event(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
 #endif
-
-#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx)
+/**
+  * @}
+  */
+ 
+#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || defined(STM32F091xC) || defined(STM32F098xx)
+/** @addtogroup RTCEx_Exported_Functions_Group2
+ * @{
+ */ 
+ 
 /* RTC Wake-up functions ******************************************************/
 HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer(RTC_HandleTypeDef *hrtc, uint32_t WakeUpCounter, uint32_t WakeUpClock);
 HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer_IT(RTC_HandleTypeDef *hrtc, uint32_t WakeUpCounter, uint32_t WakeUpClock);
@@ -631,7 +658,14 @@ void              HAL_RTCEx_WakeUpTimerIRQHandler(RTC_HandleTypeDef *hrtc);
 void              HAL_RTCEx_WakeUpTimerEventCallback(RTC_HandleTypeDef *hrtc);
 HAL_StatusTypeDef HAL_RTCEx_PollForWakeUpTimerEvent(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
 #endif
+/**
+  * @}
+  */
 
+/** @addtogroup RTCEx_Exported_Functions_Group3
+ * @{
+ */ 
+    
 /* Extension Control functions ************************************************/
 #if !defined(STM32F030x6) && !defined(STM32F030x8)
 void              HAL_RTCEx_BKUPWrite(RTC_HandleTypeDef *hrtc, uint32_t BackupRegister, uint32_t Data);
@@ -646,9 +680,15 @@ HAL_StatusTypeDef HAL_RTCEx_SetRefClock(RTC_HandleTypeDef *hrtc);
 HAL_StatusTypeDef HAL_RTCEx_DeactivateRefClock(RTC_HandleTypeDef *hrtc);
 HAL_StatusTypeDef HAL_RTCEx_EnableBypassShadow(RTC_HandleTypeDef *hrtc);
 HAL_StatusTypeDef HAL_RTCEx_DisableBypassShadow(RTC_HandleTypeDef *hrtc);
-
+/**
+  * @}
+  */
+  
 /* Extension RTC features functions *******************************************/
 
+/**
+  * @}
+  */
 
 /**
   * @}
@@ -665,3 +705,4 @@ HAL_StatusTypeDef HAL_RTCEx_DisableBypassShadow(RTC_HandleTypeDef *hrtc);
 #endif /* __STM32F0xx_HAL_RTC_EX_H */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+

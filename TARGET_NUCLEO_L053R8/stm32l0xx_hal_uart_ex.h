@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_uart_ex.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   Header file of UART HAL Extension module.
   ******************************************************************************
   * @attention
@@ -61,7 +61,7 @@
 typedef struct
 {
   uint32_t WakeUpEvent;        /*!< Specifies which event will activat the Wakeup from Stop mode flag (WUF).
-                                    This parameter can be a value of @ref UARTEx_WakeUp_from_Stop_Selection.
+                                    This parameter can be a value of @ref UART_WakeUp_from_Stop_Selection.
                                     If set to UART_WAKEUP_ON_ADDRESS, the two other fields below must
                                     be filled up. */
   
@@ -76,7 +76,7 @@ typedef struct
   * @{
   */
   
-/** @defgroup UARTEx_Word_Length UART Word Length
+/** @defgroup UARTEx_Word_Length
   * @{
   */
 #define UART_WORDLENGTH_7B                  ((uint32_t)USART_CR1_M_1)
@@ -89,7 +89,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup UARTEx_AutoBaud_Rate_Mode    UART Advanced Feature AutoBaud Rate Mode
+/** @defgroup UARTEx_AutoBaud_Rate_Mode
   * @{
   */
 #define UART_ADVFEATURE_AUTOBAUDRATE_ONSTARTBIT    ((uint32_t)0x0000)
@@ -104,7 +104,7 @@ typedef struct
   * @}
   */  
   
-/** @defgroup UARTEx_WakeUp_Address_Length    UART WakeUp Address Length
+/** @defgroup UARTEx_WakeUp_Address_Length
   * @{
   */
 #define UART_ADDRESS_DETECT_4B                ((uint32_t)0x00000000)
@@ -116,7 +116,7 @@ typedef struct
   */  
 
   
-  /** @defgroup UARTEx_WakeUp_Methods   UART WakeUp Methods
+/** @defgroup UARTEx_WakeUp_Methods
   * @{
   */
 #define UART_WAKEUPMETHOD_IDLELINE                ((uint32_t)0x00000000)
@@ -268,6 +268,9 @@ HAL_StatusTypeDef HAL_UARTEx_EnableStopMode(UART_HandleTypeDef *huart);
 HAL_StatusTypeDef HAL_UARTEx_EnableClockStopMode(UART_HandleTypeDef *huart);
 HAL_StatusTypeDef HAL_UARTEx_DisableStopMode(UART_HandleTypeDef *huart);
 HAL_StatusTypeDef HAL_UARTEx_DisableClockStopMode(UART_HandleTypeDef *huart);
+void HAL_UARTEx_WakeupCallback(UART_HandleTypeDef *huart);
+/* Aliases for inter STM32 series compatibility */
+#define HAL_UART_WakeupCallback         HAL_UARTEx_WakeupCallback
 
 /* Peripheral State functions  ************************************************/
 HAL_StatusTypeDef HAL_MultiProcessorEx_AddressLength_Set(UART_HandleTypeDef *huart, uint32_t AddressLength);

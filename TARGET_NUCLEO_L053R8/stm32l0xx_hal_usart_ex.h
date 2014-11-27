@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_usart_ex.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   Header file of USART HAL Extension module.
   ******************************************************************************
   * @attention
@@ -56,11 +56,11 @@
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
-/** @defgroup USARTEx_Extended_Exported_Constants
+/** @defgroup USARTEx_Exported_Constants
   * @{
   */
   
-/** @defgroup USARTEx_Word_Length USART Word Length
+/** @defgroup USARTEx_Word_Length
   * @{
   */
 #define USART_WORDLENGTH_7B                  ((uint32_t)USART_CR1_M_1)
@@ -76,7 +76,6 @@
 /**
   * @}
   */  
-  
 /* Exported macro ------------------------------------------------------------*/
 
 /** @defgroup USARTEx_Extended_Exported_Macros

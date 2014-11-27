@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32f0xx_hal_cec.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    28-May-2014
+  * @version V1.1.0
+  * @date    03-Oct-2014
   * @brief   Header file of CEC HAL module.
   ******************************************************************************
   * @attention
@@ -45,8 +45,8 @@
 
 #if defined(STM32F042x6) || defined(STM32F048xx) ||\
     defined(STM32F051x8) || defined(STM32F058xx) ||\
-    defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx)
-
+    defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) ||\
+    defined(STM32F091xC) || defined(STM32F098xx)
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f0xx_hal_def.h"
 
@@ -54,12 +54,15 @@
   * @{
   */
 
-/** @addtogroup CEC
+/** @addtogroup CEC CEC HAL Module Driver
   * @{
   */ 
 
 /* Exported types ------------------------------------------------------------*/ 
-
+/** @defgroup CEC_Exported_Types CEC Exported Types
+  * @{
+  */
+  
 /** 
   * @brief CEC Init Structure definition  
   */ 
@@ -183,11 +186,12 @@ typedef struct
   HAL_CEC_StateTypeDef    State;          /* CEC communication state */
     
 }CEC_HandleTypeDef;
-
-
+/**
+  * @}
+  */
 
 /* Exported constants --------------------------------------------------------*/
-/** @defgroup CEC_Exported_Constants
+/** @defgroup CEC_Exported_Constants CEC Exported Constants
   * @{
   */
      
@@ -330,7 +334,7 @@ typedef struct
   */  
   
 /* Exported macros -----------------------------------------------------------*/
-/** @defgroup CEC_Exported_Macros
+/** @defgroup CEC_Exported_Macros CEC Exported Macros
   * @{
   */
 
@@ -380,7 +384,7 @@ typedef struct
   *            @arg CEC_ISR_TXACKE    : Tx Missing Acknowledge
   * @retval none  
   */
-#define __HAL_CEC_CLEAR_FLAG(__HANDLE__, __FLAG__)         ((__HANDLE__)->Instance->ISR |= (__FLAG__)) 
+#define __HAL_CEC_CLEAR_FLAG(__HANDLE__, __FLAG__)         ((__HANDLE__)->Instance->ISR = (__FLAG__)) 
 
 /** @brief  Enables the specified CEC interrupt.
   * @param  __HANDLE__: specifies the CEC Handle.
@@ -524,13 +528,26 @@ typedef struct
   */                       
 
 /* Exported functions --------------------------------------------------------*/
+/** @addtogroup CEC_Exported_Functions CEC Exported Functions
+  * @{
+  */
+/** @addtogroup CEC_Exported_Functions_Group1 Initialization/de-initialization function 
+  *  @brief    Initialization and Configuration functions 
+  * @{
+  */
 /* Initialization and de-initialization functions  ****************************/
 HAL_StatusTypeDef HAL_CEC_Init(CEC_HandleTypeDef *hcec);
 HAL_StatusTypeDef HAL_CEC_DeInit(CEC_HandleTypeDef *hcec);
 void HAL_CEC_MspInit(CEC_HandleTypeDef *hcec);
 void HAL_CEC_MspDeInit(CEC_HandleTypeDef *hcec);
+/**
+  * @}
+  */                       
 
-
+/** @addtogroup CEC_Exported_Functions_Group2 IO operation function 
+  *  @brief CEC Transmit/Receive functions
+  * @{
+  */   
 /* I/O operation functions  ***************************************************/
 HAL_StatusTypeDef HAL_CEC_Transmit(CEC_HandleTypeDef *hcec, uint8_t DestinationAddress, uint8_t *pData, uint32_t Size, uint32_t Timeout);
 HAL_StatusTypeDef HAL_CEC_Receive(CEC_HandleTypeDef *hcec, uint8_t *pData, uint32_t Timeout);
@@ -540,12 +557,25 @@ void HAL_CEC_IRQHandler(CEC_HandleTypeDef *hcec);
 void HAL_CEC_TxCpltCallback(CEC_HandleTypeDef *hcec);
 void HAL_CEC_RxCpltCallback(CEC_HandleTypeDef *hcec);
 void HAL_CEC_ErrorCallback(CEC_HandleTypeDef *hcec);
+/**
+  * @}
+  */
 
-
+/** @addtogroup CEC_Exported_Functions_Group3 Peripheral Control function 
+  *  @brief   CEC control functions 
+  * @{
+  */ 
 /* Peripheral State functions  ************************************************/
 HAL_CEC_StateTypeDef HAL_CEC_GetState(CEC_HandleTypeDef *hcec);
 uint32_t HAL_CEC_GetError(CEC_HandleTypeDef *hcec);
+/**
+  * @}
+  */
 
+/**
+  * @}
+  */
+    
 /**
   * @}
   */ 
@@ -554,9 +584,10 @@ uint32_t HAL_CEC_GetError(CEC_HandleTypeDef *hcec);
   * @}
   */ 
   
-#endif /* defined(STM32F042x6) || defined(STM32F048xx) ||                                             */
-       /* defined(STM32F051x8) || defined(STM32F058xx) ||                     */
-       /* defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx)*/
+#endif /* defined(STM32F042x6) || defined(STM32F048xx) ||                         */
+       /* defined(STM32F051x8) || defined(STM32F058xx) ||                         */
+       /* defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || */
+       /* defined(STM32F091xC) || defined(STM32F098xx) */
 #ifdef __cplusplus
 }
 #endif
@@ -564,3 +595,4 @@ uint32_t HAL_CEC_GetError(CEC_HandleTypeDef *hcec);
 #endif /* __STM32F0xx_HAL_CEC_H */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+

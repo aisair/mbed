@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_dac_ex.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   Header file of DAC HAL module.
   ******************************************************************************
   * @attention
@@ -64,7 +64,7 @@
 
 /* Exported constants --------------------------------------------------------*/
   
-/** @defgroup DACEx_wave_generation 
+/** @defgroup DACEx_wave_generation
   * @{
   */
 #define DAC_WAVEGENERATION_NONE            ((uint32_t)0x00000000)

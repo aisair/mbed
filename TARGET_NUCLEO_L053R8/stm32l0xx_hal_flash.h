@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_flash.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   This file contains all the functions prototypes for the FLASH 
   *          firmware library.
   ******************************************************************************
@@ -56,6 +56,7 @@
   */
 
 /* Exported types ------------------------------------------------------------*/
+
 /**
   * @brief  FLASH Error structure definition
   */
@@ -88,11 +89,11 @@ typedef struct
   uint32_t TypeErase;   /*!< TypeErase: Mass erase or sector Erase.
                               This parameter can be a value of @ref FLASH_Type_Erase */
 
-  uint32_t Page;     /*!< Sector: Initial FLASH sector to erase when Mass erase is disabled
-                              This parameter must be a value of @ref FLASH_Sectors */
+  uint32_t Page;        /*!< Sector: Initial FLASH sector to erase when Mass erase is disabled
+                              This parameter must be an address value between 0x08000000 and 0x0800FFFF */
   
-  uint32_t NbPages; /*!< NbSectors: Number of sectors to be erased.
-                              This parameter must be a value between 1 and (max number of sectors - value of Initial sector)*/
+  uint32_t NbPages;    /*!< NbSectors: Number of sectors to be erased.
+                              This parameter must be a value between 1 and (max number of sectors - initial sector value) */
   
 } FLASH_EraseInitTypeDef;
 
@@ -107,14 +108,14 @@ typedef struct
   uint32_t WRPState;      /*!< WRPState: Write protection activation or deactivation.
                               This parameter can be a value of @ref FLASH_WRP_State */
 
-  uint32_t WRPSector;    /*!< WRPSector: specifies the sector(s) to be write protected
-                              The value of this parameter depend on device used within the same series */  
+  uint32_t WRPSector;    /*!< WRPSector: specifies the sector(s) to be write protected.
+                              The value of this parameter depends on device used within the same series */
 
   uint32_t RDPLevel;     /*!< RDPLevel: Set the read protection level..
                               This parameter can be a value of @ref FLASH_Option_Bytes_Read_Protection */
 
   uint32_t BORLevel;     /*!< BORLevel: Set the BOR Level.
-                              This parameter can be a value of @ref Option_Bytes_BOR_Level */
+                              This parameter can be a value of @ref FLASH_Option_Bytes_BOR_Level */
   uint8_t  USERConfig;     /*!< USERConfig: Program the FLASH User Option Byte: IWDG_SW / RST_STOP / RST_STDBY.
                               This parameter can be a combination of @ref FLASH_Option_Bytes_IWatchdog, @ref FLASH_Option_Bytes_nRST_STOP and @ref FLASH_Option_Bytes_nRST_STDBY*/
 } FLASH_OBProgramInitTypeDef;
@@ -138,13 +139,16 @@ typedef struct
 
 }FLASH_ProcessTypeDef;
 
+/*Variables used for Erase sectors under interruption*/
+extern FLASH_ProcessTypeDef pFlash;   
+
 /* Exported constants --------------------------------------------------------*/
 
 /** @defgroup FLASH_Exported_Constants FLASH Exported Constants
   * @{
   */
 
-/** @defgroup FLASH_Type_Erase FLASH Type Erase
+/** @defgroup FLASH_Type_Erase
   * @{
   */
 #define TYPEERASE_PAGEERASE       ((uint32_t)0x00)  /*!<Page erase only*/
@@ -156,7 +160,7 @@ typedef struct
   * @}
   */
   
-/** @defgroup FLASH_Type_Program FLASH Type Program
+/** @defgroup FLASH_Type_Program
   * @{
   */
 #define TYPEPROGRAM_BYTE            ((uint32_t)0x00)  /*!<Program byte (8-bit) at a specified address.*/
@@ -176,7 +180,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup FLASH_WRP_State FLASH WRP State
+/** @defgroup FLASH_WRP_State
   * @{
   */
 #define WRPSTATE_DISABLE       ((uint32_t)0x00)  /*!<Disable the write protection of the desired bank 1 sectors*/
@@ -188,7 +192,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup FLASH_Option_Type FLASH Option Type
+/** @defgroup FLASH_Option_Type
   * @{
   */
 #define OPTIONBYTE_WRP        ((uint32_t)0x01)  /*!<WRP option byte configuration*/
@@ -201,7 +205,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup FLASH_Interrupts 
+/** @defgroup FLASH_Interrupts
   * @{
   */
 #define FLASH_IT_EOP               FLASH_PECR_EOPIE  /*!< End of programming interrupt source */
@@ -211,17 +215,17 @@ typedef struct
   * @}
   */ 
 
-/** @defgroup FLASH_Address 
+/** @defgroup FLASH_Address
   * @{
   */
-#define IS_FLASH_DATA_ADDRESS(ADDRESS) (((ADDRESS) >= 0x08080000) && ((ADDRESS) <= 0x080807FF)) /* 2K */
-#define IS_FLASH_PROGRAM_ADDRESS(ADDRESS) (((ADDRESS) >= 0x08000000) && ((ADDRESS) <= 0x0800FFFF)) /* 64K */ 
+#define IS_FLASH_DATA_ADDRESS(ADDRESS) (((ADDRESS) >= DATA_EEPROM_BASE) && ((ADDRESS) <= DATA_EEPROM_END)) /* 2K */
+#define IS_FLASH_PROGRAM_ADDRESS(ADDRESS) (((ADDRESS) >= FLASH_BASE) && ((ADDRESS) <= FLASH_END)) /* 64K */ 
 #define IS_NBPAGES(PAGES) (((PAGES) >= 1) && ((PAGES) <= 512)) /* 512 pages from page0 to page 511 */  
 /**
   * @}
   */ 
 
-/** @defgroup Option_Bytes_Write_Protection 
+/** @defgroup FLASH_Option_Bytes_Write_Protection
   * @{
   */
 #define OB_WRP_Pages0to31              ((uint32_t)0x00000001) /* Write protection of Sector0 */
@@ -248,7 +252,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup Option_Bytes_Read_Protection 
+/** @defgroup FLASH_Option_Bytes_Read_Protection
   * @{
   */ 
 
@@ -267,7 +271,7 @@ typedef struct
   * @}
   */ 
 
-/** @defgroup Option_Bytes_IWatchdog 
+/** @defgroup FLASH_Option_Bytes_IWatchdog
   * @{
   */
 #define OB_IWDG_SW                     ((uint8_t)0x10)  /*!< Software WDG selected */
@@ -277,7 +281,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup Option_Bytes_nRST_STOP 
+/** @defgroup FLASH_Option_Bytes_nRST_STOP
   * @{
   */
 #define OB_STOP_NoRST                  ((uint8_t)0x20) /*!< No reset generated when entering in STOP */
@@ -287,7 +291,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup Option_Bytes_nRST_STDBY 
+/** @defgroup FLASH_Option_Bytes_nRST_STDBY
   * @{
   */
 #define OB_STDBY_NoRST                 ((uint8_t)0x40) /*!< No reset generated when entering in STANDBY */
@@ -297,7 +301,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup Option_Bytes_BOR_Level 
+/** @defgroup FLASH_Option_Bytes_BOR_Level
   * @{
   */
 
@@ -320,7 +324,7 @@ typedef struct
   * @}
   */
   
-/** @defgroup FLASH_Flags 
+/** @defgroup FLASH_Flags
   * @{
   */ 
 
@@ -346,7 +350,7 @@ typedef struct
   * @}
   */ 
 
-/** @defgroup FLASH_Keys 
+/** @defgroup FLASH_Keys
   * @{
   */ 
 
@@ -370,15 +374,11 @@ typedef struct
   * @}
   */
   
-/** @defgroup CMSIS_Legacy 
-  * @{
-  */
+/* CMSIS_Legacy */ 
+  
 #if defined ( __ICCARM__ )
 #define InterruptType_ACTLR_DISMCYCINT_Msk         IntType_ACTLR_DISMCYCINT_Msk
 #endif
-/**
-  * @}
-  */
 
 /**
   * @}

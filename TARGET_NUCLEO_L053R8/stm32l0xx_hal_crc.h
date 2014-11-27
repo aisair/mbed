@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_crc.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   Header file of CRC HAL module.
   ******************************************************************************
   * @attention
@@ -99,14 +99,14 @@ typedef struct
   uint32_t InitValue;                 /*!< Init value to initiate CRC computation. No need to specify it if DefaultInitValueUse 
                                            is set to DEFAULT_INIT_VALUE_ENABLE   */                                                
                                               
-  uint32_t InputDataInversionMode;    /*!< This parameter is a value of @ref Input_Data_Inversion and specifies input data inversion mode. 
+  uint32_t InputDataInversionMode;    /*!< This parameter is a value of @ref CRC_Input_Data_Inversion and specifies input data inversion mode. 
                                            Can be either one of the following values 
                                            CRC_INPUTDATA_INVERSION_NONE      no input data inversion
                                            CRC_INPUTDATA_INVERSION_BYTE      byte-wise inversion, 0x1A2B3C4D becomes 0x58D43CB2
                                            CRC_INPUTDATA_INVERSION_HALFWORD  halfword-wise inversion, 0x1A2B3C4D becomes 0xD458B23C
                                            CRC_INPUTDATA_INVERSION_WORD      word-wise inversion, 0x1A2B3C4D becomes 0xB23CD458 */  
                                               
-  uint32_t OutputDataInversionMode;   /*!< This parameter is a value of @ref Output_Data_Inversion and specifies output data (i.e. CRC) inversion mode.
+  uint32_t OutputDataInversionMode;   /*!< This parameter is a value of @ref CRC_Output_Data_Inversion and specifies output data (i.e. CRC) inversion mode.
                                             Can be either 
                                             CRC_OUTPUTDATA_INVERSION_DISABLED   no CRC inversion, or 
                                             CRC_OUTPUTDATA_INVERSION_ENABLED    CRC 0x11223344 is converted into 0x22CC4488 */                                           
@@ -126,7 +126,7 @@ typedef struct
 
   __IO HAL_CRC_StateTypeDef   State;       /*!< CRC communication state      */
 
-  uint32_t InputDataFormat;                /*!< This parameter is a value of @ref Input_Buffer_Format and specifies input data format. 
+  uint32_t InputDataFormat;                /*!< This parameter is a value of @ref CRC_Input_Buffer_Format and specifies input data format. 
                                             Can be either 
                                             CRC_INPUTDATA_FORMAT_BYTES       input data is a stream of bytes (8-bit data)
                                             CRC_INPUTDATA_FORMAT_HALFWORDS   input data is a stream of half-words (16-bit data)
@@ -136,8 +136,11 @@ typedef struct
 }CRC_HandleTypeDef;
 
 /* Exported constants --------------------------------------------------------*/
-
-/** @defgroup CRC_Default_Polynomial_Value    Default CRC generating polynomial
+/** @defgroup CRC_Exported_Constants
+  * @{
+  */
+  
+/** @defgroup CRC_Default_Polynomial_Value
   * @{
   */
 #define DEFAULT_CRC32_POLY      0x04C11DB7
@@ -146,7 +149,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup CRC_Default_InitValue    Default CRC computation initialization value
+/** @defgroup CRC_Default_Init_Value
   * @{
   */
 #define DEFAULT_CRC_INITVALUE   0xFFFFFFFF
@@ -155,19 +158,18 @@ typedef struct
   * @}
   */
 
-/** @defgroup CRC_Default_Polynomial    Indicates whether or not default polynomial is used
+/** @defgroup CRC_Default_Polynomial
   * @{
   */
 #define DEFAULT_POLYNOMIAL_ENABLE       ((uint8_t)0x00)
 #define DEFAULT_POLYNOMIAL_DISABLE      ((uint8_t)0x01)
 #define IS_DEFAULT_POLYNOMIAL(DEFAULT) (((DEFAULT) == DEFAULT_POLYNOMIAL_ENABLE) || \
                                         ((DEFAULT) == DEFAULT_POLYNOMIAL_DISABLE))
-
 /**
   * @}
   */
  
-/** @defgroup CRC_Default_InitValue_Use    Indicates whether or not default init value is used
+/** @defgroup CRC_Default_InitValue_Use
   * @{
   */                                      
 #define DEFAULT_INIT_VALUE_ENABLE      ((uint8_t)0x00)
@@ -179,7 +181,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup CRC_Polynomial_Sizes Polynomial sizes to configure the IP
+/** @defgroup CRC_Polynomial_Sizes
   * @{
   */
 #define CRC_POLYLENGTH_32B                  ((uint32_t)0x00000000)
@@ -194,7 +196,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup CRC_Polynomial_Size_Definitions CRC polynomial possible sizes actual definitions
+/** @defgroup CRC_Polynomial_Size_Definitions
   * @{
   */
 #define HAL_CRC_LENGTH_32B     32
@@ -206,7 +208,7 @@ typedef struct
   * @}
   */  
 
-/** @defgroup Input_Data_Inversion Input Data Inversion Modes
+/** @defgroup CRC_Input_Data_Inversion
   * @{
   */
 #define CRC_INPUTDATA_INVERSION_NONE              ((uint32_t)0x00000000)
@@ -221,7 +223,7 @@ typedef struct
   * @}
   */  
   
-/** @defgroup Output_Data_Inversion Output Data Inversion Modes
+/** @defgroup CRC_Output_Data_Inversion
   * @{
   */
 #define CRC_OUTPUTDATA_INVERSION_DISABLED         ((uint32_t)0x00000000)
@@ -232,7 +234,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup Input_Buffer_Format Input Buffer Format
+/** @defgroup CRC_Input_Buffer_Format
   * @{
   */
 /* WARNING: CRC_INPUT_FORMAT_UNDEFINED is created for reference purposes but
@@ -250,6 +252,9 @@ typedef struct
   * @}
   */   
 
+/** 
+  * @}
+  */ 
 /* Exported macro ------------------------------------------------------------*/
 
 /** @defgroup CRC_Exported_Macro
@@ -316,8 +321,6 @@ HAL_StatusTypeDef HAL_CRC_Init(CRC_HandleTypeDef *hcrc);
 HAL_StatusTypeDef HAL_CRC_DeInit (CRC_HandleTypeDef *hcrc);
 void HAL_CRC_MspInit(CRC_HandleTypeDef *hcrc);
 void HAL_CRC_MspDeInit(CRC_HandleTypeDef *hcrc);
-HAL_StatusTypeDef HAL_CRC_Input_Data_Reverse(CRC_HandleTypeDef *hcrc, uint32_t InputReverseMode);
-HAL_StatusTypeDef HAL_CRC_Output_Data_Reverse(CRC_HandleTypeDef *hcrc, uint32_t OutputReverseMode);
 
 /* Peripheral Control functions ***********************************************/
 uint32_t HAL_CRC_Accumulate(CRC_HandleTypeDef *hcrc, uint32_t pBuffer[], uint32_t BufferLength);

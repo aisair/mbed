@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_usart.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   Header file of USART HAL module.
   ******************************************************************************
   * @attention
@@ -71,7 +71,7 @@ typedef struct
                                               Baud Rate Register = ((PCLKx) / ((huart->Init.BaudRate))) */
 
   uint32_t WordLength;                /*!< Specifies the number of data bits transmitted or received in a frame.
-                                           This parameter can be a value of @ref USART_Word_Length */
+                                           This parameter can be a value of @ref USARTEx_Word_Length */
 
   uint32_t StopBits;                  /*!< Specifies the number of stop bits transmitted.
                                            This parameter can be a value of @ref USART_Stop_Bits */
@@ -183,7 +183,7 @@ typedef struct
   * @{
   */
 
-/** @defgroup USART_Stop_Bits  USART Stop Bits
+/** @defgroup USART_Stop_Bits
   * @{
   */
 #define USART_STOPBITS_1                     ((uint32_t)0x0000)
@@ -198,7 +198,7 @@ typedef struct
   * @}
   */ 
 
-/** @defgroup USART_Parity  USART Parity
+/** @defgroup USART_Parity
   * @{
   */ 
 #define USART_PARITY_NONE                    ((uint32_t)0x0000)
@@ -211,7 +211,7 @@ typedef struct
   * @}
   */ 
 
-/** @defgroup USART_Mode  USART Mode
+/** @defgroup USART_Mode
   * @{
   */ 
 #define USART_MODE_RX                        ((uint32_t)USART_CR1_RE)
@@ -222,7 +222,7 @@ typedef struct
   * @}
   */
     
-/** @defgroup USART_Clock  USART Clock
+/** @defgroup USART_Clock
   * @{
   */ 
 #define USART_CLOCK_DISABLED                 ((uint32_t)0x0000)
@@ -233,7 +233,7 @@ typedef struct
   * @}
   */ 
 
-/** @defgroup USART_Clock_Polarity  USART Clock Polarity
+/** @defgroup USART_Clock_Polarity
   * @{
   */
 #define USART_POLARITY_LOW                   ((uint32_t)0x0000)
@@ -265,7 +265,7 @@ typedef struct
   */
 
 
-/** @defgroup USART_Flags      USART Flags
+/** @defgroup USART_Flags
   *        Elements values convention: 0xXXXX
   *           - 0xXXXX  : Flag mask in the ISR register
   * @{
@@ -288,7 +288,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup USART_Interrupt_definition USART Interrupts Definition
+/** @defgroup USART_Interrupt_definition
   *        Elements values convention: 0000ZZZZ0XXYYYYYb
   *           - YYYYY  : Interrupt source position in the XX register (5bits)
   *           - XX  : Interrupt source register (2bits)
@@ -313,7 +313,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup USART_IT_CLEAR_Flags    USART Interruption Clear Flags
+/** @defgroup USART_IT_CLEAR_Flags
   * @{
   */
 #define USART_CLEAR_PEF                       USART_ICR_PECF            /*!< Parity Error Clear Flag */          
@@ -327,7 +327,7 @@ typedef struct
   * @}
   */ 
 
-/** @defgroup USART_Request_Parameters  USART Request Parameters
+/** @defgroup USART_Request_Parameters
   * @{
   */
 #define USART_RXDATA_FLUSH_REQUEST        ((uint32_t)USART_RQR_RXFRQ)        /*!< Receive Data flush Request */ 
@@ -338,7 +338,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup USART_Interruption_Mask    USART interruptions flag mask
+/** @defgroup USART_Interruption_Mask
   * @{
   */  
 #define USART_IT_MASK                             ((uint16_t)0x001F)  
@@ -465,7 +465,7 @@ typedef struct
   *            @arg USART_CLEAR_CTSF: CTS Interrupt Clear Flag
   * @retval None
   */
-#define __HAL_USART_CLEAR_IT(__HANDLE__, __IT_CLEAR__) ((__HANDLE__)->Instance->ICR |= (uint32_t)(__IT_CLEAR__)) 
+#define __HAL_USART_CLEAR_IT(__HANDLE__, __IT_CLEAR__) ((__HANDLE__)->Instance->ICR = (uint32_t)(__IT_CLEAR__)) 
 
 /** @brief  Set a specific USART request flag.
   * @param  __HANDLE__: specifies the USART Handle which can be USART1 or USART2.

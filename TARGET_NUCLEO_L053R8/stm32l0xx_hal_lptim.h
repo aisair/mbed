@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_lptim.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   Header file of LPTIM HAL module.
   ******************************************************************************
   * @attention
@@ -211,7 +211,7 @@ typedef struct
                                                  ((PRESCALER) ==  LPTIM_PRESCALER_DIV32 ) || \
                                                  ((PRESCALER) ==  LPTIM_PRESCALER_DIV64 ) || \
                                                  ((PRESCALER) ==  LPTIM_PRESCALER_DIV128))
-#define IS_LPTIM_CLOCK_PRESCALERDIV1(PRESCALER) ((PRESCALER) ==  LPTIM_PRESCALER_DIV1)                                             
+#define IS_LPTIM_CLOCK_PRESCALERDIV1(PRESCALER) ((PRESCALER) ==  LPTIM_PRESCALER_DIV1)
 /**
   * @}
   */ 
@@ -401,6 +401,10 @@ typedef struct
 
 /* Exported macro ------------------------------------------------------------*/
 
+/** @defgroup LPTIM_Exported_Macros
+  * @{
+  */
+
 /** @brief Reset LPTIM handle state
   * @param  __HANDLE__: LPTIM handle
   * @retval None
@@ -470,7 +474,7 @@ typedef struct
   *            @arg LPTIM_FLAG_CMPM    : Compare match Flag.
   * @retval None.
   */
-#define __HAL_LPTIM_CLEAR_FLAG(__HANDLE__, __FLAG__)         ((__HANDLE__)->Instance->ICR  |= (__FLAG__))
+#define __HAL_LPTIM_CLEAR_FLAG(__HANDLE__, __FLAG__)         ((__HANDLE__)->Instance->ICR  = (__FLAG__))
 
 /**
   * @brief  Enable the specified LPTIM interrupt.
@@ -519,7 +523,12 @@ typedef struct
   * @retval Interrupt status.
   */
     
-#define __HAL_LPTIM_GET_ITSTATUS(__HANDLE__, __INTERRUPT__) ((((__HANDLE__)->Instance->IER & (__INTERRUPT__)) == (__INTERRUPT__)) ? SET : RESET) 
+#define __HAL_LPTIM_GET_ITSTATUS(__HANDLE__, __INTERRUPT__) ((((__HANDLE__)->Instance->IER & (__INTERRUPT__)) == (__INTERRUPT__)) ? SET : RESET)
+
+/**
+  * @}
+  */
+   
 /* Exported functions --------------------------------------------------------*/
 /* Initialization/de-initialization functions  ********************************/
 HAL_StatusTypeDef HAL_LPTIM_Init(LPTIM_HandleTypeDef *hlptim);

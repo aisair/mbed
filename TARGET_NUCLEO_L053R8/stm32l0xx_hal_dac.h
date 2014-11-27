@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_dac.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   Header file of DAC HAL module.
   ******************************************************************************
   * @attention
@@ -179,7 +179,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup DAC_flags_definition 
+/** @defgroup DAC_flags_definition
   * @{
   */ 
 #define DAC_FLAG_DMAUDR1                   ((uint32_t)DAC_SR_DMAUDR1)
@@ -189,7 +189,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup DAC_flags_definition 
+/** @defgroup DAC_flags_definition
   * @{
   */ 
 #define DAC_IT_DMAUDR1                   ((uint32_t)DAC_CR_DMAUDRIE1)
@@ -230,7 +230,7 @@ typedef struct
 #define __HAL_DAC_GET_FLAG(__HANDLE__, __FLAG__) ((((__HANDLE__)->Instance->SR) & (__FLAG__)) == (__FLAG__))
 
 /* Clear the DAC's flag */
-#define __HAL_DAC_CLEAR_FLAG(__HANDLE__, __FLAG__) (((__HANDLE__)->Instance->SR) |= (__FLAG__))
+#define __HAL_DAC_CLEAR_FLAG(__HANDLE__, __FLAG__) (((__HANDLE__)->Instance->SR) = (__FLAG__))
 
 /* Include DAC HAL Extension module */
 #include "stm32l0xx_hal_dac_ex.h"

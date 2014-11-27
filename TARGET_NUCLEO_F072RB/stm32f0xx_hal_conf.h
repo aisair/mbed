@@ -1,9 +1,9 @@
 /**
   ******************************************************************************
-  * @file    stm32f0xx_hal_conf.h
+  * @file    stm32f0xx_hal_conf_template.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    28-May-2014
+  * @version V1.1.0
+  * @date    03-Oct-2014
   * @brief   HAL configuration file.
   ******************************************************************************
   * @attention
@@ -93,7 +93,7 @@
   *        Timeout value 
   */
 #if !defined  (HSE_STARTUP_TIMEOUT)
-  #define HSE_STARTUP_TIMEOUT    ((uint32_t)100)   /*!< Time out for HSE start up, in ms */
+  #define HSE_STARTUP_TIMEOUT    ((uint32_t)500)   /*!< Time out for HSE start up, in ms */
 #endif /* HSE_STARTUP_TIMEOUT */
 
 /**
@@ -140,7 +140,7 @@
                                              The real value may vary depending on the variations
                                              in voltage and temperature.  */
 /**
-  * @brief External Low Speed oscillator (LSI) value.
+  * @brief External Low Speed oscillator (LSE) value.
   */
 #if !defined  (LSE_VALUE)
  #define LSE_VALUE  ((uint32_t)32768)    /*!< Value of the External Low Speed oscillator in Hz */
@@ -304,3 +304,4 @@
 
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+

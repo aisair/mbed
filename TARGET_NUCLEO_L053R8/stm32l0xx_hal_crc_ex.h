@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_crc_ex.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   Header file of CRC HAL module.
   ******************************************************************************
   * @attention
@@ -55,10 +55,7 @@
   */ 
 
 /* Exported types ------------------------------------------------------------*/ 
-
-
 /* Exported constants --------------------------------------------------------*/
-
 /* Exported macro ------------------------------------------------------------*/
 
 /** @defgroup CRCEx_Extended_Exported_Macro
@@ -83,6 +80,8 @@
 
 /* Initialization and de-initialization functions  ****************************/
 HAL_StatusTypeDef HAL_CRCEx_Polynomial_Set(CRC_HandleTypeDef *hcrc, uint32_t Pol, uint32_t PolyLength);
+HAL_StatusTypeDef HAL_CRC_Input_Data_Reverse(CRC_HandleTypeDef *hcrc, uint32_t InputReverseMode);
+HAL_StatusTypeDef HAL_CRC_Output_Data_Reverse(CRC_HandleTypeDef *hcrc, uint32_t OutputReverseMode);
 
 /* Peripheral Control functions ***********************************************/
 /* Peripheral State and Error functions ***************************************/

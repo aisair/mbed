@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   This file contains all the functions prototypes for the HAL 
   *          module driver.
   ******************************************************************************
@@ -61,7 +61,7 @@
   * @{
   */ 
 
-/** @defgroup DBGMCU_Low_Power_Config 
+/** @defgroup HAL_DBGMCU_Low_Power_Config 
   * @{
   */
 #define DBGMCU_SLEEP                 DBGMCU_CR_DBG_SLEEP
@@ -74,7 +74,7 @@
   */
   
 
-/** @defgroup SYSCFG_I2C_FastModePlus_Config 
+/** @defgroup HAL_SYSCFG_I2C_FastModePlus_Config 
   * @{
   */ 
 #define SYSCFG_I2CFastModePlus_PB6       SYSCFG_CFGR2_I2C_PB6_FMP  /* Enable Fast Mode Plus on PB6 */
@@ -95,7 +95,7 @@
   * @}
   */  
  
-/** @defgroup SYSCFG_VREFINT_OUT_SELECT 
+/** @defgroup HAL_SYSCFG_VREFINT_OUT_SELECT 
   * @{
   */ 
 #define SYSCFG_VREFINT_OUT_NONE          ((uint32_t)0x00000000) /* no pad connected */  
@@ -111,7 +111,7 @@
   * @}
   */ 
 
-/** @defgroup SYSCFG_flags_definition 
+/** @defgroup HAL_SYSCFG_flags_definition 
   * @{
   */
 
@@ -162,8 +162,8 @@
 
 /** @brief  System Flash memory mapped at 0x00000000
   */
-#define __HAL_REMAPMEMORY_SYSTEMFLASH       do {SYSCFG->MEMRMP &= ~(SYSCFG_CFGR1_MEM_MODE);\
-                                                SYSCFG->MEMRMP |= SYSCFG_CFGR1_MEM_MODE_0;\
+#define __HAL_REMAPMEMORY_SYSTEMFLASH       do {SYSCFG->CFGR1 &= ~(SYSCFG_CFGR1_MEM_MODE);\
+                                                SYSCFG->CFGR1 |= SYSCFG_CFGR1_MEM_MODE_0;\
                                                }while(0);
 
 /** @brief  Embedded SRAM mapped at 0x00000000
@@ -206,7 +206,12 @@ void HAL_ResumeTick(void);
 uint32_t HAL_GetHalVersion(void);
 uint32_t HAL_GetREVID(void);
 uint32_t HAL_GetDEVID(void);
-
+void HAL_EnableDBGSleepMode(void);
+void HAL_DisableDBGSleepMode(void);
+void HAL_EnableDBGStopMode(void);
+void HAL_DisableDBGStopMode(void);
+void HAL_EnableDBGStandbyMode(void);
+void HAL_DisableDBGStandbyMode(void);
 void HAL_DBG_LowPowerConfig(uint32_t Periph, FunctionalState NewState);
 uint32_t  HAL_GetBootMode(void);
 void HAL_I2CFastModePlusConfig(uint32_t SYSCFG_I2CFastModePlus, FunctionalState NewState);

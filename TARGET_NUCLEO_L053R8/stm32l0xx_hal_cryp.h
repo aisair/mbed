@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_cryp.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   Header file of CRYP HAL module.
   ******************************************************************************
   * @attention
@@ -241,6 +241,9 @@ typedef struct
   */
 #define __HAL_CRYP_DISABLE_IT(__INTERRUPT__) ((AES->CR) &= ~(__INTERRUPT__))
 
+/* Include CRYP HAL Extension module */
+#include "stm32l0xx_hal_cryp_ex.h"
+
 /* Exported functions --------------------------------------------------------*/
 
 /* Initialization/de-initialization functions *********************************/
@@ -286,6 +289,9 @@ void HAL_CRYP_ComputationCpltCallback(CRYP_HandleTypeDef *hcryp);
 void HAL_CRYP_InCpltCallback(CRYP_HandleTypeDef *hcryp);
 void HAL_CRYP_OutCpltCallback(CRYP_HandleTypeDef *hcryp);
 void HAL_CRYP_ErrorCallback(CRYP_HandleTypeDef *hcryp);
+
+/* Aliases for inter STM32 series compatibility */
+#define HAL_CRYP_ComputationCpltCallback         HAL_CRYPEx_ComputationCpltCallback
 
 #endif /* STM32L051xx && STM32L052xx && STM32L053xx*/
 

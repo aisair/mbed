@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_rtc.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   Header file of RTC HAL module.
   ******************************************************************************
   * @attention
@@ -215,7 +215,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup RTC_Output_Polarity_Definitions 
+/** @defgroup RTC_Output_Polarity_Definitions
   * @{
   */
 #define RTC_OUTPUT_POLARITY_HIGH       ((uint32_t)0x00000000)
@@ -305,7 +305,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup RTC_StoreOperation_Definitions 
+/** @defgroup RTC_StoreOperation_Definitions
   * @{
   */
 #define RTC_STOREOPERATION_RESET        ((uint32_t)0x00000000)

@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_irda.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   Header file of IRDA HAL module.
   ******************************************************************************
   * @attention
@@ -66,7 +66,7 @@ typedef struct
                                               Baud Rate Register = ((PCLKx) / ((hirda->Init.BaudRate))) */
 
   uint32_t WordLength;                /*!< Specifies the number of data bits transmitted or received in a frame.
-                                           This parameter can be a value of @ref IRDA_Word_Length */
+                                           This parameter can be a value of @ref IRDAEx_Word_Length */
 
   uint32_t Parity;                    /*!< Specifies the parity mode.
                                            This parameter can be a value of @ref IRDA_Parity
@@ -170,7 +170,7 @@ typedef struct
   * @{
   */
 
-/** @defgroup IRDA_Parity IRDA Parity 
+/** @defgroup IRDA_Parity
   * @{
   */ 
 #define IRDA_PARITY_NONE                    ((uint32_t)0x0000)
@@ -184,7 +184,7 @@ typedef struct
   */ 
 
 
-/** @defgroup IRDA_Transfer_Mode IRDA Transfer Mode  
+/** @defgroup IRDA_Transfer_Mode
   * @{
   */ 
 #define IRDA_MODE_RX                        ((uint32_t)USART_CR1_RE)
@@ -195,7 +195,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup IRDA_Low_Power IRDA Low Power 
+/** @defgroup IRDA_Low_Power
   * @{
   */
 #define IRDA_POWERMODE_NORMAL                    ((uint32_t)0x0000)
@@ -206,7 +206,7 @@ typedef struct
   * @}
   */
     
- /** @defgroup IRDA_State IRDA State 
+ /** @defgroup IRDA_State
   * @{
   */ 
 #define IRDA_STATE_DISABLE                  ((uint32_t)0x0000)
@@ -217,7 +217,7 @@ typedef struct
   * @}
   */
 
- /** @defgroup IRDA_Mode  IRDA Mode
+ /** @defgroup IRDA_Mode
   * @{
   */ 
 #define IRDA_MODE_DISABLE                  ((uint32_t)0x0000)
@@ -228,7 +228,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup IRDA_One_Bit  IRDA One Bit Sampling
+/** @defgroup IRDA_One_Bit
   * @{
   */
 #define IRDA_ONE_BIT_SAMPLE_DISABLED          ((uint32_t)0x00000000)
@@ -239,7 +239,7 @@ typedef struct
   * @}
   */  
   
-/** @defgroup IRDA_DMA_Tx IRDA DMA Tx
+/** @defgroup IRDA_DMA_Tx
   * @{
   */
 #define IRDA_DMA_TX_DISABLE          ((uint32_t)0x00000000)
@@ -250,7 +250,7 @@ typedef struct
   * @}
   */  
   
-/** @defgroup IRDA_DMA_Rx  IRDA DMA Rx
+/** @defgroup IRDA_DMA_Rx
   * @{
   */
 #define IRDA_DMA_RX_DISABLE           ((uint32_t)0x0000)
@@ -261,7 +261,7 @@ typedef struct
   * @}
   */
   
-/** @defgroup IRDA_Flags IRDA Flags
+/** @defgroup IRDA_Flags
   *        Elements values convention: 0xXXXX
   *           - 0xXXXX  : Flag mask in the ISR register
   * @{
@@ -282,7 +282,7 @@ typedef struct
   * @}
   */ 
 
-/** @defgroup IRDA_Interrupt_definition IRDA Interrupts Definition
+/** @defgroup IRDA_Interrupt_definition
   *        Elements values convention: 0000ZZZZ0XXYYYYYb
   *           - YYYYY  : Interrupt source position in the XX register (5bits)
   *           - XX  : Interrupt source register (2bits)
@@ -319,7 +319,7 @@ typedef struct
   * @}
   */
   
-/** @defgroup IRDA_IT_CLEAR_Flags   IRDA Interruption Clear Flags
+/** @defgroup IRDA_IT_CLEAR_Flags
   * @{
   */
 #define IRDA_CLEAR_PEF                       USART_ICR_PECF            /*!< Parity Error Clear Flag */          
@@ -333,7 +333,7 @@ typedef struct
 
 
 
-/** @defgroup IRDA_Request_Parameters IRDA Request Parameters
+/** @defgroup IRDA_Request_Parameters
   * @{
   */
 #define IRDA_AUTOBAUD_REQUEST            ((uint16_t)USART_RQR_ABRRQ)        /*!< Auto-Baud Rate Request */     
@@ -348,7 +348,7 @@ typedef struct
   * @}
   */
   
-/** @defgroup IRDA_Interruption_Mask    IRDA interruptions flag mask
+/** @defgroup IRDA_Interruption_Mask
   * @{
   */ 
 #define IRDA_IT_MASK  ((uint16_t)0x001F)  
@@ -541,9 +541,14 @@ HAL_StatusTypeDef HAL_IRDA_Transmit_IT(IRDA_HandleTypeDef *hirda, uint8_t *pData
 HAL_StatusTypeDef HAL_IRDA_Receive_IT(IRDA_HandleTypeDef *hirda, uint8_t *pData, uint16_t Size);
 HAL_StatusTypeDef HAL_IRDA_Transmit_DMA(IRDA_HandleTypeDef *hirda, uint8_t *pData, uint16_t Size);
 HAL_StatusTypeDef HAL_IRDA_Receive_DMA(IRDA_HandleTypeDef *hirda, uint8_t *pData, uint16_t Size);
+HAL_StatusTypeDef HAL_IRDA_DMAPause(IRDA_HandleTypeDef *hirda);
+HAL_StatusTypeDef HAL_IRDA_DMAResume(IRDA_HandleTypeDef *hirda);
+HAL_StatusTypeDef HAL_IRDA_DMAStop(IRDA_HandleTypeDef *hirda);
 void HAL_IRDA_IRQHandler(IRDA_HandleTypeDef *hirda);
 void HAL_IRDA_TxCpltCallback(IRDA_HandleTypeDef *hirda);
 void HAL_IRDA_RxCpltCallback(IRDA_HandleTypeDef *hirda);
+void HAL_IRDA_TxHalfCpltCallback(IRDA_HandleTypeDef *hirda);
+void HAL_IRDA_RxHalfCpltCallback(IRDA_HandleTypeDef *hirda);
 void HAL_IRDA_ErrorCallback(IRDA_HandleTypeDef *hirda);
 
 /* Peripheral State methods  **************************************************/

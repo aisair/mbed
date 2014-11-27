@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_pcd.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   Header file of PCD HAL module.
   ******************************************************************************
   * @attention
@@ -82,11 +82,6 @@ typedef enum
   PCD_EP_BUF1
 }PCD_EP_BUF_NUM;  
 
-#define PCD_EP_TYPE_CTRL                                 0
-#define PCD_EP_TYPE_ISOC                                 1
-#define PCD_EP_TYPE_BULK                                 2
-#define PCD_EP_TYPE_INTR                                 3
-
 #define PCD_ENDP0                             ((uint8_t)0)
 #define PCD_ENDP1                             ((uint8_t)1)
 #define PCD_ENDP2                             ((uint8_t)2)
@@ -100,7 +95,7 @@ typedef enum
 #define PCD_SNG_BUF                                      0
 #define PCD_DBL_BUF                                      1
 
-#define IS_PCD_ALL_INSTANCE                              IS_USB_ALL_INSTANCE                          
+#define IS_PCD_ALL_INSTANCE            IS_USB_ALL_INSTANCE
 /** 
   * @brief  PCD Initialization Structure definition  
   */
@@ -111,13 +106,13 @@ typedef struct
                                       This parameter must be a number between Min_Data = 1 and Max_Data = 15 */ 
 
   uint32_t speed;                /*!< USB Core speed.
-                                      This parameter can be any value of @ref USB_Core_Speed_                */ 
+                                      This parameter can be any value of @ref PCD_Speed                */ 
                              
   uint32_t ep0_mps;              /*!< Set the Endpoint 0 Max Packet size. 
-                                      This parameter can be any value of @ref USB_EP0_MPS_                   */ 
+                                      This parameter can be any value of @ref PCD_USB_EP0_MPS                   */ 
                        
   uint32_t phy_itface;           /*!< Select the used PHY interface.
-                                      This parameter can be any value of @ref USB_Core_PHY_                  */ 
+                                      This parameter can be any value of @ref PCD_USB_Core_PHY                  */ 
                                 
   uint32_t Sof_enable;           /*!< Enable or disable the output of the SOF signal.
                                       This parameter can be set to ENABLE or DISABLE                        */  
@@ -145,7 +140,7 @@ typedef struct
                                 This parameter must be a number between Min_Data = 0 and Max_Data = 1     */ 
   
   uint8_t   type;           /*!< Endpoint type
-                                 This parameter can be any value of @ref USB_EP_Type_                     */ 
+                                 This parameter can be any value of @ref PCD_USB_EP_Type                     */ 
                                 
   uint16_t  pmaadress;      /*!< PMA Address
                                  This parameter can be any value between Min_addr = 0 and Max_addr = 1K   */ 
@@ -208,7 +203,7 @@ typedef struct
   * @}
   */
   
-  /** @defgroup USB_Core_PHY
+  /** @defgroup PCD_USB_Core_PHY
   * @{
   */
 #define PCD_PHY_EMBEDDED             2
@@ -216,7 +211,7 @@ typedef struct
   * @}
   */
 
-  /** @defgroup USB_EP0_MPS
+  /** @defgroup PCD_USB_EP0_MPS
   * @{
   */
 #define DEP0CTL_MPS_64                         0
@@ -231,6 +226,18 @@ typedef struct
 /**
   * @}
   */ 
+  
+/** @defgroup PCD_USB_EP_Type
+  * @{
+  */
+#define PCD_EP_TYPE_CTRL                                 0
+#define PCD_EP_TYPE_ISOC                                 1
+#define PCD_EP_TYPE_BULK                                 2
+#define PCD_EP_TYPE_INTR                                 3
+/**
+  * @}
+  */
+
 /**
   * @}
   */ 
@@ -242,13 +249,14 @@ typedef struct
  * @{
  */
 #define __HAL_PCD_GET_FLAG(__HANDLE__, __INTERRUPT__)      ((((__HANDLE__)->Instance->ISTR) & (__INTERRUPT__)) == (__INTERRUPT__))
-#define __HAL_PCD_CLEAR_FLAG(__HANDLE__, __INTERRUPT__)    (((__HANDLE__)->Instance->ISTR) &= ~(__INTERRUPT__))
+#define __HAL_PCD_CLEAR_FLAG(__HANDLE__, __INTERRUPT__)    (((__HANDLE__)->Instance->ISTR) = ~(__INTERRUPT__))
 
 #define  USB_EXTI_LINE_WAKEUP              ((uint32_t)0x00040000)  /*!< External interrupt line 18 Connected to the USB FS EXTI Line */
 
 #define __HAL_USB_EXTI_ENABLE_IT()    EXTI->IMR |= USB_EXTI_LINE_WAKEUP
 #define __HAL_USB_EXTI_DISABLE_IT()   EXTI->IMR &= ~(USB_EXTI_LINE_WAKEUP)
-                                                   
+#define __HAL_USB_EXTI_GENERATE_SWIT() (EXTI->SWIER |= USB_EXTI_LINE_WAKEUP)
+
 /* Internal macros -----------------------------------------------------------*/
 
 /* SetENDPOINT */

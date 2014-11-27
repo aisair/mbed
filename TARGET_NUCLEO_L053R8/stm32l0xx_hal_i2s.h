@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_i2s.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   Header file of I2S HAL module.
   ******************************************************************************
   * @attention
@@ -146,7 +146,7 @@ typedef struct
   * @{
   */ 
 
-/** @defgroup I2S_Mode 
+/** @defgroup I2S_Mode
   * @{
   */
 #define I2S_MODE_SLAVE_TX                ((uint32_t)0x00000000)
@@ -162,7 +162,7 @@ typedef struct
   * @}
   */
   
-/** @defgroup I2S_Standard 
+/** @defgroup I2S_Standard
   * @{
   */
 #define I2S_STANDARD_PHILIPS             ((uint32_t)0x00000000)
@@ -180,7 +180,7 @@ typedef struct
   * @}
   */
   
-/** @defgroup I2S_Data_Format 
+/** @defgroup I2S_Data_Format
   * @{
   */
 #define I2S_DATAFORMAT_16B               ((uint32_t)0x00000000)
@@ -196,7 +196,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup I2S_MCLK_Output 
+/** @defgroup I2S_MCLK_Output
   * @{
   */
 #define I2S_MCLKOUTPUT_ENABLE           ((uint32_t)SPI_I2SPR_MCKOE)
@@ -208,7 +208,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup I2S_Audio_Frequency 
+/** @defgroup I2S_Audio_Frequency
   * @{
   */
 #define I2S_AUDIOFREQ_192K               ((uint32_t)192000)
@@ -229,7 +229,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup I2S_Clock_Polarity 
+/** @defgroup I2S_Clock_Polarity
   * @{
   */
 #define I2S_CPOL_LOW                    ((uint32_t)0x00000000)
@@ -251,7 +251,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup I2S_Flag_definition 
+/** @defgroup I2S_Flag_definition
   * @{
   */
 #define I2S_FLAG_TXE                    SPI_SR_TXE

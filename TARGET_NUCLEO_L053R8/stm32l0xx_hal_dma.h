@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_dma.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   Header file of DMA HAL module.
   ******************************************************************************
   * @attention
@@ -66,19 +66,19 @@ typedef struct
     
   uint32_t Direction;                 /*!< Specifies if the data will be transferred from memory to peripheral, 
                                            from memory to memory or from peripheral to memory.
-                                           This parameter can be a value of @ref Data_transfer_direction */
+                                           This parameter can be a value of @ref DMA_Data_transfer_direction */
 
   uint32_t PeriphInc;                 /*!< Specifies whether the Peripheral address register should be incremented or not.
-                                           This parameter can be a value of @ref Peripheral_incremented_mode */  
+                                           This parameter can be a value of @ref DMA_Peripheral_incremented_mode */  
 
   uint32_t MemInc;                    /*!< Specifies whether the memory address register should be incremented or not.
-                                           This parameter can be a value of @ref Memory_incremented_mode */
+                                           This parameter can be a value of @ref DMA_Memory_incremented_mode */
   
   uint32_t PeriphDataAlignment;       /*!< Specifies the Peripheral data width.
-                                           This parameter can be a value of @ref Peripheral_data_size */   
+                                           This parameter can be a value of @ref DMA_Peripheral_data_size */   
 
   uint32_t MemDataAlignment;          /*!< Specifies the Memory data width.
-                                           This parameter can be a value of @ref Memory_data_size */
+                                           This parameter can be a value of @ref DMA_Memory_data_size */
 
   uint32_t Mode;                      /*!< Specifies the operation mode of the DMAy Channelx.
                                            This parameter can be a value of @ref DMA_mode
@@ -86,7 +86,7 @@ typedef struct
                                                  data transfer is configured on the selected Channel */ 
 
   uint32_t Priority;                   /*!< Specifies the software priority for the DMAy Channelx.
-                                            This parameter can be a value of @ref Priority_level */
+                                            This parameter can be a value of @ref DMA_Priority_level */
 } DMA_InitTypeDef;
 
 /** 
@@ -154,7 +154,7 @@ typedef struct __DMA_HandleTypeDef
   * @{
   */
 
-/** @defgroup DMA_Error_Code 
+/** @defgroup DMA_Error_Code
   * @{
   */ 
 #define HAL_DMA_ERROR_NONE      ((uint32_t)0x00000000)    /*!< No error             */
@@ -178,7 +178,7 @@ typedef struct __DMA_HandleTypeDef
   * @}
   */
 
-/** @defgroup DMA_request 
+/** @defgroup DMA_request
   * @{
   */ 
 #define DMA_REQUEST_0                     ((uint32_t)0x00000000)
@@ -208,7 +208,7 @@ typedef struct __DMA_HandleTypeDef
   * @}
   */
 
-/** @defgroup DMA_Data_transfer_direction 
+/** @defgroup DMA_Data_transfer_direction
   * @{
   */ 
 #define DMA_PERIPH_TO_MEMORY         ((uint32_t)0x00000000)        /*!< Peripheral to memory direction */
@@ -222,7 +222,7 @@ typedef struct __DMA_HandleTypeDef
   * @}
   */
 
-/** @defgroup DMA_Data_buffer_size 
+/** @defgroup DMA_Data_buffer_size
   * @{
   */ 
 #define IS_DMA_BUFFER_SIZE(SIZE) (((SIZE) >= 0x1) && ((SIZE) < 0x10000))
@@ -230,7 +230,7 @@ typedef struct __DMA_HandleTypeDef
   * @}
   */     
     
-/** @defgroup DMA_Peripheral_incremented_mode 
+/** @defgroup DMA_Peripheral_incremented_mode
   * @{
   */ 
 #define DMA_PINC_ENABLE        ((uint32_t)DMA_CCR_PINC)  /*!< Peripheral increment mode Enable */
@@ -242,7 +242,7 @@ typedef struct __DMA_HandleTypeDef
   * @}
   */ 
 
-/** @defgroup DMA_Memory_incremented_mode 
+/** @defgroup DMA_Memory_incremented_mode
   * @{
   */ 
 #define DMA_MINC_ENABLE         ((uint32_t)DMA_CCR_MINC)  /*!< Memory increment mode Enable  */
@@ -254,7 +254,7 @@ typedef struct __DMA_HandleTypeDef
   * @}
   */
 
-/** @defgroup DMA_Peripheral_data_size 
+/** @defgroup DMA_Peripheral_data_size
   * @{
   */ 
 #define DMA_PDATAALIGN_BYTE          ((uint32_t)0x00000000)       /*!< Peripheral data alignment : Byte     */
@@ -283,7 +283,7 @@ typedef struct __DMA_HandleTypeDef
   * @}
   */
 
-/** @defgroup DMA_mode 
+/** @defgroup DMA_mode
   * @{
   */ 
 #define DMA_NORMAL         ((uint32_t)0x00000000)       /*!< Normal Mode                  */
@@ -295,7 +295,7 @@ typedef struct __DMA_HandleTypeDef
   * @}
   */
 
-/** @defgroup DMA_Priority_level 
+/** @defgroup DMA_Priority_level
   * @{
   */
 #define DMA_PRIORITY_LOW             ((uint32_t)0x00000000)    /*!< Priority level : Low       */
@@ -312,7 +312,7 @@ typedef struct __DMA_HandleTypeDef
   */ 
 
 
-/** @defgroup DMA_interrupt_enable_definitions 
+/** @defgroup DMA_interrupt_enable_definitions
   * @{
   */
 
@@ -324,7 +324,7 @@ typedef struct __DMA_HandleTypeDef
   * @}
   */
 
-/** @defgroup DMA_flag_definitions 
+/** @defgroup DMA_flag_definitions
   * @{
   */ 
 
@@ -469,7 +469,7 @@ typedef struct __DMA_HandleTypeDef
   *         Where x can be 0_4, 1_5, 2_6 or 3_7 to select the DMA Channel flag.   
   * @retval None
   */
-#define __HAL_DMA_CLEAR_FLAG(__HANDLE__, __FLAG__) (DMA1->IFCR |= (__FLAG__))
+#define __HAL_DMA_CLEAR_FLAG(__HANDLE__, __FLAG__) (DMA1->IFCR = (__FLAG__))
 
 /**
   * @brief  Enables the specified DMA Channel interrupts.

@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32f0xx_hal_crc_ex.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    28-May-2014
+  * @version V1.1.0
+  * @date    03-Oct-2014
   * @brief   Header file of CRC HAL extension module.
   ******************************************************************************
   * @attention
@@ -50,13 +50,15 @@
   * @{
   */
 
-/** @addtogroup CRCEx
+/** @addtogroup CRCEx CRCEx Extended HAL Module Driver 
   * @{
   */ 
 
 /* Exported types ------------------------------------------------------------*/ 
 /* Exported constants --------------------------------------------------------*/
-
+/** @defgroup CRCEx_Exported_Constants CRCEx Exported Constants
+  * @{
+  */
 /** @defgroup CRCEx_Input_Data_Inversion Input Data Inversion Modes
   * @{
   */
@@ -85,7 +87,7 @@
   * @}
   */
 
-#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx)
+#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || defined(STM32F091xC) || defined(STM32F098xx)
 /** @defgroup CRCEx_Polynomial_Sizes Polynomial sizes to configure the IP
   * @{
   */
@@ -111,11 +113,13 @@
 /**
   * @}
   */  
-#endif /* defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) */   
-  
+#endif /* defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || defined(STM32F091xC) || defined(STM32F098xx) */   
+/**
+  * @}
+  */  
 /* Exported macro ------------------------------------------------------------*/
 
-/** @defgroup CRCEx_Exported_Macros
+/** @defgroup CRCEx_Exported_Macros CRCEx Exported Macros
   * @{
   */
     
@@ -133,7 +137,7 @@
   */
 #define __HAL_CRC_OUTPUTREVERSAL_DISABLE(__HANDLE__) ((__HANDLE__)->Instance->CR &= ~(CRC_CR_REV_OUT))   
 
-#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx)
+#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || defined(STM32F091xC) || defined(STM32F098xx)
 /**
   * @brief  Set CRC non-default polynomial
   * @param  __HANDLE__    : CRC handle
@@ -141,24 +145,37 @@
   * @retval None.
   */
 #define __HAL_CRC_POLYNOMIAL_CONFIG(__HANDLE__, __POLYNOMIAL__) ((__HANDLE__)->Instance->POL = (__POLYNOMIAL__))
-#endif /* defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) */ 
+#endif /* defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || defined(STM32F091xC) || defined(STM32F098xx) */ 
 /**
   * @}
   */
 
 /* Exported functions --------------------------------------------------------*/
+/** @addtogroup CRCEx_Exported_Functions
+  * @{
+  */
+  
+/** @addtogroup CRCEx_Exported_Functions_Group1 Extended Initialization/de-initialization functions
+  * @brief    Extended Initialization and Configuration functions.
+  * @{
+  */
+     
 /* Initialization and de-initialization functions  ****************************/
 HAL_StatusTypeDef HAL_CRCEx_Init(CRC_HandleTypeDef *hcrc);
 HAL_StatusTypeDef HAL_CRCEx_Input_Data_Reverse(CRC_HandleTypeDef *hcrc, uint32_t InputReverseMode);
 HAL_StatusTypeDef HAL_CRCEx_Output_Data_Reverse(CRC_HandleTypeDef *hcrc, uint32_t OutputReverseMode);
 
-#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx)
+#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || defined(STM32F091xC) || defined(STM32F098xx)
 HAL_StatusTypeDef HAL_CRCEx_Polynomial_Set(CRC_HandleTypeDef *hcrc, uint32_t Pol, uint32_t PolyLength);
-#endif /* defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) */ 
-
+#endif /* defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || defined(STM32F091xC) || defined(STM32F098xx) */ 
+/**
+  * @}
+  */
 /* Peripheral Control functions ***********************************************/
 /* Peripheral State and Error functions ***************************************/
-
+/**
+  * @}
+  */ 
 
 /**
   * @}

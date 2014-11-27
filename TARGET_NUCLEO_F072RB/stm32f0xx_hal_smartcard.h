@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32f0xx_hal_smartcard.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    28-May-2014
+  * @version V1.1.0
+  * @date    03-Oct-2014
   * @brief   Header file of SMARTCARD HAL module.
   ******************************************************************************
   * @attention
@@ -57,6 +57,11 @@
   */ 
 
 /* Exported types ------------------------------------------------------------*/ 
+/** @defgroup SMARTCARD_Exported_Types SMARTCARD Exported Types
+  * @{
+  */ 
+
+
 /** 
   * @brief SMARTCARD Init Structure definition  
   */ 
@@ -91,7 +96,7 @@ typedef struct
                                            data bit (MSB) has to be output on the SCLK pin in synchronous mode.
                                            This parameter can be a value of @ref SMARTCARD_Last_Bit */
                                              
-  uint16_t OneBitSampling;            /*!< Specifies wether a single sample or three samples' majority vote is selected.
+  uint16_t OneBitSampling;            /*!< Specifies whether a single sample or three samples' majority vote is selected.
                                            Selecting the single sample method increases the receiver tolerance to clock
                                            deviations. This parameter can be a value of @ref SMARTCARD_OneBit_Sampling. */
 
@@ -101,7 +106,7 @@ typedef struct
   
   uint16_t NACKEnable;                /*!< Specifies whether the SmartCard NACK transmission is enabled
                                            in case of parity error.
-                                           This parameter can be a value of @ref SMARTCARD_NACK_Enable */ 
+                                           This parameter can be a value of @ref SMARTCARD_NACK_State */ 
                                            
   uint32_t TimeOutEnable;             /*!< Specifies whether the receiver timeout is enabled. 
                                             This parameter can be a value of @ref SMARTCARD_Timeout_Enable*/
@@ -228,9 +233,12 @@ typedef struct
   
 }SMARTCARD_HandleTypeDef;
 
+/**
+  * @}
+  */
 
 /* Exported constants --------------------------------------------------------*/
-/** @defgroup SMARTCARD_Exported_Constants
+/** @defgroup SMARTCARD_Exported_Constants  SMARTCARD Exported constants
   * @{
   */
 
@@ -316,8 +324,7 @@ typedef struct
   * @}
   */  
 
-
-/** @defgroup SMARTCARD_NACK_Enable   SMARTCARD NACK Enable
+/** @defgroup SMARTCARD_NACK_State   SMARTCARD NACK State
   * @{
   */
 #define SMARTCARD_NACK_ENABLED          ((uint16_t)USART_CR3_NACK)
@@ -439,7 +446,7 @@ typedef struct
   * @}
   */  
 
-/** @defgroup SmartCard_Flags    SMARTCARD Flags
+/** @defgroup SMARTCARD_Flags    SMARTCARD Flags
   *        Elements values convention: 0xXXXX
   *           - 0xXXXX  : Flag mask in the ISR register
   * @{
@@ -550,8 +557,8 @@ typedef struct
   * @}
   */    
     
-/* Exported macros -----------------------------------------------------------*/
-/** @defgroup SMARTCARD_Exported_Macros
+/* Exported macro ------------------------------------------------------------*/
+/** @defgroup SMARTCARD_Exported_Macros SMARTCARD Exported Macros
   * @{
   */
 
@@ -674,7 +681,7 @@ typedef struct
   *            @arg USART_CLEAR_EOBF: End Of Block Clear Flag 
   * @retval None
   */
-#define __HAL_SMARTCARD_CLEAR_IT(__HANDLE__, __IT_CLEAR__) ((__HANDLE__)->Instance->ICR |= (uint32_t)(__IT_CLEAR__)) 
+#define __HAL_SMARTCARD_CLEAR_IT(__HANDLE__, __IT_CLEAR__) ((__HANDLE__)->Instance->ICR = (uint32_t)(__IT_CLEAR__)) 
 
 /** @brief  Set a specific SMARTCARD request flag.
   * @param  __HANDLE__: specifies the SMARTCARD Handle.
@@ -739,13 +746,27 @@ typedef struct
 
                                  
 /* Exported functions --------------------------------------------------------*/
+
+/** @addtogroup SMARTCARD_Exported_Functions SMARTCARD Exported Functions
+  * @{
+  */
+
+/** @addtogroup SMARTCARD_Exported_Functions_Group1 Initialization and de-initialization functions 
+  * @{
+  */
+
 /* Initialization and de-initialization functions  ****************************/
 HAL_StatusTypeDef HAL_SMARTCARD_Init(SMARTCARD_HandleTypeDef *hsmartcard);
 HAL_StatusTypeDef HAL_SMARTCARD_DeInit(SMARTCARD_HandleTypeDef *hsmartcard);
 void HAL_SMARTCARD_MspInit(SMARTCARD_HandleTypeDef *hsmartcard);
 void HAL_SMARTCARD_MspDeInit(SMARTCARD_HandleTypeDef *hsmartcard);
+/**
+  * @}
+  */ 
 
-
+/** @addtogroup SMARTCARD_Exported_Functions_Group2 IO operation functions 
+  * @{
+  */
 /* IO operation functions *****************************************************/
 HAL_StatusTypeDef HAL_SMARTCARD_Transmit(SMARTCARD_HandleTypeDef *hsmartcard, uint8_t *pData, uint16_t Size, uint32_t Timeout);
 HAL_StatusTypeDef HAL_SMARTCARD_Receive(SMARTCARD_HandleTypeDef *hsmartcard, uint8_t *pData, uint16_t Size, uint32_t Timeout);
@@ -757,16 +778,27 @@ void HAL_SMARTCARD_IRQHandler(SMARTCARD_HandleTypeDef *hsmartcard);
 void HAL_SMARTCARD_TxCpltCallback(SMARTCARD_HandleTypeDef *hsmartcard);
 void HAL_SMARTCARD_RxCpltCallback(SMARTCARD_HandleTypeDef *hsmartcard);
 void HAL_SMARTCARD_ErrorCallback(SMARTCARD_HandleTypeDef *hsmartcard);
+/**
+  * @}
+  */ 
 
-/* Peripheral Control functions ***********************************************/
-void SMARTCARD_AdvFeatureConfig(SMARTCARD_HandleTypeDef *hsmartcard);
-
+/** @addtogroup SMARTCARD_Exported_Functions_Group3 Peripheral State and Errors functions 
+  * @{
+  */   
 /* Peripheral State and Error functions ***************************************/
 HAL_SMARTCARD_StateTypeDef HAL_SMARTCARD_GetState(SMARTCARD_HandleTypeDef *hsmartcard);
 uint32_t HAL_SMARTCARD_GetError(SMARTCARD_HandleTypeDef *hsmartcard);
 /**
   * @}
+  */
+  
+/**
+  * @}
   */ 
+
+/**
+  * @}
+  */
 
 /**
   * @}
@@ -781,3 +813,4 @@ uint32_t HAL_SMARTCARD_GetError(SMARTCARD_HandleTypeDef *hsmartcard);
 #endif /* __STM32F0xx_HAL_SMARTCARD_H */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+

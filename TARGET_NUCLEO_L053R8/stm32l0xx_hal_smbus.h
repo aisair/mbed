@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_smbus.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   Header file of SMBUS HAL module.
   ******************************************************************************
   * @attention
@@ -81,10 +81,10 @@ typedef struct
                                      This parameter can be a 7-bit address. */
 
   uint32_t OwnAddress2Masks;       /*!< Specifies the acknoledge mask address second device own address if dual addressing mode is selected
-                                     This parameter can be a value of @ref SMBUS_own_address2_masks. */
+                                     This parameter can be a value of @ref SMBUS_own_address2_masks */
 
   uint32_t GeneralCallMode;        /*!< Specifies if general call mode is selected.
-                                     This parameter can be a value of @ref SMBUS_general_call_addressing_mode. */
+                                     This parameter can be a value of @ref SMBUS_general_call_addressing_mode */
 
   uint32_t NoStretchMode;          /*!< Specifies if nostretch mode is selected.
                                      This parameter can be a value of @ref SMBUS_nostretch_mode */
@@ -115,7 +115,9 @@ typedef enum
   HAL_SMBUS_STATE_SLAVE_BUSY_RX   = 0x42,  /*!< Slave Data Reception process is ongoing       */
   HAL_SMBUS_STATE_TIMEOUT         = 0x03,  /*!< Timeout state                                 */
   HAL_SMBUS_STATE_ERROR           = 0x04,  /*!< Reception process is ongoing                  */
-  HAL_SMBUS_STATE_SLAVE_LISTEN    = 0x08   /*!< Slave Address Listen Mode is ongoing          */
+  HAL_SMBUS_STATE_LISTEN          = 0x08,   /*!< Address Listen Mode is ongoing                */
+/* Aliases for inter STM32 series compatibility */
+  HAL_SMBUS_STATE_SLAVE_LISTEN    = HAL_SMBUS_STATE_LISTEN
 }HAL_SMBUS_StateTypeDef;
 
 /** 
@@ -192,7 +194,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup SMBUS_dual_addressing_mode 
+/** @defgroup SMBUS_dual_addressing_mode
   * @{
   */
 
@@ -231,7 +233,7 @@ typedef struct
   */
 
 
-/** @defgroup SMBUS_general_call_addressing_mode 
+/** @defgroup SMBUS_general_call_addressing_mode
   * @{
   */
 #define SMBUS_GENERALCALL_DISABLED              ((uint32_t)0x00000000)
@@ -243,7 +245,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup SMBUS_nostretch_mode 
+/** @defgroup SMBUS_nostretch_mode
   * @{
   */
 #define SMBUS_NOSTRETCH_DISABLED                ((uint32_t)0x00000000)
@@ -281,7 +283,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup SMBUS_ReloadEndMode_definition 
+/** @defgroup SMBUS_ReloadEndMode_definition
   * @{
   */
 
@@ -301,7 +303,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup SMBUS_StartStopMode_definition 
+/** @defgroup SMBUS_StartStopMode_definition
   * @{
   */
 
@@ -318,7 +320,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup SMBUS_XferOptions_definition 
+/** @defgroup SMBUS_XferOptions_definition
   * @{
   */
 
@@ -361,7 +363,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup SMBUS_Flag_definition 
+/** @defgroup SMBUS_Flag_definition
   * @brief Flag definition
   *        Elements values convention: 0xXXXXYYYY
   *           - XXXXXXXX  : Flag mask
@@ -393,9 +395,6 @@ typedef struct
   */
 
 /* Exported macro ------------------------------------------------------------*/
-/** @defgroup SMBUS_Exported_Macros
-  * @{
-  */
 
 /** @brief Reset SMBUS handle state
   * @param  __HANDLE__: specifies the SMBUS Handle.
@@ -482,7 +481,7 @@ typedef struct
   *            @arg SMBUS_FLAG_ALERT:		SMBus alert
   * @retval None
   */
-#define __HAL_SMBUS_CLEAR_FLAG(__HANDLE__, __FLAG__) ((__HANDLE__)->Instance->ICR |= ((__FLAG__) & SMBUS_FLAG_MASK))
+#define __HAL_SMBUS_CLEAR_FLAG(__HANDLE__, __FLAG__) ((__HANDLE__)->Instance->ICR = ((__FLAG__) & SMBUS_FLAG_MASK))
  
 
 #define __HAL_SMBUS_ENABLE(__HANDLE__)                          ((__HANDLE__)->Instance->CR1 |=  I2C_CR1_PE)
@@ -503,9 +502,6 @@ typedef struct
 
 #define IS_SMBUS_OWN_ADDRESS1(ADDRESS1)                         ((ADDRESS1) <= (uint32_t)0x000003FF)
 #define IS_SMBUS_OWN_ADDRESS2(ADDRESS2)                         ((ADDRESS2) <= (uint16_t)0x00FF)
-/**
-  * @}
-  */ 
 
 /* Exported functions --------------------------------------------------------*/
 /* Initialization and de-initialization functions  ****************************/
@@ -517,27 +513,34 @@ void HAL_SMBUS_MspDeInit(SMBUS_HandleTypeDef *hsmbus);
 /* IO operation functions  ****************************************************/
 HAL_StatusTypeDef HAL_SMBUS_EnableAlert_IT(SMBUS_HandleTypeDef *hsmbus);
 HAL_StatusTypeDef HAL_SMBUS_DisableAlert_IT(SMBUS_HandleTypeDef *hsmbus);
+HAL_StatusTypeDef HAL_SMBUS_EnableListen_IT(SMBUS_HandleTypeDef *hsmbus);
+HAL_StatusTypeDef HAL_SMBUS_DisableListen_IT(SMBUS_HandleTypeDef *hsmbus);
+/* Aliases for inter STM32 series compatibility */
+#define HAL_SMBUS_Slave_Listen_IT   HAL_SMBUS_EnableListen_IT
 
 /******* Blocking mode: Polling */
 HAL_StatusTypeDef HAL_SMBUS_IsDeviceReady(SMBUS_HandleTypeDef *hsmbus, uint16_t DevAddress, uint32_t Trials, uint32_t Timeout);
 
- /******* Non-Blocking mode: Interrupt */
+/******* Non-Blocking mode: Interrupt */
 HAL_StatusTypeDef HAL_SMBUS_Master_Transmit_IT(SMBUS_HandleTypeDef *hsmbus, uint16_t DevAddress, uint8_t *pData, uint16_t Size, uint32_t XferOptions);
 HAL_StatusTypeDef HAL_SMBUS_Master_Receive_IT(SMBUS_HandleTypeDef *hsmbus, uint16_t DevAddress, uint8_t *pData, uint16_t Size, uint32_t XferOptions);
 HAL_StatusTypeDef HAL_SMBUS_Master_Abort_IT(SMBUS_HandleTypeDef *hsmbus, uint16_t DevAddress);
 HAL_StatusTypeDef HAL_SMBUS_Slave_Transmit_IT(SMBUS_HandleTypeDef *hsmbus, uint8_t *pData, uint16_t Size, uint32_t XferOptions);
 HAL_StatusTypeDef HAL_SMBUS_Slave_Receive_IT(SMBUS_HandleTypeDef *hsmbus, uint8_t *pData, uint16_t Size, uint32_t XferOptions);
-HAL_StatusTypeDef HAL_SMBUS_Slave_Listen_IT(SMBUS_HandleTypeDef *hsmbus);
 
- /******* SMBUS IRQHandler and Callbacks used in non blocking modes (Interrupt) */
+/******* SMBUS IRQHandler and Callbacks used in non blocking modes (Interrupt) */
 void HAL_SMBUS_EV_IRQHandler(SMBUS_HandleTypeDef *hsmbus);
 void HAL_SMBUS_ER_IRQHandler(SMBUS_HandleTypeDef *hsmbus);
 void HAL_SMBUS_MasterTxCpltCallback(SMBUS_HandleTypeDef *hsmbus);
 void HAL_SMBUS_MasterRxCpltCallback(SMBUS_HandleTypeDef *hsmbus);
 void HAL_SMBUS_SlaveTxCpltCallback(SMBUS_HandleTypeDef *hsmbus);
 void HAL_SMBUS_SlaveRxCpltCallback(SMBUS_HandleTypeDef *hsmbus);
-void HAL_SMBUS_SlaveAddrCallback(SMBUS_HandleTypeDef *hsmbus, uint8_t TransferDirection, uint16_t AddrMatchCode);
-void HAL_SMBUS_SlaveListenCpltCallback(SMBUS_HandleTypeDef *hsmbus);
+void HAL_SMBUS_AddrCallback(SMBUS_HandleTypeDef *hsmbus, uint8_t TransferDirection, uint16_t AddrMatchCode);
+void HAL_SMBUS_ListenCpltCallback(SMBUS_HandleTypeDef *hsmbus);
+/* Aliases for inter STM32 series compatibility */
+#define HAL_SMBUS_SlaveAddrCallback         HAL_SMBUS_AddrCallback
+#define HAL_SMBUS_SlaveListenCpltCallback   HAL_SMBUS_ListenCpltCallback
+
 void HAL_SMBUS_ErrorCallback(SMBUS_HandleTypeDef *hsmbus);
 
 /* Peripheral State and Errors functions  *************************************/

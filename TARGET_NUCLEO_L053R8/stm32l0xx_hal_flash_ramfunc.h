@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_flash_ramfunc.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   Header file of FLASH RAMFUNC driver.
   ******************************************************************************
   * @attention
@@ -50,7 +50,7 @@
   * @{
   */
 
-/** @addtogroup FLASH_RAMFUNC
+/** @addtogroup FLASHRamfunc
   * @{
   */ 
 
@@ -62,10 +62,14 @@
 /* I/O operation functions  *****************************************************/
 /* Peripheral Control functions  ************************************************/
 
+__RAM_FUNC  HAL_FLASHEx_HalfPageProgram(uint32_t Address, uint32_t *Data);
+__RAM_FUNC  HAL_FLASHEx_EnableRunPowerDown(void);
+__RAM_FUNC  HAL_FLASHEx_DisableRunPowerDown(void);
 
-__RAM_FUNC  FLASH_HalfPageProgram(uint32_t Address, uint32_t *Data);
-__RAM_FUNC  FLASH_EnableRunPowerDown(void);
-__RAM_FUNC  FLASH_DisableRunPowerDown(void);
+/* Aliases for legacy compatibility */
+#define FLASH_HalfPageProgram         HAL_FLASHEx_HalfPageProgram
+#define FLASH_EnableRunPowerDown      HAL_FLASHEx_EnableRunPowerDown
+#define FLASH_DisableRunPowerDown     HAL_FLASHEx_DisableRunPowerDown
 
 
 /**

@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_gpio.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   Header file of GPIO HAL module.
   ******************************************************************************
   * @attention
@@ -93,7 +93,7 @@ typedef enum
   * @{
   */
 
-/** @defgroup GPIO_pins_define 
+/** @defgroup GPIO_pins_define
   * @{
   */
 #define GPIO_PIN_0                 ((uint16_t)0x0001)  /* Pin 0 selected    */
@@ -114,23 +114,8 @@ typedef enum
 #define GPIO_PIN_15                ((uint16_t)0x8000)  /* Pin 15 selected   */
 #define GPIO_PIN_All               ((uint16_t)0xFFFF)  /* All pins selected */
 
-#define IS_GPIO_PIN(PIN) ((((PIN) & (uint32_t)0x00) == 0x00) && ((PIN) != (uint32_t)0x00))
-#define IS_GET_GPIO_PIN(PIN) (((PIN) == GPIO_PIN_0)  || \
-                              ((PIN) == GPIO_PIN_1)  || \
-                              ((PIN) == GPIO_PIN_2)  || \
-                              ((PIN) == GPIO_PIN_3)  || \
-                              ((PIN) == GPIO_PIN_4)  || \
-                              ((PIN) == GPIO_PIN_5)  || \
-                              ((PIN) == GPIO_PIN_6)  || \
-                              ((PIN) == GPIO_PIN_7)  || \
-                              ((PIN) == GPIO_PIN_8)  || \
-                              ((PIN) == GPIO_PIN_9)  || \
-                              ((PIN) == GPIO_PIN_10) || \
-                              ((PIN) == GPIO_PIN_11) || \
-                              ((PIN) == GPIO_PIN_12) || \
-                              ((PIN) == GPIO_PIN_13) || \
-                              ((PIN) == GPIO_PIN_14) || \
-                              ((PIN) == GPIO_PIN_15))
+#define GPIO_PIN_MASK              ((uint32_t)0x0000FFFF) /* PIN mask for assert test */
+#define IS_GPIO_PIN(PIN)           (((PIN) & GPIO_PIN_MASK ) != (uint32_t)0x00)
 /**
   * @}
   */
@@ -176,7 +161,7 @@ typedef enum
 
 /**
   * @}
-  */                                                        
+  */
 /** @defgroup GPIO_speed_define
   * @brief GPIO Output Maximum frequency
   * @{
@@ -256,6 +241,7 @@ typedef enum
 #include "stm32l0xx_hal_gpio_ex.h"
 
 /* Exported functions --------------------------------------------------------*/ 
+
 /* Initialization and de-initialization functions *******************************/
 void  HAL_GPIO_Init(GPIO_TypeDef  *GPIOx, GPIO_InitTypeDef *GPIO_Init);
 void  HAL_GPIO_DeInit(GPIO_TypeDef  *GPIOx, uint32_t GPIO_Pin);
@@ -264,6 +250,7 @@ void  HAL_GPIO_DeInit(GPIO_TypeDef  *GPIOx, uint32_t GPIO_Pin);
 GPIO_PinState HAL_GPIO_ReadPin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
 void          HAL_GPIO_WritePin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState);
 void          HAL_GPIO_TogglePin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+HAL_StatusTypeDef HAL_GPIO_LockPin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
 void          HAL_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin);
 void          HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
 

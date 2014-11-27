@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32f0xx_hal_comp.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    28-May-2014
+  * @version V1.1.0
+  * @date    03-Oct-2014
   * @brief   Header file of COMP HAL module.
   ******************************************************************************
   * @attention
@@ -44,7 +44,8 @@
 #endif
 
 #if defined(STM32F051x8) || defined(STM32F058xx) || \
-    defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx)
+    defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || \
+    defined(STM32F091xC) || defined(STM32F098xx)
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f0xx_hal_def.h"
@@ -53,21 +54,26 @@
   * @{
   */
 
-/** @addtogroup COMP
+/** @addtogroup COMP COMP HAL Module Driver
   * @{
   */ 
 
 /* Exported types ------------------------------------------------------------*/ 
-
+/** @defgroup COMP_Exported_Types COMP Exported Types
+  * @{
+  */
+    
 /** 
   * @brief  COMP Init structure definition  
-  */
-  
+  */ 
 typedef struct
 {
 
   uint32_t InvertingInput;     /*!< Selects the inverting input of the comparator.
                                     This parameter can be a value of @ref COMP_InvertingInput */
+
+  uint32_t NonInvertingInput;  /*!< Selects the non inverting input of the comparator.
+                                    This parameter can be a value of @ref COMP_NonInvertingInput */
 
   uint32_t Output;             /*!< Selects the output redirection of the comparator.
                                     This parameter can be a value of @ref COMP_Output */
@@ -102,9 +108,8 @@ typedef enum
   HAL_COMP_STATE_BUSY_LOCKED       = 0x12     /*!< COMP is running and the configuration is locked  */
 }HAL_COMP_StateTypeDef;
 
-
 /** 
-  * @brief  PPP Handle Structure definition  
+  * @brief  COMP Handle Structure definition  
   */ 
 typedef struct
 {
@@ -112,15 +117,18 @@ typedef struct
   COMP_InitTypeDef            Init;      /*!< COMP required parameters */
   HAL_LockTypeDef             Lock;      /*!< Locking object           */
   __IO HAL_COMP_StateTypeDef  State;     /*!< COMP communication state */
-  
 }COMP_HandleTypeDef;
 
+/**
+  * @}
+  */
+  
 /* Exported constants --------------------------------------------------------*/
-/** @defgroup COMP_Exported_Constants
+/** @defgroup COMP_Exported_Constants COMP Exported Constants
   * @{
   */
 
-/** @defgroup COMP_OutputPolarity
+/** @defgroup COMP_OutputPolarity COMP OutputPolarity
   * @{
   */
 #define COMP_OUTPUTPOL_NONINVERTED             ((uint32_t)0x00000000)  /*!< COMP output on GPIO isn't inverted */
@@ -132,7 +140,7 @@ typedef struct
   * @}
   */ 
 
-/** @defgroup COMP_Hysteresis
+/** @defgroup COMP_Hysteresis COMP Hysteresis
   * @{
   */
 #define COMP_HYSTERESIS_NONE                   ((uint32_t)0x00000000)  /*!< No hysteresis */
@@ -148,7 +156,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup COMP_Mode
+/** @defgroup COMP_Mode COMP Mode
   * @{
   */
 /* Please refer to the electrical characteristics in the device datasheet for
@@ -167,7 +175,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup COMP_InvertingInput
+/** @defgroup COMP_InvertingInput COMP InvertingInput
   * @{
   */
 
@@ -193,7 +201,20 @@ typedef struct
   * @}
   */ 
 
-/** @defgroup COMP_Output
+/** @defgroup COMP_NonInvertingInput COMP NonInvertingInput
+  * @{
+  */
+#define COMP_NONINVERTINGINPUT_IO1               ((uint32_t)0x00000000) /*!< I/O1 (PA1 for COMP1, PA3 for COMP2) 
+                                                                             connected to comparator non inverting input */
+#define COMP_NONINVERTINGINPUT_DAC1SWITCHCLOSED  COMP_CSR_COMP1SW1  /*!< DAC ouput connected to comparator COMP1 non inverting input */
+
+#define IS_COMP_NONINVERTINGINPUT(INPUT) (((INPUT) == COMP_NONINVERTINGINPUT_IO1) || \
+                                          ((INPUT) == COMP_NONINVERTINGINPUT_DAC1SWITCHCLOSED))
+/**
+  * @}
+  */
+
+/** @defgroup COMP_Output COMP Output
   * @{
   */
 
@@ -220,7 +241,7 @@ typedef struct
   * @}
   */ 
 
-/** @defgroup COMP_OutputLevel
+/** @defgroup COMP_OutputLevel COMP OutputLevel
   * @{
   */ 
 /* When output polarity is not inverted, comparator output is low when
@@ -233,7 +254,7 @@ typedef struct
   * @}
   */ 
 
-/** @defgroup COMP_TriggerMode 
+/** @defgroup COMP_TriggerMode COMP TriggerMode
   * @{
   */
 #define COMP_TRIGGERMODE_NONE                  ((uint32_t)0x00000000)  /*!< No External Interrupt trigger detection */
@@ -249,7 +270,7 @@ typedef struct
   * @}
   */ 
 
-/** @defgroup COMP_WindowMode
+/** @defgroup COMP_WindowMode COMP WindowMode
   * @{
   */
 #define COMP_WINDOWMODE_DISABLED               ((uint32_t)0x00000000)  /*!< Window mode disabled */
@@ -262,7 +283,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup COMP_ExtiLineEvent
+/** @defgroup COMP_ExtiLineEvent COMP ExtiLineEvent
   *        Elements values convention: XXXX0000
   *           - XXXX : Interrupt mask in the EMR/IMR/RTSR/FTSR register
   * @{   
@@ -274,16 +295,26 @@ typedef struct
   * @}
   */
 
+/** @defgroup COMP_Lock COMP Lock
+  * @{   
+  */  
 #define COMP_LOCK_DISABLE                      ((uint32_t)0x00000000)
 #define COMP_LOCK_ENABLE                       COMP_CSR_COMP1LOCK
 
 #define COMP_STATE_BIT_LOCK                    ((uint32_t)0x10)
+/**
+  * @}
+  */ 
+
 
 /**
   * @}
   */ 
   
 /* Exported macros -----------------------------------------------------------*/
+/** @defgroup COMP_Exported_Macros COMP Exported Macros
+  * @{
+  */
 
 /** @brief  Reset COMP handle state
   * @param  __HANDLE__: COMP handle.
@@ -305,7 +336,7 @@ typedef struct
   *          This parameter can be a value of @ref COMP_ExtiLineEvent
   * @retval None.
   */
-#define __HAL_COMP_EXTI_CLEAR_FLAG(__FLAG__)   (EXTI->PR |= (__FLAG__))
+#define __HAL_COMP_EXTI_CLEAR_FLAG(__FLAG__)   (EXTI->PR = (__FLAG__))
 
 /**
   * @brief  Enable the COMP Exti Line.
@@ -362,33 +393,65 @@ typedef struct
   */
 #define __HAL_COMP_GET_EXTI_LINE(__INSTANCE__) (((__INSTANCE__) == COMP1) ? COMP_EXTI_LINE_COMP1_EVENT : \
                                                 COMP_EXTI_LINE_COMP2_EVENT)
-
+/**
+  * @}
+  */ 
 
 /* Exported functions --------------------------------------------------------*/
-
+/** @addtogroup COMP_Exported_Functions COMP Exported Functions
+  * @{
+  */
+/** @addtogroup COMP_Exported_Functions_Group1 Initialization/de-initialization functions 
+ *  @brief    Initialization and Configuration functions 
+ * @{
+ */ 
 /* Initialization and de-initialization functions  ****************************/
 HAL_StatusTypeDef     HAL_COMP_Init(COMP_HandleTypeDef *hcomp);
 HAL_StatusTypeDef     HAL_COMP_DeInit (COMP_HandleTypeDef *hcomp);
 void                  HAL_COMP_MspInit(COMP_HandleTypeDef *hcomp);
 void                  HAL_COMP_MspDeInit(COMP_HandleTypeDef *hcomp);
+/**
+  * @}
+  */
 
+/** @addtogroup COMP_Exported_Functions_Group2 I/O operation functions 
+ *  @brief   Data transfers functions 
+ * @{
+ */   
 /* IO operation functions *****************************************************/
 HAL_StatusTypeDef     HAL_COMP_Start(COMP_HandleTypeDef *hcomp);
 HAL_StatusTypeDef     HAL_COMP_Stop(COMP_HandleTypeDef *hcomp);
 HAL_StatusTypeDef     HAL_COMP_Start_IT(COMP_HandleTypeDef *hcomp);
 HAL_StatusTypeDef     HAL_COMP_Stop_IT(COMP_HandleTypeDef *hcomp);
 void                  HAL_COMP_IRQHandler(COMP_HandleTypeDef *hcomp);
+/**
+  * @}
+  */
 
+/** @addtogroup COMP_Exported_Functions_Group3 Peripheral Control functions 
+ *  @brief   management functions
+ * @{
+ */   
 /* Peripheral Control functions ***********************************************/
 HAL_StatusTypeDef     HAL_COMP_Lock(COMP_HandleTypeDef *hcomp);
 uint32_t              HAL_COMP_GetOutputLevel(COMP_HandleTypeDef *hcomp);
 
 /* Callback in Interrupt mode */
 void                  HAL_COMP_TriggerCallback(COMP_HandleTypeDef *hcomp);
+/**
+  * @}
+  */
 
+/** @addtogroup COMP_Exported_Functions_Group4 Peripheral State functions 
+ *  @brief   Peripheral State functions
+ * @{
+ */   
 /* Peripheral State and Error functions ***************************************/
 HAL_COMP_StateTypeDef HAL_COMP_GetState(COMP_HandleTypeDef *hcomp);
-
+/**
+  * @}
+  */ 
+  
 /**
   * @}
   */ 
@@ -397,8 +460,13 @@ HAL_COMP_StateTypeDef HAL_COMP_GetState(COMP_HandleTypeDef *hcomp);
   * @}
   */ 
 
+/**
+  * @}
+  */ 
+  
 #endif /* STM32F051x8 || STM32F058xx || */
-       /* STM32F071xB || STM32F072xB || STM32F078xx */
+       /* STM32F071xB || STM32F072xB || STM32F078xx || */
+       /* STM32F091xC || STM32F098xx */
 
 #ifdef __cplusplus
 }
@@ -407,3 +475,4 @@ HAL_COMP_StateTypeDef HAL_COMP_GetState(COMP_HandleTypeDef *hcomp);
 #endif /* __STM32F0xx_HAL_COMP_H */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+

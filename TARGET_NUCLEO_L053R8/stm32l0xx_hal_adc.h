@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_adc.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   This file contains all the functions prototypes for the ADC firmware 
   *          library.
   ******************************************************************************
@@ -106,13 +106,13 @@ typedef struct
                                               This parameter can be a value of @ref ADC_Resolution
                                               Note: This parameter can be modified only if ADC is disabled. */
   uint32_t SamplingTime;                 /*!< The sample time value to be set for all channels.
-                                              This parameter can be a value of @ref ADC_sampling_times.
-                                              Note: This parameter can be modified only if there is no conversion is ongoing. */
+                                              This parameter can be a value of @ref ADC_sampling_times
+                                              Note: This parameter can be modified only if there is no conversion ongoing. */
   uint32_t ScanDirection;                /*!< The scan sequence direction.
-                                              This parameter can be a value of @ref ADC_scan_direction.
+                                              This parameter can be a value of @ref ADC_scan_direction
                                               Note: This parameter can be modified only if there is no conversion is ongoing. */
   uint32_t DataAlign;                    /*!< Specifies whether the ADC data  alignment is left or right.  
-                                              This parameter can be a value of @ref ADC_data_align.
+                                              This parameter can be a value of @ref ADC_data_align
                                               Note: This parameter can be modified only if there is no conversion is ongoing. */
   uint32_t ContinuousConvMode;           /*!< Specifies whether the conversion is performed in Continuous or Single mode.
                                               This parameter can be set to ENABLE or DISABLE.
@@ -123,10 +123,10 @@ typedef struct
                                               This parameter can be set to ENABLE or DISABLE.
                                               Note: This parameter can be modified only if there is no conversion is ongoing. */
   uint32_t ExternalTrigConvEdge;         /*!< Select the external trigger edge and enable the trigger. 
-                                              This parameter can be a value of @ref ADC_External_trigger_Edge.
+                                              This parameter can be a value of @ref ADC_External_trigger_Edge
                                               Note: This parameter can be modified only if there is no conversion is ongoing. */
   uint32_t ExternalTrigConv;             /*!< Select the external event used to trigger the start of conversion.
-                                              This parameter can be a value of @ref ADC_External_trigger_Source.
+                                              This parameter can be a value of @ref ADC_External_trigger_Source
                                               Note: This parameter can be modified only if there is no conversion is ongoing. */
   uint32_t DMAContinuousRequests;        /*!< Specifies whether the DMA requests are performed in one shot mode (DMA transfer stop when number of conversions is reached)
                                               or in Continuous mode (DMA transfer unlimited, whatever number of conversions).
@@ -135,10 +135,10 @@ typedef struct
                                               Note: This parameter can be modified only if there is no conversion is ongoing. */
   uint32_t EOCSelection;                 /*!< Specifies what EOC (End Of Conversion) flag is used for conversion polling and interruption:  
                                               end of single channel conversion or end of channels conversions sequence.
-                                              This parameter can be a value of @ref ADC_EOCSelection. */ 
+                                              This parameter can be a value of @ref ADC_EOCSelection */ 
   uint32_t Overrun;                      /*!< Select the behaviour in case of overrun: data preserved or overwritten 
                                               This parameter has an effect on regular channels only, including in DMA mode.
-                                              This parameter can be a value of @ref ADC_Overrun.
+                                              This parameter can be a value of @ref ADC_Overrun
                                               Note: This parameter can be modified only if there is no conversion is ongoing. */
   uint32_t LowPowerAutoWait;             /*!< Specifies the usage of dynamic low power Auto Delay: new conversion start only
                                               when the previous conversion (for regular channel) is completed.
@@ -189,10 +189,10 @@ typedef struct
 typedef struct
 {
   uint32_t WatchdogMode;      /*!< Configures the ADC analog watchdog mode: single/all channels.
-                                   This parameter can be a value of @ref ADC_analog_watchdog_mode. */
+                                   This parameter can be a value of @ref ADC_analog_watchdog_mode */
   uint32_t Channel;           /*!< Selects which ADC channel to monitor by analog watchdog.
                                    This parameter has an effect only if watchdog mode is configured on single channel (parameter WatchdogMode)
-                                   This parameter can be a value of @ref ADC_channels. */
+                                   This parameter can be a value of @ref ADC_channels */
   uint32_t ITMode;            /*!< Specifies whether the analog watchdog is configured in interrupt or polling mode.
                                    This parameter can be set to ENABLE or DISABLE */
   uint32_t HighThreshold;     /*!< Configures the ADC analog watchdog High threshold value.
@@ -400,9 +400,9 @@ typedef struct
 #define ADC_CHANNEL_18          ((uint32_t)(ADC_CHSELR_CHSEL18)| ADC_CFGR1_AWDCH_4| ADC_CFGR1_AWDCH_1)
 
 /* Internal channels */
-#define ADC_CHANNEL_TEMPSENSOR   ADC_CHANNEL_16    
+#define ADC_CHANNEL_VLCD         ADC_CHANNEL_16    
 #define ADC_CHANNEL_VREFINT      ADC_CHANNEL_17
-#define ADC_CHANNEL_VLCD         ADC_CHANNEL_18    
+#define ADC_CHANNEL_TEMPSENSOR   ADC_CHANNEL_18    
 
     
 #define IS_ADC_CHANNEL(CHANNEL) (((CHANNEL) == ADC_CHANNEL_0)           || \
@@ -632,7 +632,7 @@ typedef struct
   * @}
   */ 
 
-/** @defgroup ADC_regular_nb_conv_verification 
+/** @defgroup ADC_regular_nb_conv_verification
   * @{
   */ 
 #define IS_ADC_REGULAR_NB_CONV(LENGTH) (((LENGTH) >= ((uint32_t)1)) && ((LENGTH) <= ((uint32_t)16)))
@@ -837,7 +837,7 @@ typedef struct
   * @retval None
   */
 /* Note: bit cleared bit by writing 1 */
-#define __HAL_ADC_CLEAR_FLAG(__HANDLE__, __FLAG__) (((__HANDLE__)->Instance->ISR) &= (__FLAG__))
+#define __HAL_ADC_CLEAR_FLAG(__HANDLE__, __FLAG__) (((__HANDLE__)->Instance->ISR) = (__FLAG__))
 
 /**
   * @brief Get the selected ADC's flag status.

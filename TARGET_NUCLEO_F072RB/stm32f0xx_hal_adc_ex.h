@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32f0xx_hal_adc_ex.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    28-May-2014
+  * @version V1.1.0
+  * @date    03-Oct-2014
   * @brief   Header file of ADC HAL Extension module.
   ******************************************************************************
   * @attention
@@ -58,19 +58,35 @@
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions --------------------------------------------------------*/
+/** @addtogroup ADCEx_Exported_Functions
+  * @{
+  */
 
 /* IO operation functions  *****************************************************/
+/** @addtogroup ADCEx_Exported_Functions_Group1
+  * @{
+  */
+
 /* ADC calibration */
 HAL_StatusTypeDef       HAL_ADCEx_Calibration_Start(ADC_HandleTypeDef* hadc);
+/**
+  * @}
+  */
+
 
 /**
   * @}
   */ 
 
+
 /**
   * @}
   */
-  
+
+/**
+  * @}
+  */
+    
 #ifdef __cplusplus
 }
 #endif
@@ -79,3 +95,4 @@ HAL_StatusTypeDef       HAL_ADCEx_Calibration_Start(ADC_HandleTypeDef* hadc);
 
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+

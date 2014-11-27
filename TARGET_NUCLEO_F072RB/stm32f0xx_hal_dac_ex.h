@@ -1,9 +1,9 @@
 /**
   ******************************************************************************
-  * @file    stm32f0xx_hal_dac.h
+  * @file    stm32f0xx_hal_dac_ex.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    28-May-2014
+  * @version V1.1.0
+  * @date    03-Oct-2014
   * @brief   Header file of DAC HAL Extension module.
   ******************************************************************************
   * @attention
@@ -44,7 +44,8 @@
 #endif
 
 #if defined(STM32F051x8) || defined(STM32F058xx) || \
-    defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx)
+    defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || \
+    defined(STM32F091xC) || defined(STM32F098xx)
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f0xx_hal_def.h"
@@ -64,8 +65,10 @@
   */ 
 
 /* Exported constants --------------------------------------------------------*/
-  
-/** @defgroup DACEx_wave_generation 
+/** @defgroup DACEx_Exported_Constants DACEx Exported Constants
+  * @{
+  */  
+/** @defgroup DACEx_wave_generation DACEx wave generation
   * @{
   */
 #define DAC_WAVEGENERATION_NONE            ((uint32_t)0x00000000)
@@ -79,7 +82,7 @@
   * @}
   */
 
-/** @defgroup DACEx_lfsrunmask_triangleamplitude
+/** @defgroup DACEx_lfsrunmask_triangleamplitude DACEx lfsrunmask triangleamplitude
   * @{
   */
 #define DAC_LFSRUNMASK_BIT0                ((uint32_t)0x00000000) /*!< Unmask DAC channel LFSR bit0 for noise wave generation */
@@ -135,7 +138,7 @@
   * @}
   */
 
-/** @defgroup DACEx_wave_generation 
+/** @defgroup DACEx_wave_generationbis DACEx wave generation bis
   * @{
   */
 #define DAC_WAVE_NOISE                     ((uint32_t)DAC_CR_WAVE1_0)
@@ -143,19 +146,22 @@
 
 #define IS_DAC_WAVE(WAVE) (((WAVE) == DAC_WAVE_NOISE) || \
                            ((WAVE) == DAC_WAVE_TRIANGLE))
-
-
-
-
+                           
+/**
+  * @}
+  */
 
 /**
   * @}
   */
 
 /* Exported macro ------------------------------------------------------------*/
-/* Exported functions --------------------------------------------------------*/  
 
-/** @defgroup DAC_trigger_selection 
+/** @defgroup DACEx_Exported_Macros DACEx Exported Macros
+  * @{
+  */
+  
+/** @defgroup DAC_trigger_selection DAC trigger selection
   * @{
   */
 #if defined(STM32F051x8) || defined(STM32F058xx)
@@ -179,7 +185,8 @@
 
 #endif /* STM32F051x8 || STM32F058xx */
 
-#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx)
+#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || \
+    defined(STM32F091xC) || defined(STM32F098xx)
 
 #define DAC_TRIGGER_NONE                   ((uint32_t)0x00000000) /*!< Conversion is automatic once the DAC1_DHRxxxx register 
                                                                        has been loaded, and not by external trigger */
@@ -200,23 +207,27 @@
                                  ((TRIGGER) == DAC_TRIGGER_EXT_IT9) || \
                                  ((TRIGGER) == DAC_TRIGGER_SOFTWARE))      
 
-#endif /* STM32F071xB || STM32F072xB || STM32F078xx */
+#endif /* STM32F071xB || STM32F072xB || STM32F078xx || */
+       /* STM32F091xC || STM32F098xx */
+/**
+  * @}
+  */
 
-#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx)
-
-/** @defgroup DAC_Channel_selection 
+/** @defgroup DAC_Channel_selection DAC Channel selection
   * @{
   */
+  
+#if defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F078xx) || \
+    defined(STM32F091xC) || defined(STM32F098xx)
+
 #define DAC_CHANNEL_1                      ((uint32_t)0x00000000)
 #define DAC_CHANNEL_2                      ((uint32_t)0x00000010)
 
 #define IS_DAC_CHANNEL(CHANNEL) (((CHANNEL) == DAC_CHANNEL_1) || \
                                  ((CHANNEL) == DAC_CHANNEL_2))
-/**
-  * @}
-  */
 
-#endif /* STM32F071xB || STM32F072xB || STM32F078xx */
+#endif /* STM32F071xB || STM32F072xB || STM32F078xx || */
+       /* STM32F091xC || STM32F098xx */
 
 #if defined(STM32F051x8) || defined(STM32F058xx)
 
@@ -228,9 +239,23 @@
 /**
   * @}
   */
+  
+/**
+  * @}
+  */
 
-
+/* Exported functions --------------------------------------------------------*/  
 /* Extension features functions ***********************************************/
+
+/** @addtogroup DACEx_Exported_Functions
+  * @{
+  */
+
+/** @addtogroup DACEx_Exported_Functions_Group1 Extended features functions
+ *  @brief    Extended features functions
+   * @{
+  */
+  
 uint32_t HAL_DACEx_DualGetValue(DAC_HandleTypeDef* hdac);
 HAL_StatusTypeDef HAL_DACEx_TriangleWaveGenerate(DAC_HandleTypeDef* hdac, uint32_t Channel, uint32_t Amplitude);
 HAL_StatusTypeDef HAL_DACEx_NoiseWaveGenerate(DAC_HandleTypeDef* hdac, uint32_t Channel, uint32_t Amplitude);
@@ -244,7 +269,13 @@ void HAL_DACEx_DMAUnderrunCallbackCh2(DAC_HandleTypeDef* hdac);
 void DAC_DMAConvCpltCh2(DMA_HandleTypeDef *hdma);
 void DAC_DMAErrorCh2(DMA_HandleTypeDef *hdma);
 void DAC_DMAHalfConvCpltCh2(DMA_HandleTypeDef *hdma); 
-
+/**
+  * @}
+  */
+  
+ /**
+ * @}
+ */
 #endif /*  */
 
 /**
@@ -257,8 +288,9 @@ void DAC_DMAHalfConvCpltCh2(DMA_HandleTypeDef *hdma);
   
 #ifdef __cplusplus
 }
-#endif   /* STM32F051x8 || STM32F058xx ||             */
-         /* STM32F071xB || STM32F072xB || STM32F078xx */
+#endif   /* STM32F051x8 || STM32F058xx ||                */
+         /* STM32F071xB || STM32F072xB || STM32F078xx || */
+         /* STM32F091xC || STM32F098xx */
 
 #endif /*__STM32F0xx_HAL_DAC_EX_H */
 

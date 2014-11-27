@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_rcc.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   Header file of RCC HAL module.
   ******************************************************************************
   * @attention
@@ -68,7 +68,7 @@ typedef struct
                             This parameter must be a value of @ref RCC_PLL_Clock_Source */
 
   uint32_t PLLMUL;       /*!< PLLMUL: Multiplication factor for PLL VCO output clock
-                              This parameter must of RCC_PLLMultiplication_Factor */
+                              This parameter must of @ref RCC_PLLMultiplication_Factor */
 
   uint32_t PLLDIV;       /*!< PLLDIV: Division factor for main system clock (SYSCLK)
                             This parameter must be a value of @ref RCC_PLLDivider_Factor */
@@ -179,13 +179,8 @@ typedef struct
 #define RCC_OSCILLATORTYPE_MSI             ((uint32_t)0x00000010)
 #define RCC_OSCILLATORTYPE_HSI48           ((uint32_t)0x00000020)
 
-#define IS_RCC_OSCILLATORTYPE(OSCILLATOR)  (((OSCILLATOR) == RCC_OSCILLATORTYPE_NONE) || \
-                                            ((OSCILLATOR) == RCC_OSCILLATORTYPE_HSE)  || \
-                                            ((OSCILLATOR) == RCC_OSCILLATORTYPE_HSI)  || \
-                                            ((OSCILLATOR) == RCC_OSCILLATORTYPE_LSE)  || \
-                                            ((OSCILLATOR) == RCC_OSCILLATORTYPE_LSI)  || \
-                                            ((OSCILLATOR) == RCC_OSCILLATORTYPE_MSI)  || \
-                                            ((OSCILLATOR) == RCC_OSCILLATORTYPE_HSI48))
+#define IS_RCC_OSCILLATORTYPE(OSCILLATOR) ((OSCILLATOR) <= 0x3F)
+
 /**
   * @}
   */
@@ -229,7 +224,7 @@ typedef struct
   * @}
   */ 
 
-/** @defgroup RCC_MSI_Clock_Range 
+/** @defgroup RCC_MSI_Clock_Range
   * @{
   */
 
@@ -253,7 +248,7 @@ typedef struct
   * @}
   */ 
 
-/** @defgroup RCC_LSI_Config 
+/** @defgroup RCC_LSI_Config
   * @{
   */
 #define RCC_LSI_OFF                      ((uint8_t)0x00)
@@ -265,7 +260,7 @@ typedef struct
   */
 
     
-/** @defgroup RCC_MSI_Config 
+/** @defgroup RCC_MSI_Config
   * @{
   */
 #define RCC_MSI_OFF                      ((uint8_t)0x00)
@@ -276,7 +271,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup RCC_HSI48_Config 
+/** @defgroup RCC_HSI48_Config
   * @{
   */
 #define RCC_HSI48_OFF                      ((uint8_t)0x00)
@@ -287,7 +282,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup RCC_PLL_Config 
+/** @defgroup RCC_PLL_Config
   * @{
   */
 #define RCC_PLL_NONE                      ((uint8_t)0x00)
@@ -299,7 +294,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup RCC_PLL_Clock_Source 
+/** @defgroup RCC_PLL_Clock_Source
   * @{
   */
 #define RCC_PLLSOURCE_HSI                RCC_CFGR_PLLSRC_HSI
@@ -312,7 +307,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup RCC_PLLMultiplication_Factor 
+/** @defgroup RCC_PLLMultiplication_Factor
   * @{
   */
 
@@ -334,7 +329,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup RCC_PLLDivider_Factor 
+/** @defgroup RCC_PLLDivider_Factor
   * @{
   */
 
@@ -360,7 +355,7 @@ typedef struct
   * @}
   */
   
-/** @defgroup RCC_System_Clock_Source 
+/** @defgroup RCC_System_Clock_Source
   * @{
   */
 #define RCC_SYSCLKSOURCE_MSI             RCC_CFGR_SW_MSI
@@ -485,7 +480,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup RCC_Interrupt 
+/** @defgroup RCC_Interrupt
   * @{
   */
 #define RCC_IT_LSIRDY                    RCC_CIFR_LSIRDYF
@@ -554,6 +549,7 @@ typedef struct
 
 
 #define IS_RCC_CALIBRATION_VALUE(VALUE) ((VALUE) <= 0x1F)
+#define IS_RCC_MSICALIBRATION_VALUE(VALUE) ((VALUE) <= 0xFF)
 /**
   * @}
   */ 
@@ -929,7 +925,7 @@ typedef struct
                                                    MODIFY_REG( RCC->CSR, RCC_CSR_RTCSEL, (uint32_t)(__RTCCLKSource__));  \
                                                    } while (0)
 
-#define  __HAL_RCC_GET_RTC_SOURCE() ((uint32_t)(READ_BIT(RCC->CCIPR, RCC_CSR_RTCSEL)))
+#define  __HAL_RCC_GET_RTC_SOURCE() ((uint32_t)(READ_BIT(RCC->CSR, RCC_CSR_RTCSEL)))
 
 /** @brief  Macros to force or release the Backup domain reset.
   * @note   This function resets the RTC peripheral (including the backup registers)
@@ -1054,7 +1050,7 @@ typedef struct
   *     @arg RCC_IT_LSECSS: LSE CSS interrupt
   *     @arg RCC_IT_CSS: Clock Security System interrupt
   */
- #define __HAL_RCC_CLEAR_IT(__INTERRUPT__) SET_BIT(RCC->CICR, (__INTERRUPT__))
+ #define __HAL_RCC_CLEAR_IT(__INTERRUPT__) (RCC->CICR = (__INTERRUPT__))
 
 /** @brief  Check the RCC's interrupt has occurred or not.
   * @param  __INTERRUPT__: specifies the RCC interrupt source to check.

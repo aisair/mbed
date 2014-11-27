@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32f0xx_hal_pcd_ex.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    28-May-2014
+  * @version V1.1.0
+  * @date    03-Oct-2014
   * @brief   Header file of PCD HAL Extension module.
   ******************************************************************************
   * @attention
@@ -61,18 +61,34 @@
 /* Exported macros -----------------------------------------------------------*/
 /* Internal macros -----------------------------------------------------------*/
 /* Exported functions --------------------------------------------------------*/
+
+/** @addtogroup PCDEx_Exported_Functions
+  * @{
+  */
+/** @addtogroup PCDEx_Exported_Functions_Group1 Initialization and de-initialization functions 
+ *  @brief    Initialization and Configuration functions
+  * @{
+  */
+   
 HAL_StatusTypeDef HAL_PCDEx_PMAConfig(PCD_HandleTypeDef *hpcd, 
                                      uint16_t ep_addr,
                                      uint16_t ep_kind,
                                      uint32_t pmaadress);
-
+/**
+  * @}
+  */ 
+  
 /**
   * @}
   */ 
 
 /**
   * @}
-  */ 
+  */
+
+/**
+  * @}
+  */   
 
 #endif /* STM32F042x6 || STM32F072xB || STM32F078xx */
 
@@ -84,3 +100,4 @@ HAL_StatusTypeDef HAL_PCDEx_PMAConfig(PCD_HandleTypeDef *hpcd,
 #endif /* __STM32F0xx_HAL_PCD_EX_H */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+

@@ -35,7 +35,7 @@
 // STM32F030R8
 // CORE: 16 vectors = 64 bytes from 0x00 to 0x3F
 // MCU Peripherals: 29 vectors = 116 bytes from 0x40 to 0xB3
-// Total: 45 vectors = 180 bytes (0xB4) to be reserved in RAM (see scatter file)
+// Total: 45 vectors = 180 bytes (0xB4) to be reserved in RAM
 #define NVIC_NUM_VECTORS      45
 #define NVIC_USER_IRQ_OFFSET  16
 

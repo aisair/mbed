@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_tsc.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   This file contains all the functions prototypes for the TSC firmware 
   *          library.
   ******************************************************************************
@@ -242,7 +242,7 @@ typedef struct
 #define IS_TSC_SYNC_POL(VAL) (((VAL) == TSC_SYNC_POL_FALL) || ((VAL) == TSC_SYNC_POL_RISE_HIGH))
 
 #define TSC_ACQ_MODE_NORMAL  ((uint32_t)0)
-#define TSC_ACQ_MODE_SYNCHRO (TSC_CR_SYNCPOL)
+#define TSC_ACQ_MODE_SYNCHRO (TSC_CR_AM)
 #define IS_TSC_ACQ_MODE(VAL) (((VAL) == TSC_ACQ_MODE_NORMAL) || ((VAL) == TSC_ACQ_MODE_SYNCHRO))
 
 #define TSC_IOMODE_UNUSED   ((uint32_t)0)
@@ -254,7 +254,7 @@ typedef struct
                             ((VAL) == TSC_IOMODE_SHIELD) || \
                             ((VAL) == TSC_IOMODE_SAMPLING))
 
-/** @defgroup TSC_interrupts_definition 
+/** @defgroup TSC_interrupts_definition
   * @{
   */
 #define TSC_IT_EOA ((uint32_t)TSC_IER_EOAIE)  
@@ -264,7 +264,7 @@ typedef struct
   * @}
   */ 
 
-/** @defgroup TSC_flags_definition 
+/** @defgroup TSC_flags_definition
   * @{
   */ 
 #define TSC_FLAG_EOA ((uint32_t)TSC_ISR_EOAF)
@@ -450,7 +450,7 @@ typedef struct
   * @param  __FLAG__: TSC flag
   * @retval None
   */
-#define __HAL_TSC_CLEAR_FLAG(__HANDLE__, __FLAG__) ((__HANDLE__)->Instance->ICR |= (__FLAG__))
+#define __HAL_TSC_CLEAR_FLAG(__HANDLE__, __FLAG__) ((__HANDLE__)->Instance->ICR = (__FLAG__))
 
 /**
   * @brief Enable schmitt trigger hysteresis on a group of IOs

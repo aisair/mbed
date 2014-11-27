@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_rng.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   Header file of RNG HAL module.
   ******************************************************************************
   * @attention
@@ -89,7 +89,7 @@ typedef struct
   * @{
   */
 
-/** @defgroup RNG_Interrupt_definition 
+/** @defgroup RNG_Interrupt_definition
   * @{
   */ 
 #define RNG_IT_CEI   ((uint32_t)0x20)  /*!< Clock error interrupt */
@@ -102,7 +102,7 @@ typedef struct
   */
 
 
-/** @defgroup RNG_Flag_definition 
+/** @defgroup RNG_Flag_definition
   * @{
   */ 
 #define RNG_FLAG_DRDY   ((uint32_t)0x0001)  /*!< Data ready                 */
@@ -156,7 +156,7 @@ typedef struct
   * @param  __FLAG__: RNG flag
   * @retval None
   */
-#define __HAL_RNG_CLEAR_FLAG(__HANDLE__, __FLAG__) (((__HANDLE__)->Instance->SR) &= ~(__FLAG__))
+#define __HAL_RNG_CLEAR_FLAG(__HANDLE__, __FLAG__) (((__HANDLE__)->Instance->SR) = ~(__FLAG__))
     
 /**
   * @brief  Enables the RNG interrupts.
@@ -168,7 +168,6 @@ typedef struct
 /**
   * @brief  Disables the RNG interrupts.
   * @param  __HANDLE__: RNG Handle
-  * @param  __INTERRUPT__: specifies the RNG interrupt source to check.
   *         This parameter can be one of the following values:
   *            @arg RNG_FLAG_DRDY:  Data ready interrupt
   *            @arg RNG_FLAG_CECS:  Clock error interrupt

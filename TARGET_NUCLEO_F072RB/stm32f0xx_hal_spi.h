@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32f0xx_hal_spi.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    28-May-2014
+  * @version V1.1.0
+  * @date    03-Oct-2014
   * @brief   Header file of SPI HAL module.
   ******************************************************************************
   * @attention
@@ -55,6 +55,9 @@
   */ 
 
 /* Exported types ------------------------------------------------------------*/ 
+/** @defgroup SPI_Exported_Types SPI Exported Types
+  * @{
+  */
 
 /** 
   * @brief  SPI Configuration Structure definition  
@@ -179,13 +182,17 @@ typedef struct __SPI_HandleTypeDef
 
 }SPI_HandleTypeDef;
 
+/**
+  * @}
+  */ 
+
 /* Exported constants --------------------------------------------------------*/
 
-/** @defgroup SPI_Exported_Constants
+/** @defgroup SPI_Exported_Constants SPI Exported Constants
   * @{
   */
 
-/** @defgroup SPI_mode 
+/** @defgroup SPI_mode SPI mode
   * @{
   */  
 
@@ -197,7 +204,7 @@ typedef struct __SPI_HandleTypeDef
   * @}
   */
 
-/** @defgroup SPI_Direction 
+/** @defgroup SPI_Direction SPI Direction
   * @{
   */
 #define SPI_DIRECTION_2LINES             ((uint32_t)0x00000000)
@@ -216,7 +223,7 @@ typedef struct __SPI_HandleTypeDef
   * @}
   */
   
-/** @defgroup SPI_data_size 
+/** @defgroup SPI_data_size SPI data size
   * @{
   */
 
@@ -251,7 +258,7 @@ typedef struct __SPI_HandleTypeDef
   * @}
   */ 
 
-/** @defgroup SPI_Clock_Polarity 
+/** @defgroup SPI_Clock_Polarity SPI Clock Polarity
   * @{
   */ 
 
@@ -263,7 +270,7 @@ typedef struct __SPI_HandleTypeDef
   * @}
   */
 
-/** @defgroup SPI_Clock_Phase 
+/** @defgroup SPI_Clock_Phase SPI Clock Phase
   * @{
   */
 
@@ -275,7 +282,7 @@ typedef struct __SPI_HandleTypeDef
   * @}
   */
 
-/** @defgroup SPI_Slave_Select_management 
+/** @defgroup SPI_Slave_Select_management SPI Slave Select management
   * @{
   */ 
 
@@ -286,12 +293,11 @@ typedef struct __SPI_HandleTypeDef
                          ((NSS) == SPI_NSS_HARD_INPUT) || \
                          ((NSS) == SPI_NSS_HARD_OUTPUT))
 
-   /**
+/**
   * @}
   */
-
  
-/** @defgroup SPI_NSS pulse management 
+/** @defgroup SPI_NSS_pulse_management SPI NSS pulse management
   * @{
   */ 
 #define SPI_NSS_PULSE_ENABLED           SPI_CR2_NSSP
@@ -305,7 +311,7 @@ typedef struct __SPI_HandleTypeDef
   */
 
    
-/** @defgroup SPI_BaudRate_Prescaler 
+/** @defgroup SPI_BaudRate_Prescaler SPI BaudRate Prescaler
   * @{
   */
 
@@ -329,7 +335,7 @@ typedef struct __SPI_HandleTypeDef
   * @}
   */ 
 
-/** @defgroup SPI_MSB_LSB_transmission 
+/** @defgroup SPI_MSB_LSB_transmission SPI MSB LSB transmission
   * @{
   */ 
 
@@ -341,7 +347,7 @@ typedef struct __SPI_HandleTypeDef
   * @}
   */
 
-/** @defgroup SPI_TI_mode 
+/** @defgroup SPI_TI_mode SPI TI mode
   * @{
   */
 
@@ -353,7 +359,7 @@ typedef struct __SPI_HandleTypeDef
   * @}
   */ 
   
-/** @defgroup SPI_CRC_Calculation 
+/** @defgroup SPI_CRC_Calculation SPI CRC Calculation
   * @{
   */
 
@@ -365,7 +371,7 @@ typedef struct __SPI_HandleTypeDef
   * @}
   */
 
-/** @defgroup SPI_CRC_length 
+/** @defgroup SPI_CRC_length SPI CRC length
   * @{
   * This parameter can be one of the following values:
   *     SPI_CRC_LENGTH_DATASIZE: aligned with the data size 
@@ -382,7 +388,7 @@ typedef struct __SPI_HandleTypeDef
   * @}
   */
   
-/** @defgroup SPI_FIFO_reception_threshold 
+/** @defgroup SPI_FIFO_reception_threshold SPI FIFO reception threshold
   * @{
   * This parameter can be one of the following values:
   *     SPI_RxFIFOThreshold_HF: RXNE event is generated if the FIFO 
@@ -398,7 +404,7 @@ typedef struct __SPI_HandleTypeDef
   * @}
   */
 
-/** @defgroup SPI_Interrupt_configuration_definition
+/** @defgroup SPI_Interrupt_configuration_definition SPI Interrupt configuration definition
   * @brief SPI Interrupt definition
   *        Elements values convention: 0xXXXXXXXX
   *           - XXXXXXXX  : Interrupt control mask
@@ -407,41 +413,32 @@ typedef struct __SPI_HandleTypeDef
 #define SPI_IT_TXE                      SPI_CR2_TXEIE
 #define SPI_IT_RXNE                     SPI_CR2_RXNEIE
 #define SPI_IT_ERR                      SPI_CR2_ERRIE
-#define IS_SPI_IT(IT) (((IT) == SPI_IT_TXE) 	|| \
-                       ((IT) == SPI_IT_RXNE)	|| \
-                       ((IT) == SPI_IT_ERR))
 /**
   * @}
   */
 
 
-/** @defgroup SPI_Flag_definition 
+/** @defgroup SPI_Flag_definition SPI Flag definition
   * @brief Flag definition
   *        Elements values convention: 0xXXXXYYYY
   *           - XXXX  : Flag register Index
   *           - YYYY  : Flag mask
+  * @{  
   */ 
-#define SPI_FLAG_RXNE                   SPI_SR_RXNE		/* SPI status flag: Rx buffer not empty flag */
-#define SPI_FLAG_TXE                    SPI_SR_TXE		/* SPI status flag: Tx buffer empty flag */
-#define SPI_FLAG_BSY                    SPI_SR_BSY		/* SPI status flag: Busy flag */
-#define SPI_FLAG_CRCERR                 SPI_SR_CRCERR	        /* SPI Error flag: CRC error flag */
-#define SPI_FLAG_MODF                   SPI_SR_MODF		/* SPI Error flag: Mode fault flag */
-#define SPI_FLAG_OVR                    SPI_SR_OVR		/* SPI Error flag: Overrun flag */
-#define SPI_FLAG_FRE                    SPI_SR_FRE		/* SPI Error flag: TI mode frame format error flag */
-#define SPI_FLAG_FTLVL                  SPI_SR_FTLVL            /* SPI fifo transmission level */
-#define SPI_FLAG_FRLVL                  SPI_SR_FRLVL            /* SPI fifo reception level */
-#define IS_SPI_FLAG(FLAG) (((FLAG) == SPI_FLAG_RXNE)  || \
-                           ((FLAG) == SPI_FLAG_TXE)   || \
-                       	   ((FLAG) == SPI_FLAG_BSY)   || \
-                      	   ((FLAG) == SPI_FLAG_CRCERR)|| \
-                      	   ((FLAG) == SPI_FLAG_MODF)  || \
-                      	   ((FLAG) == SPI_FLAG_OVR)   || \
-                      	   ((FLAG) == SPI_FLAG_FTLVL) || \
-                      	   ((FLAG) == SPI_FLAG_FRLVL) || \
-                      	   ((FLAG) == SPI_IT_FRE))
+#define SPI_FLAG_RXNE                   SPI_SR_RXNE   /* SPI status flag: Rx buffer not empty flag */
+#define SPI_FLAG_TXE                    SPI_SR_TXE    /* SPI status flag: Tx buffer empty flag */
+#define SPI_FLAG_BSY                    SPI_SR_BSY    /* SPI status flag: Busy flag */
+#define SPI_FLAG_CRCERR                 SPI_SR_CRCERR /* SPI Error flag: CRC error flag */
+#define SPI_FLAG_MODF                   SPI_SR_MODF   /* SPI Error flag: Mode fault flag */
+#define SPI_FLAG_OVR                    SPI_SR_OVR    /* SPI Error flag: Overrun flag */
+#define SPI_FLAG_FRE                    SPI_SR_FRE    /* SPI Error flag: TI mode frame format error flag */
+#define SPI_FLAG_FTLVL                  SPI_SR_FTLVL  /* SPI fifo transmission level */
+#define SPI_FLAG_FRLVL                  SPI_SR_FRLVL  /* SPI fifo reception level */
+/**
+  * @}
+  */
 
-
-/** @defgroup SPI_transmission_fifo_status_level 
+/** @defgroup SPI_transmission_fifo_status_level SPI transmission fifo status level
   * @{
   */ 
 
@@ -449,13 +446,12 @@ typedef struct __SPI_HandleTypeDef
 #define SPI_FTLVL_QUARTER_FULL    ((uint16_t)0x0800) 
 #define SPI_FTLVL_HALF_FULL       ((uint16_t)0x1000) 
 #define SPI_FTLVL_FULL            ((uint16_t)0x1800)
-
   
 /**
   * @}
   */ 
 
-/** @defgroup SPI_reception_fifo_status_level 
+/** @defgroup SPI_reception_fifo_status_level SPI reception fifo status level
   * @{
   */ 
 #define SPI_FRLVL_EMPTY           ((uint16_t)0x0000)
@@ -473,7 +469,10 @@ typedef struct __SPI_HandleTypeDef
 
 
 /* Exported macros ------------------------------------------------------------*/
-
+/** @defgroup SPI_Exported_Macros SPI Exported Macros
+  * @{
+  */
+  
 /** @brief  Reset SPI handle state
   * @param  __HANDLE__: SPI handle.
   * @retval None
@@ -527,7 +526,7 @@ typedef struct __SPI_HandleTypeDef
   *         This parameter can be SPI where x: 1, 2, or 3 to select the SPI peripheral.
   * @retval None
   */
-#define __HAL_SPI_CLEAR_CRCERRFLAG(__HANDLE__) ((__HANDLE__)->Instance->SR &= (uint16_t)(~SPI_FLAG_CRCERR))
+#define __HAL_SPI_CLEAR_CRCERRFLAG(__HANDLE__) ((__HANDLE__)->Instance->SR = (uint16_t)(~SPI_FLAG_CRCERR))
                                                   
 /** @brief  Clears the SPI MODF pending flag.
   * @param  __HANDLE__: specifies the SPI Handle.
@@ -593,16 +592,33 @@ typedef struct __SPI_HandleTypeDef
 
 
 #define IS_SPI_CRC_POLYNOMIAL(POLYNOMIAL) (((POLYNOMIAL) >= 0x1) && ((POLYNOMIAL) <= 0xFFFF))
-
+/**
+  * @}
+  */
+  
 /* Exported functions --------------------------------------------------------*/
+/** @addtogroup SPI_Exported_Functions
+  * @{
+  */
 
+/** @addtogroup SPI_Exported_Functions_Group1 
+  * @{
+  */
+  
 /* Initialization and de-initialization functions  ****************************/
 HAL_StatusTypeDef HAL_SPI_Init(SPI_HandleTypeDef *hspi);
 HAL_StatusTypeDef HAL_SPI_InitExtended(SPI_HandleTypeDef *hspi);
 HAL_StatusTypeDef HAL_SPI_DeInit (SPI_HandleTypeDef *hspi);
 void HAL_SPI_MspInit(SPI_HandleTypeDef *hspi);
 void HAL_SPI_MspDeInit(SPI_HandleTypeDef *hspi);
+/**
+  * @}
+  */
 
+/** @addtogroup SPI_Exported_Functions_Group2
+  * @{
+  */
+     
 /* IO operation functions *****************************************************/
 HAL_StatusTypeDef HAL_SPI_Transmit(SPI_HandleTypeDef *hspi, uint8_t *pData, uint16_t Size, uint32_t Timeout);
 HAL_StatusTypeDef HAL_SPI_Receive(SPI_HandleTypeDef *hspi, uint8_t *pData, uint16_t Size, uint32_t Timeout);
@@ -618,10 +634,24 @@ void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi);
 void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi);
 void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi);
 void HAL_SPI_ErrorCallback(SPI_HandleTypeDef *hspi);
+/**
+  * @}
+  */
 
+/** @addtogroup SPI_Exported_Functions_Group3
+  * @{
+  */
+    
 /* Peripheral State and Error functions ***************************************/
 HAL_SPI_StateTypeDef HAL_SPI_GetState(SPI_HandleTypeDef *hspi);
+/**
+  * @}
+  */
 
+/**
+  * @}
+  */
+    
 /**
   * @}
   */ 
@@ -637,3 +667,4 @@ HAL_SPI_StateTypeDef HAL_SPI_GetState(SPI_HandleTypeDef *hspi);
 #endif /* __STM32F0xx_HAL_SPI_H */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+

@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l0xx_hal_spi.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2014
+  * @version V1.1.0
+  * @date    18-June-2014
   * @brief   Header file of SPI HAL module.
   ******************************************************************************
   * @attention
@@ -173,7 +173,7 @@ typedef struct __SPI_HandleTypeDef
   * @{
   */
 
-/** @defgroup SPI_mode 
+/** @defgroup SPI_mode
   * @{
   */
 #define SPI_MODE_SLAVE                  ((uint32_t)0x00000000)
@@ -185,7 +185,7 @@ typedef struct __SPI_HandleTypeDef
   * @}
   */
 
-/** @defgroup SPI_Direction_mode 
+/** @defgroup SPI_Direction_mode
   * @{
   */
 #define SPI_DIRECTION_2LINES             ((uint32_t)0x00000000)
@@ -205,7 +205,7 @@ typedef struct __SPI_HandleTypeDef
   * @}
   */
 
-/** @defgroup SPI_data_size 
+/** @defgroup SPI_data_size
   * @{
   */
 #define SPI_DATASIZE_8BIT               ((uint32_t)0x00000000)
@@ -217,7 +217,7 @@ typedef struct __SPI_HandleTypeDef
   * @}
   */ 
 
-/** @defgroup SPI_Clock_Polarity 
+/** @defgroup SPI_Clock_Polarity
   * @{
   */
 #define SPI_POLARITY_LOW                ((uint32_t)0x00000000)
@@ -229,7 +229,7 @@ typedef struct __SPI_HandleTypeDef
   * @}
   */
 
-/** @defgroup SPI_Clock_Phase 
+/** @defgroup SPI_Clock_Phase
   * @{
   */
 #define SPI_PHASE_1EDGE                 ((uint32_t)0x00000000)
@@ -241,7 +241,7 @@ typedef struct __SPI_HandleTypeDef
   * @}
   */
 
-/** @defgroup SPI_Slave_Select_management 
+/** @defgroup SPI_Slave_Select_management
   * @{
   */
 #define SPI_NSS_SOFT                    SPI_CR1_SSM
@@ -255,7 +255,7 @@ typedef struct __SPI_HandleTypeDef
   * @}
   */ 
 
-/** @defgroup SPI_BaudRate_Prescaler 
+/** @defgroup SPI_BaudRate_Prescaler
   * @{
   */
 #define SPI_BAUDRATEPRESCALER_2         ((uint32_t)0x00000000)
@@ -279,7 +279,7 @@ typedef struct __SPI_HandleTypeDef
   * @}
   */ 
 
-/** @defgroup SPI_MSB_LSB_transmission 
+/** @defgroup SPI_MSB_LSB_transmission
   * @{
   */
 #define SPI_FIRSTBIT_MSB                ((uint32_t)0x00000000)
@@ -291,7 +291,7 @@ typedef struct __SPI_HandleTypeDef
   * @}
   */
 
-/** @defgroup SPI_TI_mode 
+/** @defgroup SPI_TI_mode
   * @{
   */
 #define SPI_TIMODE_DISABLED             ((uint32_t)0x00000000)
@@ -303,7 +303,7 @@ typedef struct __SPI_HandleTypeDef
   * @}
   */
 
-/** @defgroup SPI_CRC_Calculation 
+/** @defgroup SPI_CRC_Calculation
   * @{
   */
 #define SPI_CRCCALCULATION_DISABLED     ((uint32_t)0x00000000)
@@ -325,7 +325,7 @@ typedef struct __SPI_HandleTypeDef
   * @}
   */
 
-/** @defgroup SPI_Flag_definition 
+/** @defgroup SPI_Flag_definition
   * @{
   */
 #define SPI_FLAG_RXNE                   SPI_SR_RXNE
@@ -454,11 +454,18 @@ HAL_StatusTypeDef HAL_SPI_TransmitReceive_IT(SPI_HandleTypeDef *hspi, uint8_t *p
 HAL_StatusTypeDef HAL_SPI_Transmit_DMA(SPI_HandleTypeDef *hspi, uint8_t *pData, uint16_t Size);
 HAL_StatusTypeDef HAL_SPI_Receive_DMA(SPI_HandleTypeDef *hspi, uint8_t *pData, uint16_t Size);
 HAL_StatusTypeDef HAL_SPI_TransmitReceive_DMA(SPI_HandleTypeDef *hspi, uint8_t *pTxData, uint8_t *pRxData, uint16_t Size);
+HAL_StatusTypeDef HAL_SPI_DMAPause(SPI_HandleTypeDef *hspi);
+HAL_StatusTypeDef HAL_SPI_DMAResume(SPI_HandleTypeDef *hspi);
+HAL_StatusTypeDef HAL_SPI_DMAStop(SPI_HandleTypeDef *hspi);
+
 void HAL_SPI_IRQHandler(SPI_HandleTypeDef *hspi);
 void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi);
 void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi);
 void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi);
 void HAL_SPI_ErrorCallback(SPI_HandleTypeDef *hspi);
+void HAL_SPI_TxHalfCpltCallback(SPI_HandleTypeDef *hspi);
+void HAL_SPI_RxHalfCpltCallback(SPI_HandleTypeDef *hspi);
+void HAL_SPI_TxRxHalfCpltCallback(SPI_HandleTypeDef *hspi);
 
 /* Peripheral State and Control functions  **************************************/
 HAL_SPI_StateTypeDef HAL_SPI_GetState(SPI_HandleTypeDef *hspi);
