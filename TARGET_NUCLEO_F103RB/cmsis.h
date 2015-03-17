@@ -32,7 +32,7 @@
 #ifndef MBED_CMSIS_H
 #define MBED_CMSIS_H
 
-#include "stm32f10x.h"
+#include "stm32f1xx.h"
 #include "cmsis_nvic.h"
 
 #endif
