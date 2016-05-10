@@ -7,7 +7,7 @@
 #ifndef MBED_CMSIS_H
 #define MBED_CMSIS_H
 
-#include "MK22F51212.h"
+#include "fsl_device_registers.h"
 #include "cmsis_nvic.h"
 
 #endif
