@@ -38,6 +38,7 @@ extern "C" {
 
 typedef enum {
     ADC_1 = (int)ADC1_BASE,
+    ADC_2 = (int)ADC2_BASE,
     ADC_3 = (int)ADC3_BASE
 } ADCName;
 
@@ -89,6 +90,11 @@ typedef enum {
     PWM_13 = (int)TIM13_BASE,
     PWM_14 = (int)TIM14_BASE
 } PWMName;
+
+typedef enum {
+    CAN_1 = (int)CAN1_BASE,
+    CAN_2 = (int)CAN2_BASE
+} CANName;
 
 #ifdef __cplusplus
 }
