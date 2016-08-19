@@ -1,34 +1,56 @@
-/*
- * Copyright (c) Nordic Semiconductor ASA
- * All rights reserved.
+
+/****************************************************************************************************//**
+ * @file     nrf51.h
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * @brief    CMSIS Cortex-M0 Peripheral Access Layer Header File for
+ *           nrf51 from Nordic Semiconductor.
  *
- *   1. Redistributions of source code must retain the above copyright notice, this
- *   list of conditions and the following disclaimer.
+ * @version  V522
+ * @date     23. February 2016
  *
- *   2. Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
+ * @note     Generated with SVDConv V2.81d 
+ *           from CMSIS SVD File 'nrf51.svd' Version 522,
  *
- *   3. Neither the name of Nordic Semiconductor ASA nor the names of other
- *   contributors to this software may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * @par      Copyright (c) 2013, Nordic Semiconductor ASA
+ *           All rights reserved.
+ *           
+ *           Redistribution and use in source and binary forms, with or without
+ *           modification, are permitted provided that the following conditions are met:
+ *           
+ *           * Redistributions of source code must retain the above copyright notice, this
+ *           list of conditions and the following disclaimer.
+ *           
+ *           * Redistributions in binary form must reproduce the above copyright notice,
+ *           this list of conditions and the following disclaimer in the documentation
+ *           and/or other materials provided with the distribution.
+ *           
+ *           * Neither the name of Nordic Semiconductor ASA nor the names of its
+ *           contributors may be used to endorse or promote products derived from
+ *           this software without specific prior written permission.
+ *           
+ *           THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ *           AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ *           IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ *           DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ *           FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ *           DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ *           SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ *           CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ *           OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ *           OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *           
  *
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- */
+ *******************************************************************************************************/
+
+
+
+/** @addtogroup Nordic Semiconductor
+  * @{
+  */
+
+/** @addtogroup nrf51
+  * @{
+  */
 
 #ifndef NRF51_H
 #define NRF51_H
@@ -843,8 +865,8 @@ typedef struct {                                    /*!< AAR Structure          
   __IO uint32_t  IRKPTR;                            /*!< Pointer to the IRK data structure.                                    */
   __I  uint32_t  RESERVED5;
   __IO uint32_t  ADDRPTR;                           /*!< Pointer to the resolvable address (6 bytes).                          */
-  __IO uint32_t  SCRATCHPTR;                        /*!< Pointer to a "scratch" data area used for temporary storage
-                                                         during resolution. A minimum of 3 bytes must be reserved.             */
+  __IO uint32_t  SCRATCHPTR;                        /*!< Pointer to a scratch data area used for temporary storage during
+                                                         resolution. A minimum of 3 bytes must be reserved.                    */
   __I  uint32_t  RESERVED6[697];
   __IO uint32_t  POWER;                             /*!< Peripheral power control.                                             */
 } NRF_AAR_Type;
@@ -882,8 +904,8 @@ typedef struct {                                    /*!< CCM Structure          
   __IO uint32_t  CNFPTR;                            /*!< Pointer to a data structure holding AES key and NONCE vector.         */
   __IO uint32_t  INPTR;                             /*!< Pointer to the input packet.                                          */
   __IO uint32_t  OUTPTR;                            /*!< Pointer to the output packet.                                         */
-  __IO uint32_t  SCRATCHPTR;                        /*!< Pointer to a "scratch" data area used for temporary storage
-                                                         during resolution. A minimum of 43 bytes must be reserved.            */
+  __IO uint32_t  SCRATCHPTR;                        /*!< Pointer to a scratch data area used for temporary storage during
+                                                         resolution. A minimum of 43 bytes must be reserved.                   */
   __I  uint32_t  RESERVED5[697];
   __IO uint32_t  POWER;                             /*!< Peripheral power control.                                             */
 } NRF_CCM_Type;
@@ -1031,7 +1053,7 @@ typedef struct {                                    /*!< NVMC Structure         
   __I  uint32_t  READY;                             /*!< Ready flag.                                                           */
   __I  uint32_t  RESERVED1[64];
   __IO uint32_t  CONFIG;                            /*!< Configuration register.                                               */
-
+  
   union {
     __IO uint32_t  ERASEPCR1;                       /*!< Register for erasing a non-protected non-volatile memory page.        */
     __IO uint32_t  ERASEPAGE;                       /*!< Register for erasing a non-protected non-volatile memory page.        */
@@ -1082,7 +1104,7 @@ typedef struct {                                    /*!< FICR Structure         
   __I  uint32_t  PPFC;                              /*!< Pre-programmed factory code present.                                  */
   __I  uint32_t  RESERVED2;
   __I  uint32_t  NUMRAMBLOCK;                       /*!< Number of individualy controllable RAM blocks.                        */
-
+  
   union {
     __I  uint32_t  SIZERAMBLOCK[4];                 /*!< Deprecated array of size of RAM block in bytes. This name is
                                                          kept for backward compatinility purposes. Use SIZERAMBLOCKS
@@ -1121,7 +1143,7 @@ typedef struct {                                    /*!< UICR Structure         
   __IO uint32_t  XTALFREQ;                          /*!< Reset value for CLOCK XTALFREQ register.                              */
   __I  uint32_t  RESERVED0;
   __I  uint32_t  FWID;                              /*!< Firmware ID.                                                          */
-
+  
   union {
     __IO uint32_t  NRFFW[15];                       /*!< Reserved for Nordic firmware design.                                  */
     __IO uint32_t  BOOTLOADERADDR;                  /*!< Bootloader start address.                                             */
@@ -1260,3 +1282,4 @@ typedef struct {                                    /*!< GPIO Structure         
 
 
 #endif  /* nrf51_H */
+
