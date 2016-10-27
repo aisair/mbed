@@ -1,6 +1,6 @@
 /* mbed Microcontroller Library
  *******************************************************************************
- * Copyright (c) 2014, STMicroelectronics
+ * Copyright (c) 2016, STMicroelectronics
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,25 +57,12 @@ struct port_s {
 struct analogin_s {
     ADCName adc;
     PinName pin;
+    uint32_t channel;
 };
 
 struct dac_s {
     DACName dac;
     PinName pin;
-};
-
-struct spi_s {
-    SPIName spi;
-    uint32_t bits;
-    uint32_t cpol;
-    uint32_t cpha;
-    uint32_t mode;
-    uint32_t nss;
-    uint32_t br_presc;
-    PinName  pin_miso;
-    PinName  pin_mosi;
-    PinName  pin_sclk;
-    PinName  pin_ssel;
 };
 
 struct i2c_s {
