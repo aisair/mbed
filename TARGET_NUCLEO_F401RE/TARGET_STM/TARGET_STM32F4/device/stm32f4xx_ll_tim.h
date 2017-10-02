@@ -3720,7 +3720,7 @@ __STATIC_INLINE void LL_TIM_DisableDMAReq_CC3(TIM_TypeDef *TIMx)
 /**
   * @brief  Indicates whether the capture/compare 3 DMA request (CC3DE) is enabled.
   * @rmtoll DIER         CC3DE         LL_TIM_IsEnabledDMAReq_CC3
-  * @param  TIM| Timer instance
+  * @param  TIMx Timer instance
   * @retval State of bit (1 or 0).
   */
 __STATIC_INLINE uint32_t LL_TIM_IsEnabledDMAReq_CC3(TIM_TypeDef *TIMx)
