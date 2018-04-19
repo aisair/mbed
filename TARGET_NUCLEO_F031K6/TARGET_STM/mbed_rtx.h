@@ -59,6 +59,7 @@
 
 #elif (defined(TARGET_STM32F091RC) ||\
        defined(TARGET_STM32F410RB) ||\
+       defined(TARGET_STM32L151CBA)||\
        defined(TARGET_STM32L151CC) ||\
        defined(TARGET_STM32L151RC) ||\
        defined(TARGET_STM32L152RC))
@@ -108,6 +109,7 @@
        defined(TARGET_STM32F746NG) ||\
        defined(TARGET_STM32F746ZG) ||\
        defined(TARGET_STM32F756ZG) ||\
+       defined(TARGET_STM32L496AG) ||\
        defined(TARGET_STM32L496ZG))
 #define INITIAL_SP              (0x20050000UL)
 

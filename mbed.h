@@ -21,8 +21,8 @@
 #if MBED_CONF_RTOS_PRESENT
 // RTOS present, this is valid only for mbed OS 5
 #define MBED_MAJOR_VERSION 5
-#define MBED_MINOR_VERSION 7
-#define MBED_PATCH_VERSION 7
+#define MBED_MINOR_VERSION 8
+#define MBED_PATCH_VERSION 2
 
 #else
 // mbed 2
@@ -87,6 +87,7 @@
 #include "drivers/RawSerial.h"
 #include "drivers/UARTSerial.h"
 #include "drivers/FlashIAP.h"
+#include "drivers/MbedCRC.h"
 
 // mbed Internal components
 #include "drivers/Timer.h"
@@ -99,7 +100,7 @@
 #include "drivers/InterruptIn.h"
 #include "platform/mbed_wait_api.h"
 #include "hal/sleep_api.h"
-#include "platform/mbed_sleep.h"
+#include "platform/mbed_power_mgmt.h"
 #include "platform/mbed_rtc_time.h"
 #include "platform/mbed_poll.h"
 #include "platform/ATCmdParser.h"
@@ -112,6 +113,7 @@
 // mbed Non-hardware components
 #include "platform/Callback.h"
 #include "platform/FunctionPointer.h"
+#include "platform/ScopedLock.h"
 
 using namespace mbed;
 using namespace std;
