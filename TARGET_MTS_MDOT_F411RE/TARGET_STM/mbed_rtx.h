@@ -17,6 +17,8 @@
 #ifndef MBED_MBED_RTX_H
 #define MBED_MBED_RTX_H
 
+#include <stdint.h>
+
 #ifndef INITIAL_SP
 
 #if (defined(TARGET_STM32L475VG) ||\
@@ -98,6 +100,7 @@
 
 #elif (defined(TARGET_STM32F429ZI) ||\
        defined(TARGET_STM32F437VG) ||\
+       defined(TARGET_STM32F439VI) ||\
        defined(TARGET_STM32F439ZI))
 #define INITIAL_SP              (0x20030000UL)
 

@@ -21,8 +21,8 @@
 #if MBED_CONF_RTOS_PRESENT
 // RTOS present, this is valid only for mbed OS 5
 #define MBED_MAJOR_VERSION 5
-#define MBED_MINOR_VERSION 8
-#define MBED_PATCH_VERSION 5
+#define MBED_MINOR_VERSION 9
+#define MBED_PATCH_VERSION 1
 
 #else
 // mbed 2
@@ -109,6 +109,7 @@
 #include "platform/DirHandle.h"
 #include "platform/CriticalSectionLock.h"
 #include "platform/DeepSleepLock.h"
+#include "platform/mbed_stats.h"
 
 // mbed Non-hardware components
 #include "platform/Callback.h"
