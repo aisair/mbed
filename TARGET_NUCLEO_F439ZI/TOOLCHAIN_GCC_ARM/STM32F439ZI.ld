@@ -6,6 +6,8 @@
   #define MBED_APP_SIZE 2048k
 #endif
 
+M_CRASH_DATA_RAM_SIZE = 0x100;
+
 /* Linker script to configure memory regions. */
 /* 0x1AC resevered for vectors; 8-byte aligned = 0x1B0 (0x1AC + 0x4)*/
 MEMORY
@@ -19,7 +21,7 @@ MEMORY
  * with other linker script that defines memory regions FLASH and RAM.
  * It references following symbols, which must be defined in code:
  *   Reset_Handler : Entry of reset handler
- * 
+ *
  * It defines following symbols, which code can use without definition:
  *   __exidx_start
  *   __exidx_end
@@ -86,6 +88,18 @@ SECTIONS
 
     __etext = .;
     _sidata = .;
+    
+    .crash_data_ram :
+    {
+        . = ALIGN(8);
+        __CRASH_DATA_RAM__ = .;
+        __CRASH_DATA_RAM_START__ = .; /* Create a global symbol at data start */
+        KEEP(*(.keep.crash_data_ram))
+        *(.m_crash_data_ram)     /* This is a user defined section */
+        . += M_CRASH_DATA_RAM_SIZE;
+        . = ALIGN(8);
+        __CRASH_DATA_RAM_END__ = .; /* Define a global symbol at data end */
+    } > RAM        
 
     .data : AT (__etext)
     {

@@ -17,106 +17,108 @@
 #ifndef MBED_MBED_RTX_H
 #define MBED_MBED_RTX_H
 
-#if defined(TARGET_K20D50M)
+#include <stdint.h>
+
+#if defined(TARGET_LPC11U68)
 
 #ifndef INITIAL_SP
 #define INITIAL_SP              (0x10008000UL)
 #endif
 
-#elif defined(TARGET_TEENSY3_1)
+#elif defined(TARGET_LPC11U24)        \
+     || defined(TARGET_LPC11CXX)  \
+     || defined(TARGET_LPC11U35_401)  \
+     || defined(TARGET_LPC11U35_501)  \
+     || defined(TARGET_LPCCAPPUCCINO)
 
 #ifndef INITIAL_SP
-#define INITIAL_SP              (0x20008000UL)
+#define INITIAL_SP              (0x10002000UL)
 #endif
 
-#elif defined(TARGET_MCU_K22F)
+#elif defined(TARGET_LPC1114)
+
+#ifndef INITIAL_SP
+#define INITIAL_SP              (0x10001000UL)
+#endif
+
+#elif defined(TARGET_LPC1347)
+
+#ifndef INITIAL_SP
+#define INITIAL_SP              (0x10002000UL)
+#endif
+
+#elif defined(TARGET_LPC1549)
+
+#ifndef INITIAL_SP
+#define INITIAL_SP              (0x02009000UL)
+#endif
+
+#elif defined(TARGET_LPC1768) || defined(TARGET_LPC1769)
+
+#ifndef INITIAL_SP
+#define INITIAL_SP              (0x10008000UL)
+#endif
+
+#elif defined(TARGET_LPC4088) || defined(TARGET_LPC4088_DM)
+
+#ifndef INITIAL_SP
+#define INITIAL_SP              (0x10010000UL)
+#endif
+
+#elif defined(TARGET_LPC4330) || defined(TARGET_LPC4337)
+
+#ifndef INITIAL_SP
+#define INITIAL_SP              (0x10008000UL)
+#endif
+
+#elif defined(TARGET_LPC812)
+
+#ifndef INITIAL_SP
+#define INITIAL_SP              (0x10001000UL)
+#endif
+
+#elif defined(TARGET_LPC824) || defined(TARGET_SSCI824)
+
+#ifndef INITIAL_SP
+#define INITIAL_SP              (0x10002000UL)
+#endif
+
+#elif defined(TARGET_LPC54114_M4)
 
 #ifndef INITIAL_SP
 #define INITIAL_SP              (0x20010000UL)
 #endif
 
-#elif defined(TARGET_K66F)
+#elif defined(TARGET_MCU_LPC546XX)
 
 #ifndef INITIAL_SP
-#define INITIAL_SP              (0x20030000UL)
+#define INITIAL_SP              (0x20028000UL)
 #endif
 
-#elif defined(TARGET_KL27Z)
+#elif defined(TARGET_MIMXRT1050_EVK)
 
-#ifndef INITIAL_SP
-#define INITIAL_SP              (0x20003000UL)
-#endif
-
-#elif defined(TARGET_KL43Z)
-
-#ifndef INITIAL_SP
-#define INITIAL_SP              (0x20006000UL)
-#endif
-
-#elif defined(TARGET_KL05Z)
-
-#ifndef INITIAL_SP
-#define INITIAL_SP              (0x20000C00UL)
-#endif
-
-#elif defined(TARGET_KL25Z)
-
-#ifndef INITIAL_SP
-#define INITIAL_SP              (0x20003000UL)
-#endif
-
-#elif defined(TARGET_KL26Z)
-
-#ifndef INITIAL_SP
-#define INITIAL_SP              (0x20003000UL)
-#endif
-
-#elif defined(TARGET_KL46Z)
-
-#ifndef INITIAL_SP
-#define INITIAL_SP              (0x20006000UL)
-#endif
-
-#elif defined(TARGET_KL82Z)
-
-#ifndef INITIAL_SP
-#define INITIAL_SP              (0x20012000UL)
-#endif
-
-#elif defined(TARGET_K64F)
-
-#ifndef INITIAL_SP
-#define INITIAL_SP              (0x20030000UL)
-#endif
-
-#elif defined(TARGET_SDT64B)
-
-#ifndef INITIAL_SP
-#define INITIAL_SP              (0x20030000UL)
-#endif
-
-#elif defined(TARGET_KW24D)
-
-#ifndef INITIAL_SP
-#define INITIAL_SP              (0x20008000UL)
-#endif
-
-#elif defined(TARGET_KW41Z)
-
-#ifndef INITIAL_SP
-#define INITIAL_SP              (0x20018000UL)
-#endif
-
-#elif defined(TARGET_K82F)
-
-#ifndef INITIAL_SP
-#define INITIAL_SP              (0x20030000UL)
-#endif
-
-#elif defined(TARGET_RO359B)
-
-#ifndef INITIAL_SP
-#define INITIAL_SP              (0x20030000UL)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))
+    extern uint32_t               Image$$RW_IRAM1$$ZI$$Base[];
+    extern uint32_t               Image$$RW_IRAM1$$ZI$$Length[];
+    extern uint32_t               Image$$ARM_LIB_STACK$$ZI$$Base[];
+    extern uint32_t               Image$$ARM_LIB_STACK$$ZI$$Length[];
+    #define HEAP_START            ((unsigned char*) Image$$RW_IRAM1$$ZI$$Base)
+    #define HEAP_SIZE             ((uint32_t) Image$$RW_IRAM1$$ZI$$Length)
+    #define ISR_STACK_START       ((unsigned char*)Image$$ARM_LIB_STACK$$ZI$$Base)
+    #define ISR_STACK_SIZE        ((uint32_t)Image$$ARM_LIB_STACK$$ZI$$Length)
+#elif defined(__GNUC__)
+    extern uint32_t               __StackTop[];
+    extern uint32_t               __StackLimit[];
+    extern uint32_t               __end__;
+    extern uint32_t               __HeapLimit[];
+    #define HEAP_START            ((unsigned char*)&__end__)
+    #define HEAP_SIZE             ((uint32_t)((uint32_t)__HeapLimit - (uint32_t)HEAP_START))
+    #define ISR_STACK_START       ((unsigned char*)__StackLimit)
+    #define ISR_STACK_SIZE        ((uint32_t)((uint32_t)__StackTop - (uint32_t)__StackLimit))
+#elif defined(__ICCARM__)
+    /* No region declarations needed */
+#else
+    #error "no toolchain defined"
 #endif
 
 #endif
